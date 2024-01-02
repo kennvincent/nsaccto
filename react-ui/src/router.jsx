@@ -11,6 +11,7 @@ import OfficeBudget from "./components/budget/OfficeBudget";
 import CreateObligationRequest from "./components/obligationrequest/CreateObligationRequest";
 import ShowObrBudget from "./components/obligationrequest/ShowObrBudget";
 import ObrListBudget from "./components/ObrListBudget";
+import RegisterUser from "./components/users/RegisterUser";
 
 const router = createBrowserRouter([
     {
@@ -59,6 +60,11 @@ const router = createBrowserRouter([
            {
             path:'/settings',
             element:<Settings/>
+           }
+           ,
+           {
+            path:'/register',
+            element:<RegisterUser/>
            }
         ]
     }

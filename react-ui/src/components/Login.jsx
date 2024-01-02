@@ -1,6 +1,6 @@
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from "../api/axios";
 
 
@@ -23,6 +23,7 @@ export default function handleLogin() {
   }
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+          <NavLink to="/dashboard">Home</NavLink>
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             {/* <img
               className="mx-auto h-10 w-auto"

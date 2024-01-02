@@ -49,6 +49,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		path: '/obrlistbudget',
 		icon: <HiOutlineDocumentText />
 	},
+	{
+		key: 'register',
+		label: 'Register User',
+		path: '/register',
+		icon: <HiOutlineDocumentText />
+	},
 	// {
 	// 	key: 'messages',
 	// 	label: 'Messages',

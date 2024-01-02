@@ -17,7 +17,8 @@ export default function AddNewOffice({visible,onClose}) {
         const newOffice = {
           officecode : office.officecode,
           officename : office.officename,
-          officedesc : office.officedesc
+          officedesc : office.officedesc,
+          officeaddress:"Catarman, Northern Samar"
         }
     
     
