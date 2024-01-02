@@ -19,7 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
+<<<<<<< HEAD
     'allowed_origins' => [env('FRONTEND_URL', 'http://127.0.0.1:3000')],
+=======
+    'allowed_origins' => [env('FRONTEND_URL', 'http://https://www.nsaccto.com/')],
+>>>>>>> 57fb233d8da55b44aa822e7f9ea04c38dd37986b
 
     'allowed_origins_patterns' => [],
 
