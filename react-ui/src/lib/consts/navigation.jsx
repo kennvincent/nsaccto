@@ -11,8 +11,12 @@ import {
     HiOutlineLibrary,
     HiDocumentReport
 } from 'react-icons/hi'
+import AcctObrView from '../../components/accounting/AcctObrView'
+
+
 
 export const DASHBOARD_SIDEBAR_LINKS = [
+
 	{
 		key: 'dashboard',
 		label: 'Dashboard',
@@ -47,6 +51,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		key: 'obrlistbudget',
 		label: 'OBR List Budget View',
 		path: '/obrlistbudget',
+		icon: <HiOutlineDocumentText />
+	},
+	{
+		key: 'acctobrview',
+		label: 'OBR Accounting View',
+		path: '/acctobrview',
 		icon: <HiOutlineDocumentText />
 	},
 	{

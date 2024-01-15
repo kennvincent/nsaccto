@@ -9,24 +9,24 @@ export default function () {
     const [totalBudget2,setTotalBudget2] = useState();
     const [totalBudget3,setTotalBudget3] = useState();
     const [totalBudget4,setTotalBudget4] = useState();
-
+ 
     useEffect(()=>{
      
-        axios.get(`http://127.0.0.1:8000/api/budgetalloted/${2020}`).then(res =>{
-            setTotalBudget1(res.data.budget);
-        });
+        // axios.get(`http://127.0.0.1:8000/api/budgetalloted/${2020}`).then(res =>{
+        //     setTotalBudget1(res.data.budget);
+        // });
 
-        axios.get(`http://127.0.0.1:8000/api/budgetalloted/${2021}`).then(res =>{
-            setTotalBudget2(res.data.budget);
-        });
+        // axios.get(`http://127.0.0.1:8000/api/budgetalloted/${2021}`).then(res =>{
+        //     setTotalBudget2(res.data.budget);
+        // });
 
-        axios.get(`http://127.0.0.1:8000/api/budgetalloted/${2022}`).then(res =>{
-            setTotalBudget3(NUmber(res.data.budget).toLocaleString());
-        });
+        // axios.get(`http://127.0.0.1:8000/api/budgetalloted/${2022}`).then(res =>{
+        //     setTotalBudget3(NUmber(res.data.budget).toLocaleString());
+        // });
 
-        axios.get(`http://127.0.0.1:8000/api/budgetalloted/${2023}`).then(res =>{
-            setTotalBudget4(Number(res.data.budget).toLocaleString());
-        });
+        // axios.get(`http://127.0.0.1:8000/api/budgetalloted/${2023}`).then(res =>{
+        //     setTotalBudget4(Number(res.data.budget).toLocaleString());
+        // });
 
        
     },[]);

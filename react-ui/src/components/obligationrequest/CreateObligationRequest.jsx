@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState,useReducer } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AddParticulars from './AddAccount';
 
@@ -9,37 +10,17 @@ export default function CreateObligationRequest() {
     const [officeid,setOfficeId] = useState();
     const [tempAccountCode,SetTempAccountCode] =useState();
     const [tempAmount,setTempAmount] = useState();
-    const [offices,setOffices] = useState([]);
+    const [officeDesc,setOfficeofficeDesc] = useState();
     const [address,setAddress] = useState();
-    const [responsibilityCenter,setResponsibilityCenter] = useState("");
-    const [officeCode,setOfficeCode] = useState("");
+    const [responsibilityCenter,setResponsibilityCenter] = useState();
+    const [officeCode,setOfficeCode] = useState();
     const [showParticulars,setShowParticulars] = useState(false);
     const [particulars,setParticulars] = useState("");
     const [payee,setPayee] = useState("");
     const [total,setTotal]=useState([]);
     const [details,setDetails] =useState([]);
-
-
-    const [reducer,setReducer] = useReducer(x => x + 1,0);
-    
-    const handleSelectValue = (e)=>{
-        
-        const id = e.target.value;
-
-        setOfficeId(id);
-        axios.get(`http://127.0.0.1:8000/api/office/search/${id}`).then(res =>{
-            setAddress(res.data.office.officeaddress);
-            setResponsibilityCenter(res.data.office.officename);
-            setOfficeCode(res.data.office.officecode);
-        });
-       
-
-        axios.delete(`http://127.0.0.1:8000/api/tempobligationrequest/${id}`).then(res =>{
-            //alert(res.data.message);
-        })
-
-        setDetails([]);
-    }
+    const [office,setOffice] = useState([]);    
+    const navigate = useNavigate();
 
     const handleShowAddParticulars = ()=>{
         setShowParticulars(true);
@@ -63,11 +44,10 @@ export default function CreateObligationRequest() {
         e.preventDefault();
         setParticulars(e.target.value)
     }
-    const handleCreateOBR = ()=>{
 
-        // details.map((d)=>(
-        //     console.log(d)
-        // ))
+
+    const handleCreateOBR = ()=>{
+    
        
         const obr = {
             'payee' : payee,
@@ -80,10 +60,22 @@ export default function CreateObligationRequest() {
             'obrdetails': details
             
         };
-        
+        console.log(obr);
+
        
         axios.post(`http://127.0.0.1:8000/api/obligationrequest`,obr).then(res=>{
-            alert.log(res.data);
+            if(res.data.obr_id>0){
+                window.localStorage.setItem('obr_id',res.data.obr_id);
+                alert('Obligation Requested created!!!')
+                axios.delete(`http://127.0.0.1:8000/api/tempobligationrequest/${officeid}`).then(res =>{
+                    //alert(res.data.message);
+                })
+                
+                setDetails([]);
+                setTotal(0);
+                navigate('/obrprintpreview');
+            }
+          
         }).catch(function(error){ 
         if(error.response){
             if(error.response.status===422){
@@ -98,22 +90,19 @@ export default function CreateObligationRequest() {
         }
         });
 
-        // axios.delete(`http://127.0.0.1:8000/api/tempobligationrequest/${officeid}`).then(res =>{
-        //     //alert(res.data.message);
-        // })
-        // setDetails([]);
-        // setTotal(0);
+        
     }
 
-    const getArrayData =(particulars,accountcode,amount)=>{
-        //save the details here
+    const getArrayData =(particulars,accountid,accountcode,amount)=>{
         const obr = {
             office_id:officeid,
+            accountid:accountid,
             accountcode : accountcode,
             amount:amount
           }
 
-        axios.post(`http://127.0.0.1:8000/api/tempobligationrequest`,obr).then(res =>{
+         
+            axios.post(`http://127.0.0.1:8000/api/tempobligationrequest`,obr).then(res =>{
             
             axios.get(`http://127.0.0.1:8000/api/tempobligationrequest/${officeid}`).then(res =>{
                 setDetails(res.data.obr)
@@ -124,8 +113,7 @@ export default function CreateObligationRequest() {
                 setTotal(res.data[0].temptotal)
             });
 
-            alert(res.data.message);
-        })
+            })
         .catch(function(error){ 
           
             if(error.response){
@@ -143,19 +131,37 @@ export default function CreateObligationRequest() {
         setShowParticulars(false);
     }
     
-    useEffect(()=>{
-        axios.get(`http://127.0.0.1:8000/api/offices`).then(res =>{
-            setOffices(res.data.offices);
-        });
+    
 
-       
-      
+    const [user,setUser] = useState();
+    useEffect(()=>  {
+        setUser(window.localStorage.getItem('user'));
+        console.log(window.localStorage.getItem('user'));
+        const fetchData = async()=>{
+            try{
+                await axios.get(`http://127.0.0.1:8000/api/login/${window.localStorage.getItem('user')}`).then(res =>{
+                    setOfficeId(res.data.office[0].office_id);
+                    setOfficeCode(res.data.office[0].officecode);
+                    setOfficeofficeDesc(res.data.office[0].officedesc);
+                    setAddress(res.data.office[0].officeaddress)
+                    setResponsibilityCenter(res.data.office[0].officename);
 
+                });
+            }
+            catch(e){
+    
+            }
+        }
+        
+
+        fetchData();
     },[]);
 
+   
+    
   return (
     <div className='card  overflow-hidden'>
-        
+
         <div className='card-header text-center bg-white'>
             <p className='font-bold p-0 m-0'>Republic of the Philippines</p>
             <p className='font-bold text-lg p-0 m-0'>PROVINCE OF NORTHERN SAMAR</p>
@@ -163,6 +169,7 @@ export default function CreateObligationRequest() {
         </div>
         <div className='card-body h-[800px] overflow-scroll'>
             <div className='text-center p-0'>
+              
                 <h4>OBLIGATION REQUEST</h4>
             </div>
             <div className='flex'>
@@ -170,21 +177,16 @@ export default function CreateObligationRequest() {
                     <p>Payee</p>
                 </div>
                 <div className='w-[85rem] h-8 border p-0'>
-                   <input type="text" name="payee" id="payee"  className='w-full py-0 px-2' onChange={handlePayeeInput}/>
+                   <input type="text" name="payee" id="payee"   className='w-full py-0 px-2' onChange={handlePayeeInput}/>
                 </div>
             </div>
             <div className='flex'>
                 <div className='w-[15rem] h-8 items-center border py-0 px-2'>
                     <p>Office</p>
                 </div>
-                <div className='w-[85rem] h-8 border p-0'>
-                    <select  id="" className='w-full h-8 py-0 px-2' onChange={handleSelectValue}>
-                        <option value=""></option>
-                        {offices.map((office) =>(
-                            <option value={office.id} key={office.id}>{office.officedesc}</option>
-                        ))}
-                    </select>
-                   
+                <div className='w-[85rem] h-8 border py-0 px-2'>
+                    
+                    <p>{officeDesc}</p>
                 </div>
             </div>
             <div className='flex'>

@@ -23,6 +23,7 @@ useEffect(()=>{
     })
 },[]);
 
+
 const accountsList = accounts.map((account) =>{
     return(
         <option value={account.id} key={account.id}>{account.accountdesc}</option>
@@ -35,18 +36,18 @@ const handleSubmit = (e)=>{
     callback=particulars;
 }
 
+
 const getAccount = (e)=>{
     const id = e.target.value;
     axios.get(`http://127.0.0.1:8000/api/account/${id}`).then(res=>{
         setAccount(res.data.account);
     });
     
-  
 }
+
 
 const handleClick = (e)=>{
     e.preventDefault();
-    console.log(account + ' '+ amount);
 }
 
 
@@ -98,7 +99,7 @@ if(!visible) return null;
                 <div className="text-center gap-2 flex mt-2">
                     <button  className="px-5 py-2 bg-green-700 text-white rounded" 
                         // onClick={()=>{passParticulars(particulars),passAccountCode(account.accountcode),passAmount(amount),passArrayData(arrayData)}} 
-                        onClick={()=>passArrayData(particulars,account.accountcode,amount)}
+                        onClick={()=>passArrayData(particulars,account.id, account.accountcode,amount)}
                         >
                         Add
                     </button>

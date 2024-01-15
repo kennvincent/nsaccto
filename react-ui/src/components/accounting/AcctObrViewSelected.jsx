@@ -2,24 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios';
 
-export default function ShowObrBudget() {
- const location = useLocation();
+export default function AcctObrViewSelected() {
+  const location = useLocation();
 
- const [obr,setObr] = useState([]);
- const [obrtotal,setObrTotal]=useState([]);
- let obrid = location.state.obrid;
- 
- let payee="";
- let officedesc="";
- let officename="";
- let officeaddress="";
- let particulars="";
- let officecode="";
- let totalamount=0;
- let obrstatus="";
+  const [obr,setObr] = useState([]);
+  const [obrtotal,setObrTotal]=useState([]);
+  let obrid = location.state.obrid;
+  
+  let payee="";
+  let officedesc="";
+  let officename="";
+  let officeaddress="";
+  let particulars="";
+  let officecode="";
+  let totalamount=0;
+  let obrstatus="";
 
-
- useEffect(()=>{
+  useEffect(()=>{
     axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
         setObr(res.data.obr);
       });
@@ -29,20 +28,9 @@ export default function ShowObrBudget() {
       });
  },[]);
 
- const handleApproveObr = ()=>{
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/approve/${location.state.obrid}`).then(res=>{
-        alert(res.data.message)
-    });
- }
-
- const handleRejectObr = ()=>{
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/reject/${location.state.obrid}`).then(res=>{
-        alert(res.data.message)
-    });
- }
   return (
-    <div>
-        <div className='card-body h-[800px] overflow-scroll'>
+    <div className='bg-white'>
+        <div className='card-body '>
             <div className='text-center p-0'>
                 <h4>OBLIGATION REQUEST</h4>
                 {/* <h3> {obr.map((obr)=>{obrstatus = obr.obrstatus})}
@@ -117,7 +105,7 @@ export default function ShowObrBudget() {
                         <p className='p-0 m-0 text-right' key={index}> {Number(obr.amount).toLocaleString()}</p>
                     ))}
                 </div>
-
+                
             </div>
 
             <div className='flex'>
@@ -129,13 +117,22 @@ export default function ShowObrBudget() {
                 </div>
             </div>
             <div className='flex'>
-                <div className='w-[100rem] border p-1 text-right'>
-                        <button className='btn btn-primary btn-sm w-40' onClick={handleApproveObr}>Approve</button>
-                        <button className='btn btn-primary btn-sm w-40 ml-2' onClick={handleRejectObr}>Reject</button>
+                <div className='w-[85rem] h-11 border p-1 text-right'>
+                        <p className='font-bold'>Amount paid</p>
+                </div>
+                <div className='w-[15rem] h-11 border text-right p-1' >
+                    <input type="text" name="amount" id="amount" className='h-9 text-right font-bold w-[100%]' />
                 </div>
             </div>
 
-            
+            <div className='flex'>
+                <div className='w-[85rem] h-11 border p-1 text-right'>
+                        
+                </div>
+                <div className='w-[15rem] h-11 border p-1'>
+                    <button className='btn btn-primary btn-sm w-[100%]'>Save</button>
+                </div>
+            </div>
 
            
         </div>

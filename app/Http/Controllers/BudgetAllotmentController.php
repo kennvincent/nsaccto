@@ -18,14 +18,30 @@ class BudgetAllotmentController extends Controller
     // }
 
     public function officebudget($office_id){
-        $budget = DB::table('budgetallotments')
-                    ->join('offices','budgetallotments.office_id','=','offices.id')
-                    ->join('accounts','budgetallotments.account_id','=','accounts.id')
-                    ->select('budgetallotments.id','accounts.accountcode','accounts.accountdesc','budgetallotments.amount')
-                    ->where('budgetallotments.office_id',$office_id)
+        $budget = DB::table('vw_budgetallotments')
+        ->select('id','office_id','officename','accountid','accountcode',
+            'accountdesc','allotted','utilized','remaining')
+        ->where('office_id',$office_id)
+        ->get();
+
+        // $budget = DB::table('budgetallotments')
+        //             ->join('offices','budgetallotments.office_id','=','offices.id')
+        //             ->join('accounts','budgetallotments.account_id','=','accounts.id')
+        //             ->select('budgetallotments.id','accounts.accountcode','accounts.accountdesc','budgetallotments.amount')
+        //             ->where('budgetallotments.office_id',$office_id)
+        //             ->get();
+        return response()->json(['budget'=>$budget]);
+    }
+
+    public function officebudgetall($office_id){
+        $budget = DB::table('vw_budgetallotments')
+                    ->select('id','office_id','officename','accountid','accountcode','accountdesc','allotted','utilized','remaining')
+                    ->where('office_id',$office_id)
                     ->get();
         return response()->json(['budget'=>$budget]);
     }
+
+
 
     public function index(){
         $year=DB::table('currentbudgetyears')->get();

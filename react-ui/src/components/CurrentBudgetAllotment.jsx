@@ -100,6 +100,11 @@ export default function CurrentBudgetAllotment() {
 			<td>{ofc.officename}</td>
 			<td>{ofc.officedesc}</td>
 			<td>{ofc.totalbudget}</td>
+			<td>0.00</td>
+			<td>0.00</td>
+			<td>0.00</td>
+			<td>0.00</td>
+			<td>{ofc.totalbudget}</td>
 		</tr>
 	))
 	return (
@@ -111,12 +116,14 @@ export default function CurrentBudgetAllotment() {
 					<thead className='sticky top-0'>
 						<tr>
 							<th>Office Code</th>
-							<th>Office Abbr</th>
-							<th>Office Name</th>
-							<th>Alloted Budget</th>
+							<th>Office</th>
+							<th>&nbsp;</th>
+							<th>Approriated</th>
 							<th>Augmented</th>
+							<th>Transferred</th>
 							<th>Total Budget</th>
-							<th>Used Budget</th>
+							<th>Utilized</th>
+							<th>Remaining</th>
 						</tr>
 					</thead>
 					<tbody>

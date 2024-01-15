@@ -8,7 +8,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BudgetAllotmentController;
 use App\Http\Controllers\ObligationRequestController;
 use App\Http\Controllers\TempObligationRequestController;
-
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,4 +59,11 @@ Route::get('obligationrequest/budgetview/selected/{id}',[ObligationRequestContro
 Route::get('obligationrequest/budgetview/selected/sum/{id}',[ObligationRequestController::class,'sum']);
 Route::get('obligationrequest/budgetview/selected/approve/{id}',[ObligationRequestController::class,'approve']);
 Route::get('obligationrequest/budgetview/selected/reject/{id}',[ObligationRequestController::class,'reject']);
+Route::get('obligationrequest/printpreview/{id}',[ObligationRequestController::class,'printpreview']);
+Route::get('obligationrequest/obrsum/{id}',[ObligationRequestController::class,'obrsum']);
 
+Route::get('obligationrequest/accountingview',[ObligationRequestController::class,'accountingviewlist']);
+
+Route::post('register',[RegisterController::class,'register']);
+Route::post('login',[LoginController::class,'login']);
+Route::get('login/{username}',[LoginController::class,'currentuser']);

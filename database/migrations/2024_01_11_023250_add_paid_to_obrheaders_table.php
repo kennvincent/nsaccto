@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tempobligationrequests', function (Blueprint $table) {
-            $table->id();
-            $table->integer('office_id');
-            $table->string('accountcode');
-            $table->decimal('amount',8,2);
-            $table->timestamps();
+        Schema::table('obrheaders', function (Blueprint $table) {
+            $table->string('ispaid')->after('obrstatus');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tempobligationrequests');
+        Schema::table('obrheaders', function (Blueprint $table) {
+            $table->droColumn('ispaid');
+        });
     }
 };

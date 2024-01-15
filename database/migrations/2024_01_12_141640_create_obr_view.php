@@ -18,20 +18,25 @@ return new class extends Migration
             t1.id,
             t1.payee,
             t1.particulars,
+            t1.officeid,
             t2.officecode,
             t2.officename,
             t2.officedesc,
             t2.officeaddress,
+            t3.accountid,
             t3.accountcode,
             t3.amount,
             CASE 
                 WHEN t1.obrstatus='0' THEN 'Cancelled'
                 WHEN t1.obrstatus='1' THEN 'Pending'
                 WHEN t1.obrstatus='2' THEN 'Approved'
-            END AS obrstatus
+            END AS obrstatus,
+            t1.ispaid
             FROM obrheaders t1
             LEFT JOIN offices t2 ON t1.officeid=t2.id
             LEFT JOIN obrdetails t3 on t1.id = t3.obrid
+        
+ 
         ");
     }
 

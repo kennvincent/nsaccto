@@ -12,6 +12,7 @@ class TempObligationRequestController extends Controller
         $obr = new Tempobligationrequest;
 
         $obr->office_id = $request->office_id;
+        $obr->accountid =$request->accountid;
         $obr->accountcode = $request->accountcode;
         $obr->amount = $request->amount;
         $obr->save();

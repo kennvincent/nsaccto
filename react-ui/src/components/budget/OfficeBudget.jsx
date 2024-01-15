@@ -44,10 +44,11 @@ import AugmentBudget from './AugmentBudget';
       <tr key={budget.id} className='border hover:bg-slate-100 p-0'>
         <td className='py-1'>{budget.accountdesc}</td>
         <td className='py-1'>{budget.accountcode}</td>
-        <td className='py-1'>{Number(budget.amount).toLocaleString()}</td>
+        <td className='py-1'>{Number(budget.allotted).toLocaleString()}</td>
         <td className='py-1'>0.00</td>
         <td className='py-1'>0.00</td>
-        <td className='py-1'>{Number(budget.amount).toLocaleString()}</td>
+        <td className='py-1'>{Number(budget.utilized).toLocaleString()}</td>
+        <td className='py-1'>{Number(budget.remaining).toLocaleString()}</td>
         <td className='py-1'><button className='btn btn-primary btn-sm'>Edit</button></td>
         <td className='py-1'><button className='btn btn-warning btn-sm'>Transfer</button></td>
         <td className='py-1'><button className='btn btn-success btn-sm' onClick={handleShowAugmentBudget}>Augment</button></td>
@@ -66,10 +67,11 @@ import AugmentBudget from './AugmentBudget';
           <tr>
             <th className='w-[40rem] py-2'>Description</th>
             <th className='w-[10rem] py-2'>Account code</th>
-            <th className='w-[15rem] py-2'>Amount</th>
+            <th className='w-[15rem] py-2'>Approriated</th>
             <th className='w-[15rem] py-2'>Augmented</th>
             <th className='w-[15rem] py-2'>Transferred</th>
-            <th className='w-[15rem] py-2'>Total</th>
+            <th className='w-[15rem] py-2'>Utilized</th>
+            <th className='w-[15rem] py-2'>Remaining</th>
             <th className='w-fit py-2'>&nbsp;</th>
             <th className='w-fit py-2'>&nbsp;</th>
             <th className='w-fit py-2'>&nbsp;</th>

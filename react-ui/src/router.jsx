@@ -12,11 +12,24 @@ import CreateObligationRequest from "./components/obligationrequest/CreateObliga
 import ShowObrBudget from "./components/obligationrequest/ShowObrBudget";
 import ObrListBudget from "./components/ObrListBudget";
 import RegisterUser from "./components/users/RegisterUser";
+import ObligationRequestPrintPreview from "./components/obligationrequest/ObligationRequestPrintPreview";
+import AcctObrView from "./components/accounting/AcctObrView";
+import AcctObrViewSelected from "./components/accounting/AcctObrViewSelected";
+import AcctLogin from "./components/AcctLogin";
+
 
 const router = createBrowserRouter([
     {
         path:'/',
-        element:<Login/> 
+        element:<Login/>
+    },
+    {
+        path:'/obrprintpreview',
+        element:<ObligationRequestPrintPreview/>
+    },
+    {
+        path:'/acctlogin',
+        element:<AcctLogin />
     },
     {
         path: '/',
@@ -43,6 +56,7 @@ const router = createBrowserRouter([
             path:'/obrcreate',
             element:<CreateObligationRequest />
            }
+           
            ,
            {
             path:'/obrlist',
@@ -55,6 +69,16 @@ const router = createBrowserRouter([
            {
                 path:'/showobrbudget',
                 element:<ShowObrBudget/>
+           }
+           ,
+           {
+            path:'/acctobrview',
+            element:<AcctObrView/>
+           }
+           ,
+           {
+            path:'/acctobrviewselected',
+            element:<AcctObrViewSelected/>
            }
            ,
            {

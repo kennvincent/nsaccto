@@ -13,6 +13,7 @@ class ObligationRequestController extends Controller
     public function viewlist(){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename','officedesc','officeaddress','obrstatus')
+                    ->orderBy('id','DESC')
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
     }
@@ -26,10 +27,40 @@ class ObligationRequestController extends Controller
         return response()->json(['obr'=>$obrlist]);
     }
 
+    public function printpreview($id){
+
+        // $obr = DB::table('vw_obr')
+                //  ->select('id','payee',DB::raw('SUM(amount) as total'))
+                //  ->groupBy('id')
+                //  ->where('id','=',[$id])
+                // ->get();
+
+        $obr = DB::table('vw_obr')
+                ->select('id',
+                        'payee',
+                        'particulars',
+                        'officecode',
+                        'officename',
+                        'officedesc',
+                        'officeaddress',
+                        'accountcode',
+                        'amount',
+                        'obrstatus')
+                ->where('id','=',[$id])
+                ->get();
+        return response()->json(['obr'=>$obr]);
+    }
+
     public function sum($id){
         $obrtotal = DB::select("SELECT sum(amount) as obrtotal FROM vw_obr WHERE id = $id");
         return response()->json($obrtotal);
     }
+
+    public function obrsum($id){
+        $obrtotal = DB::select("SELECT sum(amount) as obrtotal FROM vw_obr WHERE id = $id");
+        return response()->json($obrtotal);
+    }
+
 
     public function budgetviewlist(){
         $obrlist = DB::table('vw_obrheaders')
@@ -38,6 +69,15 @@ class ObligationRequestController extends Controller
         return response()->json(['obrlist'=>$obrlist]);
     }
 
+
+    public function accountingviewlist(){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename','officedesc','officeaddress','obrstatus')
+                    ->where('obrstatus','=','Approved')
+                    ->get();
+
+        return response()->json(['obrlist'=>$obrlist]);
+    }
     public function approve($obrid){
         $affected = DB::table('obrheaders')
               ->where('id', $obrid)
@@ -53,10 +93,10 @@ class ObligationRequestController extends Controller
     }
 
     public function insert(Request $request){
-
           
             DB::beginTransaction();
             try{
+
                 $obr = new Obrheader;
                 $obr->payee = $request->payee;
                 $obr->officeid = $request->officeid;
@@ -66,28 +106,28 @@ class ObligationRequestController extends Controller
                 $obr->signatory2 = $request->signatory2;
                 $obr->position2 = $request->position2;
                 $obr->obrstatus="1";
+                $obr->ispaid="0";
                 $obr->save();
 
                 $details = $request->obrdetails;
-               
-
                 // $obrid = DB::table('obrheaders')->select('id')->lastInsertedId();
                 // $obrid = $obrid->id;
-                $obrid = $obr->id;
                 
+                $obrid = DB::getPdo()->lastInsertId();
+             
 
                 foreach($details as $key => $detail){
-                   
+                    $obrDetail['accountid'] = $detail['accountid'];
                     $obrDetail['accountcode'] = $detail['accountcode'];
                     $obrDetail['amount'] = $detail['amount'];
                     $obrDetail['obrid'] = $obrid;
                     Obrdetail::create($obrDetail);
                 }
 
-               
 
                 DB::commit();
-                return response()->json(['message'=>'Obligation Request have been created!!!']);
+                return response()->json(['obr_id'=>$obrid]);
+                //return response()->json(['message'=>'Obligation Request have been created!!!']);
                 //  Toastr::success('Obligation Request have been created!!!');
                 //  return redirect()->back();
             }catch(\Exception $e){

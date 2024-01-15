@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('obrdetails', function (Blueprint $table) {
+        Schema::create('tempobligationrequests', function (Blueprint $table) {
             $table->id();
+            $table->integer('office_id');
+            $table->unsignedBigInteger('accountid');
             $table->string('accountcode');
             $table->decimal('amount',8,2);
-            $table->unsignedBigInteger('obrid');
-            $table->foreign('obrid')->references('id')->on('obrheaders');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('obrdetails');
+        Schema::dropIfExists('tempobligationrequests');
     }
 };
