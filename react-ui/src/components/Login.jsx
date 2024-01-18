@@ -52,7 +52,7 @@ export default function handleLogin() {
 
               axios.get(`http://127.0.0.1:8000/api/login/${userlogin.username}`).then(res=>{
                 window.localStorage.setItem('usertype',res.data.office[0].usertype);
-            
+                window.localStorage.setItem('officename',res.data.office[0].officename);
               });
               navigate("/dashboard");
             }else{

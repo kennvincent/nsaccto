@@ -16,7 +16,8 @@ import ObligationRequestPrintPreview from "./components/obligationrequest/Obliga
 import AcctObrView from "./components/accounting/AcctObrView";
 import AcctObrViewSelected from "./components/accounting/AcctObrViewSelected";
 import AcctLogin from "./components/AcctLogin";
-
+import ImportBudget from "./components/budget/ImportBudget";
+import DisplayBudgets from "./components/budget/DisplayBudgets";
 
 const router = createBrowserRouter([
     {
@@ -85,6 +86,17 @@ const router = createBrowserRouter([
             path:'/settings',
             element:<Settings/>
            }
+           ,
+           {
+            path:'/importbudget',
+            element:<ImportBudget/>
+           }
+           ,
+           {
+            path:'/budgets',
+            element:<DisplayBudgets/>
+           }
+           ,
            ,
            {
             path:'/register',

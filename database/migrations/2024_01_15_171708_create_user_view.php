@@ -25,7 +25,9 @@ return new class extends Migration
             t2.officecode,
             t2.officename,
             t2.officedesc,
-            t2.officeaddress
+            t2.officeaddress,
+            t2.authorizedpersonnel,
+            t2.position
             FROM users t1 
             LEFT JOIN offices t2 
             ON t1.office_id = t2.id

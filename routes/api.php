@@ -10,6 +10,8 @@ use App\Http\Controllers\ObligationRequestController;
 use App\Http\Controllers\TempObligationRequestController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\BudgetImportController;
+use App\Http\Controllers\BudgetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,3 +69,10 @@ Route::get('obligationrequest/accountingview',[ObligationRequestController::clas
 Route::post('register',[RegisterController::class,'register']);
 Route::post('login',[LoginController::class,'login']);
 Route::get('login/{username}',[LoginController::class,'currentuser']);
+
+Route::post('import',[BudgetImportController::class,'import']);
+Route::get('budgets',[BudgetImportController::class,'display']);
+
+Route::get('displayofficebudget/{officename}',[BudgetController::class,'officebudget']);
+Route::get('getaccounts/{officename}',[BudgetController::class,'accountsperoffice']);
+Route::get('getaccount/{id}',[BudgetController::class,'getaccount']);

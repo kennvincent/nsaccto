@@ -17,9 +17,10 @@ return new class extends Migration
             $table->text('particulars');
             $table->string('accountcode');
             $table->integer('budgetyear');
-            $table->decimal('proposedamount',8,2);
-            $table->string('accountclassification');
-            $table->string('funding');
+            $table->decimal('proposedamount',18,2)->nullable();
+            $table->string('accountclassification')->nullable();
+            $table->string('funding')->nullable();
+            $table->string('sector')->nullable();
             $table->string('budgetstatus');
             $table->timestamps();
         });

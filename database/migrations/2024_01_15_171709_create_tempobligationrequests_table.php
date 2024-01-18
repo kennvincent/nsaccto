@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('tempobligationrequests', function (Blueprint $table) {
             $table->id();
             $table->integer('office_id');
-            $table->unsignedBigInteger('accountid');
             $table->string('accountcode');
-            $table->decimal('amount',8,2);
+            $table->decimal('amount',18,2);
             $table->timestamps();
         });
     }

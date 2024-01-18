@@ -2,10 +2,10 @@ import axios from 'axios';
 import { vi } from 'date-fns/locale';
 import React, { useEffect, useState } from 'react'
 
-export default function AddParticulars({visible,onClose,onAdd,passParticulars,passAccountCode,passAmount,passArrayData}) {
+export default function AddParticulars({visible,onClose,onAdd,passParticulars,passAmount,passArrayData}) {
 const [particulars,setParticulars] = useState("");
 const [accounts,setAccounts] = useState([]);
-const [account,setAccount] =useState("");
+const [accountCode,setAccountCode] =useState();
 const [amount,setAmount] =useState(0);
 
 const [arrayData,SetArrayDate]=useState(['AccountCode','Amount'])
@@ -18,17 +18,14 @@ const handleInputAmount=(e)=>{
 }
 
 useEffect(()=>{
-    axios.get(`http://127.0.0.1:8000/api/accounts`).then(res=>{
+    var officename = window.localStorage.getItem('officename');
+   
+    axios.get(`http://127.0.0.1:8000/api/getaccounts/${officename}`).then(res=>{
         setAccounts(res.data.accounts);
     })
+ 
 },[]);
 
-
-const accountsList = accounts.map((account) =>{
-    return(
-        <option value={account.id} key={account.id}>{account.accountdesc}</option>
-    );
-})
 
 
 const handleSubmit = (e)=>{
@@ -37,13 +34,21 @@ const handleSubmit = (e)=>{
 }
 
 
-const getAccount = (e)=>{
-    const id = e.target.value;
-    axios.get(`http://127.0.0.1:8000/api/account/${id}`).then(res=>{
-        setAccount(res.data.account);
-    });
+// const getAccount = (e)=>{
+//     const id = e.target.value;
+//     axios.get(`http://127.0.0.1:8000/api/getaccount/${id}`).then(res=>{
+//         setAccountCode(res.data.account[0].accountcode);
+//         console.log(accountCode);
+//     });
     
-}
+// }
+
+const accountsList = accounts.map((account) =>{
+    return(
+        <option value={account.accountcode + ' ' + account.particulars} key={account.id}>{account.accountcode} - {account.particulars}</option>
+    );
+})
+
 
 
 const handleClick = (e)=>{
@@ -65,7 +70,7 @@ if(!visible) return null;
                         <label htmlFor="accountdesc">Account Description</label>
                     </div>
                     <div>
-                        <select  className='w-full' onChange={getAccount}>
+                        <select  className='w-full' onChange={handleInput}>
                             <option value=""></option>
                             {accountsList}
                         </select>
@@ -73,7 +78,7 @@ if(!visible) return null;
                 </div>
 
                 <div className='w-full h-10 border border-black mt-2 pt-2 px-3'>
-                    <p name='account' id='account'>{account.accountcode}</p>
+                    <p name='account' id='account'>{accountCode}</p>
                 </div>
                 {/* <div className="flex flex-col mt-3">
                     <div>
@@ -90,7 +95,8 @@ if(!visible) return null;
                         <label htmlFor="amount">Amount</label>
                     </div>
                     <div>
-                        <input type="text" name="amount" id="amount" className='w-full' value={amount} onChange={handleInputAmount} />
+                        <input type="text" name="amount" id="amount" pattern="[0-9]*" inputmode="numeric"
+                        className='w-full' value={amount} onChange={handleInputAmount} />
                     </div>
                 </div>
 
@@ -99,7 +105,8 @@ if(!visible) return null;
                 <div className="text-center gap-2 flex mt-2">
                     <button  className="px-5 py-2 bg-green-700 text-white rounded" 
                         // onClick={()=>{passParticulars(particulars),passAccountCode(account.accountcode),passAmount(amount),passArrayData(arrayData)}} 
-                        onClick={()=>passArrayData(particulars,account.id, account.accountcode,amount)}
+                        // onClick={()=>passArrayData(particulars,account.id, account.accountcode,amount)}
+                        onClick={()=>passArrayData(particulars,amount)}
                         >
                         Add
                     </button>

@@ -117,7 +117,6 @@ class ObligationRequestController extends Controller
              
 
                 foreach($details as $key => $detail){
-                    $obrDetail['accountid'] = $detail['accountid'];
                     $obrDetail['accountcode'] = $detail['accountcode'];
                     $obrDetail['amount'] = $detail['amount'];
                     $obrDetail['obrid'] = $obrid;

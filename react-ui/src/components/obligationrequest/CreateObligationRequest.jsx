@@ -14,6 +14,8 @@ export default function CreateObligationRequest() {
     const [address,setAddress] = useState();
     const [responsibilityCenter,setResponsibilityCenter] = useState();
     const [officeCode,setOfficeCode] = useState();
+    const [authorizedPersonnel,setAuthorizedPersonnel] = useState();
+    const [personnelPosition,setPersonnelPosition] = useState();
     const [showParticulars,setShowParticulars] = useState(false);
     const [particulars,setParticulars] = useState("");
     const [payee,setPayee] = useState("");
@@ -60,7 +62,6 @@ export default function CreateObligationRequest() {
             'obrdetails': details
             
         };
-        console.log(obr);
 
        
         axios.post(`http://127.0.0.1:8000/api/obligationrequest`,obr).then(res=>{
@@ -77,31 +78,33 @@ export default function CreateObligationRequest() {
             }
           
         }).catch(function(error){ 
-        if(error.response){
-            if(error.response.status===422){
-                // setInputErrorList(error.response.data.errors);
-            } else if(error.response.status===419){
-                //setInputErrorList(error.response.data.errors);
-                //console.log("ERROR " + error.response.status);
-            }else if(error.response.status===500){
-                //console.log("ERROR DITO  " + error.response.status);
+            if(error.response){
+                if(error.response.status===422){
+                    // setInputErrorList(error.response.data.errors);
+                } else if(error.response.status===419){
+                    //setInputErrorList(error.response.data.errors);
+                    //console.log("ERROR " + error.response.status);
+                }else if(error.response.status===500){
+                    //console.log("ERROR DITO  " + error.response.status);
+                }
             }
-            
-        }
         });
 
         
     }
 
-    const getArrayData =(particulars,accountid,accountcode,amount)=>{
+    const getArrayData =(particulars,amount)=>{
+
+       let account = [2];
+       account = particulars.split(' ');
+   
         const obr = {
             office_id:officeid,
-            accountid:accountid,
-            accountcode : accountcode,
+            accountcode : account[0],
             amount:amount
           }
 
-         
+
             axios.post(`http://127.0.0.1:8000/api/tempobligationrequest`,obr).then(res =>{
             
             axios.get(`http://127.0.0.1:8000/api/tempobligationrequest/${officeid}`).then(res =>{
@@ -136,7 +139,6 @@ export default function CreateObligationRequest() {
     const [user,setUser] = useState();
     useEffect(()=>  {
         setUser(window.localStorage.getItem('user'));
-        console.log(window.localStorage.getItem('user'));
         const fetchData = async()=>{
             try{
                 await axios.get(`http://127.0.0.1:8000/api/login/${window.localStorage.getItem('user')}`).then(res =>{
@@ -145,6 +147,8 @@ export default function CreateObligationRequest() {
                     setOfficeofficeDesc(res.data.office[0].officedesc);
                     setAddress(res.data.office[0].officeaddress)
                     setResponsibilityCenter(res.data.office[0].officename);
+                    setAuthorizedPersonnel(res.data.office[0].authorizedpersonnel);
+                    setPersonnelPosition(res.data.office[0].position);
 
                 });
             }
@@ -269,13 +273,13 @@ export default function CreateObligationRequest() {
                     <p>Signature</p>
                 </div>
                 <div className='w-[40rem] h-8 border px-2'>
-                    
+                   
                 </div>
                 <div className='w-[10rem] h-8 border px-2'>
                     <p>Signature</p>
                 </div>
                 <div className='w-[40rem] h-8 border px-2'>
-                    
+                   
                 </div>
             </div>
 
@@ -284,7 +288,7 @@ export default function CreateObligationRequest() {
                     <p>Printed Name</p>
                 </div>
                 <div className='w-[40rem] h-20 border px-2'>
-                    
+                    <p className='text-center mt-5 uppercase'>{authorizedPersonnel}</p>
                 </div>
                 <div className='w-[10rem] h-20 border px-2'>
                     <p>Printed Name</p>
@@ -300,7 +304,7 @@ export default function CreateObligationRequest() {
                     <p>Position</p>
                 </div>
                 <div className='w-[40rem] h-20 border'>
-                    <div className='w-[40rem] h-10 border px-2'></div>
+                    <div className='w-[40rem] h-10 border px-2 text-center uppercase'>{personnelPosition}</div>
                     <div className='w-[40rem] h-10 border px-2'></div>
                 </div>
                 <div className='w-[10rem] h-20 border px-2'>

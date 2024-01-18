@@ -29,7 +29,8 @@ class LoginController extends Controller
         $office =DB::table('vw_users')
                 ->select('id','lastname','firstname','usertype'
                     ,'office_id','officecode','officename'
-                    ,'officedesc','officeaddress')
+                    ,'officedesc','officeaddress'
+                    ,'authorizedpersonnel','position')
                 ->where('username',$username)
                 ->get();
         return response()->json(['office'=>$office]);

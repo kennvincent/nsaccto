@@ -11,29 +11,59 @@ import {
     HiOutlineLibrary,
     HiDocumentReport
 } from 'react-icons/hi'
-import AcctObrView from '../../components/accounting/AcctObrView'
 
 
-
-export const DASHBOARD_SIDEBAR_LINKS = [
-
+export const DASHBOARD_BUDGET_SIDEBAR_LINKS =[
+	
 	{
-		key: 'dashboard',
-		label: 'Dashboard',
-		path: '/dashboard',
-		icon: <HiOutlineViewGrid />
+		key: 'obrlistbudget',
+		label: 'OBR List Budget View',
+		path: '/obrlistbudget',
+		icon: <HiOutlineDocumentText />
 	},
+]
+
+export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
+	
 	{
 		key: 'offices',
 		label: 'Offices',
 		path: '/offices',
-		icon: <HiOutlineLibrary />
+		icon: <HiOutlineLibrary />,
 	},
 	{
 		key: 'accounts',
 		label: 'Accounts',
 		path: '/accounts',
-		icon: <HiBriefcase />
+		icon: <HiBriefcase />,
+	},
+	{
+		key: 'acctobrview',
+		label: 'OBR Accounting View',
+		path: '/acctobrview',
+		icon: <HiOutlineDocumentText />,
+	},
+	{
+		key: 'importbudget',
+		label: 'Import Budget',
+		path: '/importbudget',
+		icon: <HiOutlineDocumentText />,
+	},
+	{
+		key: 'register',
+		label: 'Register User',
+		path: '/register',
+		icon: <HiOutlineDocumentText />
+	},
+]
+
+export const DASHBOARD_SIDEBAR_LINKS = [
+
+	{
+		key: 'officebudget',
+		label: 'Office Budgets',
+		path: '/officebudget',
+		icon: <HiDocumentReport />
 	},
 	{
 		key: 'obrcreate',
@@ -47,30 +77,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		path: '/obrlist',
 		icon: <HiOutlineDocumentText />
 	},
-	{
-		key: 'obrlistbudget',
-		label: 'OBR List Budget View',
-		path: '/obrlistbudget',
-		icon: <HiOutlineDocumentText />
-	},
-	{
-		key: 'acctobrview',
-		label: 'OBR Accounting View',
-		path: '/acctobrview',
-		icon: <HiOutlineDocumentText />
-	},
-	{
-		key: 'register',
-		label: 'Register User',
-		path: '/register',
-		icon: <HiOutlineDocumentText />
-	},
-	// {
-	// 	key: 'messages',
-	// 	label: 'Messages',
-	// 	path: '/messages',
-	// 	icon: <HiOutlineAnnotation />
-	// }
+	
 ]
 
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [

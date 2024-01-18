@@ -32,7 +32,7 @@ export default function AcctObrViewSelected() {
     <div className='bg-white'>
         <div className='card-body '>
             <div className='text-center p-0'>
-                <h4>OBLIGATION REQUEST</h4>
+                <h4>OBLIGATION REQUEST - PAYMENT</h4>
                 {/* <h3> {obr.map((obr)=>{obrstatus = obr.obrstatus})}
                 <p>{obrstatus}</p></h3> */}
             </div>

@@ -1,24 +1,42 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useReducer } from 'react'
 import DashboardStatsGrid from './DashboardStatsGrid'
 import MonthlyBudgetUtilizationChart from './MonthlyBudgetUtilizationChart'
 import OfficeBudgetChart from './OfficeBudgetChart'
 import CurrentBudgetAllotment from './CurrentBudgetAllotment'
 import axios from 'axios'
+import AcctObrView from './accounting/AcctObrView'
+import ShowObrBudget from './obligationrequest/ShowObrBudget'
+import ObrListBudget from './ObrListBudget'
 export default function Dashboard() {
-  
 
+  const [reducer,setReducer] = useReducer(x => x + 1,0);
+  const [defaultDisplay,setDefaultDisplay] =useState();
+  
+  useEffect(()=>{
+    var usertype = window.localStorage.getItem('usertype');
+    if(usertype=='USR'){
+      setDefaultDisplay(<CurrentBudgetAllotment/>)
+    }
+    else if(usertype=='ACTG'){
+      setDefaultDisplay(<AcctObrView/>)
+    }
+    else if(usertype=='BDGT'){
+      setDefaultDisplay(<ObrListBudget/>)
+    }
+    setReducer();
+  },[reducer]);
    
   return (
 
     <div className='flex flex-col gap-2'>
-      <DashboardStatsGrid/>
+      {/* <DashboardStatsGrid/> */}
       {/* <div className='flex flex-row gap-2 w-full'>
         <MonthlyBudgetUtilizationChart />
         <OfficeBudgetChart/>
       </div> */}
       <div className='flex flex-row gap-2 w-full'>
-     
-        <CurrentBudgetAllotment/>
+        {defaultDisplay}
+        {/* <CurrentBudgetAllotment/> */}
       </div>
 
       <div>
