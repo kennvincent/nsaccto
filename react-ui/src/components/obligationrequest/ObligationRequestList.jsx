@@ -37,6 +37,7 @@ export default function OBRList() {
                 <th>Particulars</th>
                 <th>Status</th>
                 <th>&nbsp;</th>
+                <th>&nbsp;</th>
               </tr>
             </thead>
           <tbody>
@@ -48,6 +49,7 @@ export default function OBRList() {
                 <td className='p-2'>{obr.officedesc}</td>
                 <td className='p-2'>{obr.particulars}</td>
                 <td className='p-2'>{obr.obrstatus}</td>
+                <td className='p-2'><a href="#" onClick={(e) => onClickPreview(e,{id:obr.id})}>Approve</a></td>
                 <td className='p-2'><a href="#" onClick={(e) => onClickPreview(e,{id:obr.id})}>Print Preview</a></td>
 
               </tr>

@@ -18,6 +18,7 @@ import AcctObrViewSelected from "./components/accounting/AcctObrViewSelected";
 import AcctLogin from "./components/AcctLogin";
 import ImportBudget from "./components/budget/ImportBudget";
 import DisplayBudgets from "./components/budget/DisplayBudgets";
+import DashboardAccounting from "./components/DashboardAccounting";
 
 const router = createBrowserRouter([
     {
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
             path:'/dashboard',
             element:<Dashboard />
             },
-           {
+            {
+            path:'/dashboardaccounting',
+            element:<DashboardAccounting />
+            },
+            {
             path:'/offices',
             element:<Office />
            },

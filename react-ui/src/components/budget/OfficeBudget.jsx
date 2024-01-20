@@ -55,8 +55,10 @@ import AugmentBudget from './AugmentBudget';
         <td className='py-1 text-right'>{Number(budget.proposedamount).toLocaleString()}</td>
         <td className='py-1 text-right'>0.00</td>
         <td className='py-1 text-right'>0.00</td>
-        <td className='py-1'>{Number(budget.utilized).toLocaleString()}</td>
-        <td className='py-1'>{Number(budget.remaining).toLocaleString()}</td>
+        <td className='py-1 text-right'>{Number(budget.proposedamount).toLocaleString()}</td>
+        <td className='py-1 text-right'>0.00</td>
+        <td className='py-1 text-right'>0.00</td>
+        <td className='py-1 text-right'>{Number(budget.proposedamount).toLocaleString()}</td>
         {/* <td className='py-1'><button className='btn btn-primary btn-sm'>Edit</button></td>
         <td className='py-1'><button className='btn btn-warning btn-sm'>Transfer</button></td>
         <td className='py-1'><button className='btn btn-success btn-sm' onClick={handleShowAugmentBudget}>Augment</button></td> */}
@@ -74,13 +76,14 @@ import AugmentBudget from './AugmentBudget';
         <thead className='bg-slate-200'>
           <tr>
             <th className='w-[40rem] py-2'>Particulars</th>
-            <th className='w-[10rem] py-2'>Account code</th>
-            <th className='w-[15rem] py-2'>Appropriation</th>
-            <th className='w-[15rem] py-2'>Augmentation</th>
-            <th className='w-[15rem] py-2'>Transferred</th>
-            <th className='w-[15rem] py-2'>Total Amount</th>
-            <th className='w-[15rem] py-2'>Utilized</th>
-            <th className='w-[15rem] py-2'>Remaining</th>
+            <th className='w-[12rem] py-2'>Account code</th>
+            <th className='w-[15rem] py-2 text-right'>Appropriation</th>
+            <th className='w-[15rem] py-2 text-right'>Augmentation</th>
+            <th className='w-[15rem] py-2 text-right'>Realignment</th>
+            <th className='w-[15rem] py-2 text-right'>Total <br />Appropriation</th>
+            <th className='w-[15rem] py-2 text-right'>Obligated</th>
+            <th className='w-[15rem] py-2 text-right'>Utilized</th>
+            <th className='w-[15rem] py-2 text-right'>Balance</th>
             {/* <th className='w-fit py-2'>&nbsp;</th>
             <th className='w-fit py-2'>&nbsp;</th>
             <th className='w-fit py-2'>&nbsp;</th> */}

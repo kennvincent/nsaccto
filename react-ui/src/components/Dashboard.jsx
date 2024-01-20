@@ -12,19 +12,7 @@ export default function Dashboard() {
   const [reducer,setReducer] = useReducer(x => x + 1,0);
   const [defaultDisplay,setDefaultDisplay] =useState();
   
-  useEffect(()=>{
-    var usertype = window.localStorage.getItem('usertype');
-    if(usertype=='USR'){
-      setDefaultDisplay(<CurrentBudgetAllotment/>)
-    }
-    else if(usertype=='ACTG'){
-      setDefaultDisplay(<AcctObrView/>)
-    }
-    else if(usertype=='BDGT'){
-      setDefaultDisplay(<ObrListBudget/>)
-    }
-    setReducer();
-  },[reducer]);
+
    
   return (
 

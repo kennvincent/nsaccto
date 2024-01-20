@@ -54,11 +54,12 @@ export default function handleLogin() {
                 window.localStorage.setItem('usertype',res.data.office[0].usertype);
                 window.localStorage.setItem('officename',res.data.office[0].officename);
               });
+
               navigate("/dashboard");
+             
             }else{
               alert(res.data.login);
             }
-          
             
           });
         

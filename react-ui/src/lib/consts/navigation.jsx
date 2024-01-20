@@ -39,7 +39,7 @@ export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
 	},
 	{
 		key: 'acctobrview',
-		label: 'OBR Accounting View',
+		label: 'Obligation Request',
 		path: '/acctobrview',
 		icon: <HiOutlineDocumentText />,
 	},
@@ -63,19 +63,19 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		key: 'officebudget',
 		label: 'Office Budgets',
 		path: '/officebudget',
-		icon: <HiDocumentReport />
+		icon: <HiDocumentReport />,
 	},
 	{
 		key: 'obrcreate',
 		label: 'Create OBR',
 		path: '/obrcreate',
-		icon: <HiDocumentReport />
+		icon: <HiDocumentReport />,
 	},
 	{
 		key: 'obrlist',
 		label: 'OBR List',
 		path: '/obrlist',
-		icon: <HiOutlineDocumentText />
+		icon: <HiOutlineDocumentText />,
 	},
 	
 ]
