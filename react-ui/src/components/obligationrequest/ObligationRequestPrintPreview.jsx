@@ -28,6 +28,7 @@ export default function ObligationRequestPrintPreview() {
 
     useEffect(()=>{
         const obr_id = window.localStorage.getItem('obr_id');
+        console.log(obr_id);
     
         axios.get(`http://127.0.0.1:8000/api/obligationrequest/printpreview/${obr_id}`).then(res=>{
             setPayee(res.data.obr[0].payee);

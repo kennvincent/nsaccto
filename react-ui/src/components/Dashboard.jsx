@@ -6,7 +6,7 @@ import CurrentBudgetAllotment from './CurrentBudgetAllotment'
 import axios from 'axios'
 import AcctObrView from './accounting/AcctObrView'
 import ShowObrBudget from './obligationrequest/ShowObrBudget'
-import ObrListBudget from './ObrListBudget'
+import ObrListBudget from './obligationrequest/ObrListBudget'
 export default function Dashboard() {
 
   const [reducer,setReducer] = useReducer(x => x + 1,0);

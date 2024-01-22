@@ -65,17 +65,19 @@ export default function CreateObligationRequest() {
 
        
         axios.post(`http://127.0.0.1:8000/api/obligationrequest`,obr).then(res=>{
-            if(res.data.obr_id>0){
-                window.localStorage.setItem('obr_id',res.data.obr_id);
-                alert('Obligation Requested created!!!')
-                axios.delete(`http://127.0.0.1:8000/api/tempobligationrequest/${officeid}`).then(res =>{
+            
+                const obr_id = res.data.obr_id;
+                if(obr_id>0){
+                    axios.delete(`http://127.0.0.1:8000/api/tempobligationrequest/${officeid}`).then(res =>{
                     //alert(res.data.message);
-                })
+                    })
                 
-                setDetails([]);
-                setTotal(0);
-                navigate('/obrprintpreview');
-            }
+                    setDetails([]);
+                    setTotal(0);
+                    navigate('/obrprintpreview');
+                    alert('Obligation Request have been created');
+                }
+                
           
         }).catch(function(error){ 
             if(error.response){

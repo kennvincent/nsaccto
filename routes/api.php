@@ -60,6 +60,10 @@ Route::get('obligationrequest/budgetview',[ObligationRequestController::class,'b
 Route::get('obligationrequest/budgetview/selected/{id}',[ObligationRequestController::class,'viewobr']);
 Route::get('obligationrequest/budgetview/selected/sum/{id}',[ObligationRequestController::class,'sum']);
 Route::get('obligationrequest/budgetview/selected/approve/{id}',[ObligationRequestController::class,'approve']);
+
+Route::get('obligationrequest/officeapprove/{id}',[ObligationRequestController::class,'officeapprove']);
+Route::get('obligationrequest/officecancel/{id}',[ObligationRequestController::class,'officecancel']);
+
 Route::get('obligationrequest/budgetview/selected/reject/{id}',[ObligationRequestController::class,'reject']);
 Route::get('obligationrequest/printpreview/{id}',[ObligationRequestController::class,'printpreview']);
 Route::get('obligationrequest/obrsum/{id}',[ObligationRequestController::class,'obrsum']);

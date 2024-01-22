@@ -17,8 +17,14 @@ export const DASHBOARD_BUDGET_SIDEBAR_LINKS =[
 	
 	{
 		key: 'obrlistbudget',
-		label: 'OBR List Budget View',
+		label: 'Obligated OBR',
 		path: '/obrlistbudget',
+		icon: <HiOutlineDocumentText />
+	},
+	{
+		key: 'approvedobrlistbudget',
+		label: 'Approved OBR',
+		path: '/approvedobrlistbudget',
 		icon: <HiOutlineDocumentText />
 	},
 ]

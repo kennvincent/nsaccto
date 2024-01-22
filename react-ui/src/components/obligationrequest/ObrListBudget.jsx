@@ -8,7 +8,6 @@ export default function ObrListBudget() {
     
     useEffect(()=>{
       axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview`).then(res =>{
-        console.log(res.data.obrlist);
         setObrList(res.data.obrlist);
       });
     },[]);
@@ -32,19 +31,23 @@ export default function ObrListBudget() {
               <th>Responsibility Center</th>
               <th>Office Description</th>
               <th>Particulars</th>
+              <th>Total Amount</th>
               <th>Status</th>
               <th>|||</th>
             </tr>
           </thead>
           <tbody>
             {obrlist.map((obr)=>(
+
+              obr.obrstatus ==='Obligated' && 
               <tr key={obr.id} className='p-0 m-0 border hover:bg-slate-100'> 
                 <td className='py-1'>{obr.payee}</td>
                 <td className='py-1'>{obr.officecode}</td>
                 <td className='py-1'>{obr.officename}</td>
                 <td className='py-1'>{obr.officedesc}</td>
                 <td className='py-1'>{obr.particulars}</td>
-                <td className='py-1'>{obr.obrstatus}</td>
+                <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
+                <td className='py-1'>{obr.obrstatus ==='Obligated' && 'Obligated'}</td>
                 <td className='py-1'><button className='btn btn-success btn-sm' onClick={()=>handleShowOBR(obr.id)}>View</button></td>
               </tr>
             ))}

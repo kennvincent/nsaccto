@@ -30,8 +30,9 @@ export default function ShowObrBudget() {
  },[]);
 
  const handleApproveObr = ()=>{
+ 
     axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/approve/${location.state.obrid}`).then(res=>{
-        alert(res.data.message)
+        alert('here: ' + res.data.message)
     });
  }
 

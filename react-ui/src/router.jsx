@@ -10,7 +10,7 @@ import Accounts from "./components/accounts/Accounts";
 import OfficeBudget from "./components/budget/OfficeBudget";
 import CreateObligationRequest from "./components/obligationrequest/CreateObligationRequest";
 import ShowObrBudget from "./components/obligationrequest/ShowObrBudget";
-import ObrListBudget from "./components/ObrListBudget";
+import ObrListBudget from "./components/obligationrequest/ObrListBudget";
 import RegisterUser from "./components/users/RegisterUser";
 import ObligationRequestPrintPreview from "./components/obligationrequest/ObligationRequestPrintPreview";
 import AcctObrView from "./components/accounting/AcctObrView";
@@ -19,6 +19,7 @@ import AcctLogin from "./components/AcctLogin";
 import ImportBudget from "./components/budget/ImportBudget";
 import DisplayBudgets from "./components/budget/DisplayBudgets";
 import DashboardAccounting from "./components/DashboardAccounting";
+import ApprovedObrListBudget  from "./components/obligationrequest/ApprovedObrListBudget";
 
 const router = createBrowserRouter([
     {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
                path:'/obrlistbudget',
                element:<ObrListBudget/> 
            },
+           {
+            path:'/approvedobrlistbudget',
+            element:<ApprovedObrListBudget/> 
+            },
            {
                 path:'/showobrbudget',
                 element:<ShowObrBudget/>
