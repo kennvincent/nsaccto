@@ -71,8 +71,8 @@ Route::get('obligationrequest/obrsum/{id}',[ObligationRequestController::class,'
 Route::get('obligationrequest/accountingview',[ObligationRequestController::class,'accountingviewlist']);
 
 Route::post('register',[RegisterController::class,'register']);
-Route::post('login',[LoginController::class,'login']);
-Route::get('login/{username}',[LoginController::class,'currentuser']);
+Route::post('https://api.nsaccto.com/login',[LoginController::class,'login']);
+Route::get('https://api.nsaccto.com/login/{username}',[LoginController::class,'currentuser']);
 
 Route::post('import',[BudgetImportController::class,'import']);
 Route::get('budgets',[BudgetImportController::class,'display']);

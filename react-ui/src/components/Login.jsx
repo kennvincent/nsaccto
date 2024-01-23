@@ -46,12 +46,12 @@ export default function handleLogin() {
 
   try{
         // await axios.post(`http://127.0.0.1:8000/api/login`,userlogin).then(res=>{
-          await axios.post(`api.nsaccto.com/login`,userlogin).then(res=>{
+          await axios.post(`https://api.nsaccto.com/login`,userlogin).then(res=>{
             if(res.data.login=='success'){
               window.localStorage.setItem('user',userlogin.username)
               window.localStorage.setItem('isLoggedIn',true)
 
-              axios.get(`api.nsaccto.com/login/${userlogin.username}`).then(res=>{
+              axios.get(`https://api.nsaccto.com/login/${userlogin.username}`).then(res=>{
                 window.localStorage.setItem('usertype',res.data.office[0].usertype);
                 window.localStorage.setItem('officename',res.data.office[0].officename);
               });
