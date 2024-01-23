@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Budget;
+use App\Models\Office;
 
 class BudgetController extends Controller
 {
@@ -36,5 +37,10 @@ class BudgetController extends Controller
         ->where('id',$id)
         ->get();
         return response()->json(['account'=>$accountcode]);
+    }
+
+    public function samplebudget(){
+        $budgets = Office::all();
+        return response()->json(['budgets'=>$budgets]);
     }
 }

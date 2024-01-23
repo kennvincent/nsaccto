@@ -80,3 +80,5 @@ Route::get('budgets',[BudgetImportController::class,'display']);
 Route::get('displayofficebudget/{officename}',[BudgetController::class,'officebudget']);
 Route::get('getaccounts/{officename}',[BudgetController::class,'accountsperoffice']);
 Route::get('getaccount/{id}',[BudgetController::class,'getaccount']);
+
+Route::get('budget/view',[BudgetController::class,'samplebudget']);
