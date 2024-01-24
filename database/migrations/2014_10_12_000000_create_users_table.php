@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            //UPDATE 01/24/2023 1:51PM
             $table->id();
             $table->string('username');
             $table->string('password');
