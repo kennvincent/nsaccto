@@ -28,10 +28,12 @@ export default function MainLayout() {
       {usertype ==="USR" &&  <Sidebar/>}
       {usertype ==="ACTG" && <AccountingSidebar/>}
       {usertype ==="BDGT" && <BudgetSidebar/>}
+
       <div className='flex-1'>
         <Header/>
         <div className='p-4'><Outlet></Outlet></div>
       </div>
+      
     </div>
   )
 }

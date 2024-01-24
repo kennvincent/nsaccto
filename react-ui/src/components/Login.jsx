@@ -2,6 +2,7 @@ import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from "../api/axios";
+import axiosClient from '../axios-client';
 
 
 export default function handleLogin() {
@@ -45,20 +46,25 @@ export default function handleLogin() {
   //   alert(res.data.message);
     
   // });
-  console.log(userlogin);
+
   try{
         //update 01/24/2024 1:46 PM
         // await axios.post(`http://127.0.0.1:8000/api/login`,userlogin).then(res=>{
-          await axios.post(`https://api.vincentsabelo.com/api/login`,userlogin).then(res=>{
+         axiosClient.post(`/login`,userlogin).then(res=>{
+          // await axios.post(`https://api.vincentsabelo.com/api/login`,userlogin).then(res=>{
             if(res.data.login=='success'){
               window.localStorage.setItem('user',userlogin.username)
               window.localStorage.setItem('isLoggedIn',true)
 
-              // axios.get(`http://127.0.0.1:8000/api/login/${userlogin.username}`).then(res=>{
-                axios.get(`https://api.vincentsabelao.com/api/login/${userlogin.username}`).then(res=>{
+              axiosClient.get(`/login/${userlogin.username}`).then(res=>{
                 window.localStorage.setItem('usertype',res.data.office[0].usertype);
                 window.localStorage.setItem('officename',res.data.office[0].officename);
               });
+              // axios.get(`http://127.0.0.1:8000/api/login/${userlogin.username}`).then(res=>{
+              //   axios.get(`https://api.vincentsabelao.com/api/login/${userlogin.username}`).then(res=>{
+              //   window.localStorage.setItem('usertype',res.data.office[0].usertype);
+              //   window.localStorage.setItem('officename',res.data.office[0].officename);
+              // });
 
               navigate("/dashboard");
              
