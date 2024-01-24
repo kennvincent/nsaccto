@@ -9,6 +9,7 @@ export default function handleLogin() {
   const [useraccount,setUserAccount] = useState([]);
   const navigate = useNavigate();
 
+ 
   const logged = window.localStorage.getItem('isLoggedIn');
   useEffect(()=>{
     if(logged){
@@ -48,9 +49,14 @@ export default function handleLogin() {
   // });
 
   try{
+
+    const cors = require("cors");
+    app.use(cors())
+        alert('Login');
         //update 01/24/2024 1:46 PM
         // await axios.post(`http://127.0.0.1:8000/api/login`,userlogin).then(res=>{
          axiosClient.post(`/login`,userlogin).then(res=>{
+          console.log(res.data.login);
           // await axios.post(`https://api.vincentsabelo.com/api/login`,userlogin).then(res=>{
             if(res.data.login=='success'){
               window.localStorage.setItem('user',userlogin.username)
