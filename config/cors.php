@@ -20,7 +20,7 @@ return [
     'allowed_methods' => ['*'],
 
     // 'allowed_origins' => [env('FRONTEND_URL', 'http://127.0.0.1:3000')],
-    'allowed_origins' => [env('FRONTEND_URL', 'https://vincentsabelao.com/')],
+    'allowed_origins' => [env('FRONTEND_URL', 'https://nsaccto.com/')],
 
     'allowed_origins_patterns' => [],
 
