@@ -1,3 +1,5 @@
+// Office user view
+
 import React, { useEffect, useState,useReducer } from 'react'
 import { useLocation } from 'react-router-dom'
 import AllocateOfficeBudget from './AllocateOfficeBudget';
@@ -29,20 +31,27 @@ import axiosClient from '../../axios-client';
     setShowAugment(false);
   }
 
-
-  const [budgets,setBudgets] = useState([]);
-  const [reducer,setReducer] = useReducer(x => x + 1,0);
-
-
   const [officename,setOfficeName] = useState();
+  const [budgets,setBudgets] = useState([]);
+  const [currentPage,setCurrentPage] = useState(2);
+  const [postsPerPage,setPostPerPage]=useState(20);
+
+  
   useEffect(()=>{
     var user = window.localStorage.getItem('user');
     var officename = window.localStorage.getItem('officename');
+    setOfficeName(officename);
     axiosClient.get(`/displayofficebudget/${officename}`).then(res=>{
       setBudgets(res.data.budgets);
     });
 
 
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts  = budgets.slice(firstPostIndex,lastPostIndex);
+
+  console.log(firstPostIndex,lastPostIndex);
+    
 
   },[]);
 
@@ -68,6 +77,7 @@ import axiosClient from '../../axios-client';
 
   return (
     <div className='p-2 w-full bg-white'>
+        <h4>Office: {officename}</h4>
       <div className='flex relative '>
         {/* <h4>Office : {location.state.office}</h4> <button className='btn btn-primary btn-sm right-0 
         absolute' onClick={handleShowAllocateBudget}>Add Budget</button> */}
@@ -75,7 +85,7 @@ import axiosClient from '../../axios-client';
       <table className='border mt-2'>
         <thead className='bg-slate-200'>
           <tr>
-            <th className='w-[40rem] py-2'>Particulars</th>
+            <th className='w-[40rem] py-2'>Particular</th>
             <th className='w-[12rem] py-2'>Account code</th>
             <th className='w-[15rem] py-2 text-right'>Appropriation</th>
             <th className='w-[15rem] py-2 text-right'>Augmentation</th>

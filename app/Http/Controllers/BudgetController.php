@@ -11,7 +11,8 @@ class BudgetController extends Controller
 {
     public function officebudget($officename){
         $budgets = DB::table('budgets')
-                    ->select('particulars',
+                    ->select('id',
+                            'particulars',
                              'accountcode',
                              'proposedamount',
                              'accountclassification',
