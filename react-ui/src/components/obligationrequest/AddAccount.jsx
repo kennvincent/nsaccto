@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { vi } from 'date-fns/locale';
 import React, { useEffect, useState } from 'react'
+import axiosClient from '../../axios-client';
 
 export default function AddParticulars({visible,onClose,onAdd,passParticulars,passAmount,passArrayData}) {
 const [particulars,setParticulars] = useState("");
@@ -20,7 +21,7 @@ const handleInputAmount=(e)=>{
 useEffect(()=>{
     var officename = window.localStorage.getItem('officename');
    
-    axios.get(`http://127.0.0.1:8000/api/getaccounts/${officename}`).then(res=>{
+    axiosClient.get(`/getaccounts/${officename}`).then(res=>{
         setAccounts(res.data.accounts);
     })
  

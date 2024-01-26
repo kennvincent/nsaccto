@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from "../api/axios";
 import axiosClient from '../axios-client';
-
+import cors from "cors";
 
 export default function handleLogin() {
   const [useraccount,setUserAccount] = useState([]);
@@ -42,6 +42,7 @@ export default function handleLogin() {
 
    
 
+
  const handleLogin =  async()=>{
   // axios.post(`http://127.0.0.1:8000/api/login`,userlogin).then(res=>{
   //   alert(res.data.message);
@@ -49,30 +50,42 @@ export default function handleLogin() {
   // });
 
   try{
-
-    const cors = require("cors");
-    app.use(cors())
-        alert('Login');
+    
         //update 01/24/2024 1:46 PM
         // await axios.post(`http://127.0.0.1:8000/api/login`,userlogin).then(res=>{
          axiosClient.post(`/login`,userlogin).then(res=>{
-          console.log(res.data.login);
           // await axios.post(`https://api.vincentsabelo.com/api/login`,userlogin).then(res=>{
             if(res.data.login=='success'){
               window.localStorage.setItem('user',userlogin.username)
               window.localStorage.setItem('isLoggedIn',true)
+              
+              // const response =  axiosClient(`/login/${userlogin.username}`);
+              // console.log(response);
+
+              // window.localStorage.setItem('usertype',response.data.office[0].usertype);
+              // window.localStorage.setItem('officename',response.data.office[0].officename);
+              
+              // window.localStorage.setItem('usertype','USR');
+              // window.localStorage.setItem('officename','PGO 24');
 
               axiosClient.get(`/login/${userlogin.username}`).then(res=>{
                 window.localStorage.setItem('usertype',res.data.office[0].usertype);
                 window.localStorage.setItem('officename',res.data.office[0].officename);
               });
+
+             
+        
+        // const result = await response.json();
+        
+        
+
               // axios.get(`http://127.0.0.1:8000/api/login/${userlogin.username}`).then(res=>{
               //   axios.get(`https://api.vincentsabelao.com/api/login/${userlogin.username}`).then(res=>{
               //   window.localStorage.setItem('usertype',res.data.office[0].usertype);
               //   window.localStorage.setItem('officename',res.data.office[0].officename);
               // });
 
-              navigate("/dashboard");
+             navigate("/dashboard");
              
             }else{
               alert(res.data.login);

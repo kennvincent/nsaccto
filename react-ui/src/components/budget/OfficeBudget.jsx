@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import AllocateOfficeBudget from './AllocateOfficeBudget';
 import axios from 'axios';
 import AugmentBudget from './AugmentBudget';
+import axiosClient from '../../axios-client';
 
 
   export default function OfficeBudget() {
@@ -37,8 +38,7 @@ import AugmentBudget from './AugmentBudget';
   useEffect(()=>{
     var user = window.localStorage.getItem('user');
     var officename = window.localStorage.getItem('officename');
-    
-    axios.get(`http://127.0.0.1:8000/api/displayofficebudget/${officename}`).then(res=>{
+    axiosClient.get(`/displayofficebudget/${officename}`).then(res=>{
       setBudgets(res.data.budgets);
     });
 

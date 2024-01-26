@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import axiosClient from '../../axios-client';
 
 export default function EditOffice({visible,onClose,data}) {
 
@@ -9,7 +10,7 @@ export default function EditOffice({visible,onClose,data}) {
     
 useEffect(()=>{
 
-  axios.get(`http://127.0.0.1:8000/api/office/${data.id}`).then(res=>{
+  axiosClient.get(`/office/${data.id}`).then(res=>{
     console.log(res.data.office);
     setOffice(res.data.office);
     }).catch(function(error){

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import axiosClient from "../../axios-client";
 
 export default function ImportBudget() {
     const [selectedFile,setSelectedFile] =useState([]);
@@ -14,7 +15,7 @@ export default function ImportBudget() {
     const onClickUpload = ()=>{
 
         
-        axios.post(`http://127.0.0.1:8000/api/import`,file).then(res =>{
+        axiosClient.post(`/import`,file).then(res =>{
            alert(res.data.message);
         });
     }

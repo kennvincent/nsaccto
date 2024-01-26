@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios'
+import axiosClient from '../../axios-client';
 
 
 export default function DisplayBudgets() {
@@ -7,7 +8,7 @@ export default function DisplayBudgets() {
     const [budgets,setBudgets] = useState([]);
     
     useEffect(()=>{
-        axios.get(`http://127.0.0.1:8000/api/budgets`).then(res =>{
+        axiosClient.get(`/budgets`).then(res =>{
             setBudgets(res.data.budgets);
             
         },[]);

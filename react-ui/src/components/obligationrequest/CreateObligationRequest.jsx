@@ -3,6 +3,7 @@ import { useState,useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AddParticulars from './AddAccount';
+import axiosClient from '../../axios-client';
 
 
 export default function CreateObligationRequest() {
@@ -64,11 +65,11 @@ export default function CreateObligationRequest() {
         };
 
        
-        axios.post(`http://127.0.0.1:8000/api/obligationrequest`,obr).then(res=>{
+        axiosClient.post(`/obligationrequest`,obr).then(res=>{
             
                 const obr_id = res.data.obr_id;
                 if(obr_id>0){
-                    axios.delete(`http://127.0.0.1:8000/api/tempobligationrequest/${officeid}`).then(res =>{
+                    axiosClient.delete(`/tempobligationrequest/${officeid}`).then(res =>{
                     //alert(res.data.message);
                     })
                 
@@ -107,13 +108,13 @@ export default function CreateObligationRequest() {
           }
 
 
-            axios.post(`http://127.0.0.1:8000/api/tempobligationrequest`,obr).then(res =>{
+            axiosClient.post(`/tempobligationrequest`,obr).then(res =>{
             
-            axios.get(`http://127.0.0.1:8000/api/tempobligationrequest/${officeid}`).then(res =>{
+            axiosClient.get(`/tempobligationrequest/${officeid}`).then(res =>{
                 setDetails(res.data.obr)
             });
 
-            axios.get(`http://127.0.0.1:8000/api/tempobligationrequest/sum/${officeid}`).then(res =>{
+            axiosClient.get(`/tempobligationrequest/sum/${officeid}`).then(res =>{
                 ///var temptotal = res.data[0];
                 setTotal(res.data[0].temptotal)
             });
@@ -143,7 +144,7 @@ export default function CreateObligationRequest() {
         setUser(window.localStorage.getItem('user'));
         const fetchData = async()=>{
             try{
-                await axios.get(`http://127.0.0.1:8000/api/login/${window.localStorage.getItem('user')}`).then(res =>{
+                await axiosClient.get(`/login/${window.localStorage.getItem('user')}`).then(res =>{
                     setOfficeId(res.data.office[0].office_id);
                     setOfficeCode(res.data.office[0].officecode);
                     setOfficeofficeDesc(res.data.office[0].officedesc);

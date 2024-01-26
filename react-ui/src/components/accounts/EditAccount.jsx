@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Link, useParams} from 'react-router-dom';
 import axios from 'axios';
+import axiosClient from '../../axios-client';
 
 
 export default function EditAccount({visible,onClose,data}) {
@@ -13,7 +14,7 @@ const [account,setAccount] = useState({});
 
 useEffect(()=>{
 
-  axios.get(`http://127.0.0.1:8000/api/account/${data.id}`).then(res=>{
+  axiosClient.get(`/account/${data.id}`).then(res=>{
         setAccount(res.data.account);
         console.log(account);
     }).catch(function(error){

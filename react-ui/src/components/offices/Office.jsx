@@ -4,6 +4,7 @@ import AddNewOffice from './AddNewOffice';
 import EditOffice from './EditOffice';
 
 import { useNavigate,Link } from 'react-router-dom';
+import axiosClient from '../../axios-client';
 
 export default function Office() {
   
@@ -44,7 +45,7 @@ export default function Office() {
   
   useEffect(()=>{
 
-    axios.get(`http://127.0.0.1:8000/api/offices`).then(res=>{
+    axiosClient.get(`/offices`).then(res=>{
       setOffices(res.data.offices);
     });
   },[reducer]);

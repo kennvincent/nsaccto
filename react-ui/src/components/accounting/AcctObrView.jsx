@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate,Link } from 'react-router-dom';
+import axiosClient from '../../axios-client';
 
 export default function AcctObrView() {
   const [obrlist,setObrList] = useState([]);
     const navigate = useNavigate();
     
     useEffect(()=>{
-      axios.get(`http://127.0.0.1:8000/api/obligationrequest/accountingview`).then(res =>{
+      axiosClient.get(`/obligationrequest/accountingview`).then(res =>{
         console.log(res.data.obrlist);
         setObrList(res.data.obrlist);
       });

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import axiosClient from '../../axios-client';
 
 
 export default function OBRList() {
@@ -14,7 +15,7 @@ export default function OBRList() {
 
 
   const displayOBR = ()=>{
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest`).then(res =>{
+    axiosClient.get(`/obligationrequest`).then(res =>{
       // console.log(res.data.obrlist);
       setObrList(res.data.obrlist);
     });
@@ -29,7 +30,7 @@ export default function OBRList() {
     e.preventDefault();
     const obrid = obr['id'];
   
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest/officeapprove/${obrid}`).then(res =>{
+    axiosClient.get(`/obligationrequest/officeapprove/${obrid}`).then(res =>{
       displayOBR();
       alert(res.data.message);
     })
@@ -38,7 +39,7 @@ export default function OBRList() {
   const onClickCancel = (e,obr)=>{
     e.preventDefault();
     const obrid = obr['id'];
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest/officecancel/${obrid}`).then(res =>{
+    axiosClient.get(`/obligationrequest/officecancel/${obrid}`).then(res =>{
       displayOBR();
       alert(res.data.message);
     })

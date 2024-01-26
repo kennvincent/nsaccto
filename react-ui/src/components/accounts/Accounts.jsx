@@ -4,6 +4,7 @@ import { useState,useEffect } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import EditAccount from './editaccount';
 import AddNewAccount from './AddNewAccount';
+import axiosClient from '../../axios-client';
 
 export default function Accounts() {
 
@@ -43,7 +44,7 @@ export default function Accounts() {
 
     useEffect(()=>{
 
-      axios.get(`http://127.0.0.1:8000/api/accounts`).then(res=>{
+      axiosClient.get(`/accounts`).then(res=>{
           setAccounts(res.data.accounts);
          
       });

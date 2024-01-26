@@ -22,10 +22,10 @@ class User extends Authenticatable
         'password',
         'lastname',
         'firstname',
+        'firstname',
         'usertype',
         'email',
-        'office_id',
-        'office'
+        'office_id'
        
     ];
 

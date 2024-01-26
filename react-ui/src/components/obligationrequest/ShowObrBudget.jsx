@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios';
+import axiosClient from '../../axios-client';
 
 export default function ShowObrBudget() {
  const location = useLocation();
@@ -20,24 +21,24 @@ export default function ShowObrBudget() {
 
 
  useEffect(()=>{
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
+    axiosClient.get(`/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
         setObr(res.data.obr);
       });
 
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/sum/${location.state.obrid}`).then(res=>{
+      axiosClient.get(`/obligationrequest/budgetview/selected/sum/${location.state.obrid}`).then(res=>{
         setObrTotal(res.data[0].obrtotal)
       });
  },[]);
 
  const handleApproveObr = ()=>{
  
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/approve/${location.state.obrid}`).then(res=>{
+    axiosClient.get(`/obligationrequest/budgetview/selected/approve/${location.state.obrid}`).then(res=>{
         alert('here: ' + res.data.message)
     });
  }
 
  const handleRejectObr = ()=>{
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/reject/${location.state.obrid}`).then(res=>{
+    axiosClient.get(`/obligationrequest/budgetview/selected/reject/${location.state.obrid}`).then(res=>{
         alert(res.data.message)
     });
  }

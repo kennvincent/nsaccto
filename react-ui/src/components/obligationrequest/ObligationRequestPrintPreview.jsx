@@ -4,6 +4,7 @@ import axios from 'axios'
 import { LuPrinter } from "react-icons/lu";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
+import axiosClient from '../../axios-client';
 export default function ObligationRequestPrintPreview() {
 
     
@@ -30,7 +31,7 @@ export default function ObligationRequestPrintPreview() {
         const obr_id = window.localStorage.getItem('obr_id');
         console.log(obr_id);
     
-        axios.get(`http://127.0.0.1:8000/api/obligationrequest/printpreview/${obr_id}`).then(res=>{
+        axiosClient.get(`/obligationrequest/printpreview/${obr_id}`).then(res=>{
             setPayee(res.data.obr[0].payee);
             setOfficeDesc(res.data.obr[0].officedesc);
             setAddress(res.data.obr[0].officeaddress);
@@ -40,7 +41,7 @@ export default function ObligationRequestPrintPreview() {
             setDetails(res.data.obr);
         })
 
-        axios.get(`http://127.0.0.1:8000/api/obligationrequest/obrsum/${obr_id}`).then(res =>{
+        axiosClient.get(`/obligationrequest/obrsum/${obr_id}`).then(res =>{
             ///var temptotal = res.data[0];
             setTotal(res.data[0].obrtotal)
         });

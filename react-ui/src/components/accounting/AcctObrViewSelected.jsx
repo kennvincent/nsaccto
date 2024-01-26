@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios';
+import axiosClient from '../../axios-client';
 
 export default function AcctObrViewSelected() {
   const location = useLocation();
@@ -17,7 +18,7 @@ export default function AcctObrViewSelected() {
   let obrstatus="";
 
   useEffect(()=>{
-    axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
+    axiosClient.get(`/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
 
         setObr(res.data.obr);
       

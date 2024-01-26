@@ -24,7 +24,7 @@ export default function AddNewOffice({visible,onClose}) {
     
       
         
-        axios.post(`http://127.0.0.1:8000/api/office`,newOffice).then(res =>{
+        axiosClient.post(`/office`,newOffice).then(res =>{
             alert(res.data.message);
         })
         .catch(function(error){ 

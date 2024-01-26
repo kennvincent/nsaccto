@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate,Link } from 'react-router-dom';
+import axiosClient from '../../axios-client';
 
 export default function ObrListBudget() {
     const [obrlist,setObrList] = useState([]);
     const navigate = useNavigate();
     
     useEffect(()=>{
-      axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview`).then(res =>{
+      axiosClient.get(`/obligationrequest/budgetview`).then(res =>{
         setObrList(res.data.obrlist);
       });
     },[]);

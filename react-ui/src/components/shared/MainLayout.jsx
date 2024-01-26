@@ -20,7 +20,7 @@ export default function MainLayout() {
   setTimeout(()=>{
     setUserType(window.localStorage.getItem('usertype'))
 
-  },100)
+  },1000)
 
   return (
     <div  className="flex flex-row bg-neutral-100 h-screen w-screen overflow-hidden">

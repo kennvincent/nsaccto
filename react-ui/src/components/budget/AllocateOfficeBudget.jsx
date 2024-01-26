@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios';
+import axiosClient from '../../axios-client';
 
 export default function AllocateOfficeBudget({visible,onClose,data,officeid}) {
 
@@ -10,7 +11,7 @@ export default function AllocateOfficeBudget({visible,onClose,data,officeid}) {
 
     useEffect(()=>{
 
-        axios.get(`http://127.0.0.1:8000/api/accounts`).then(res=>{
+        axiosClient.get(`/accounts`).then(res=>{
             setAccounts(res.data.accounts);
         });
         

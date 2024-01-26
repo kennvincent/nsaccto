@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Link, useParams} from 'react-router-dom';
 import axios from 'axios';
+import axiosClient from '../../axios-client';
 
 
 export default function AddNewAccount({visible,onClose}) {
@@ -22,7 +23,7 @@ export default function AddNewAccount({visible,onClose}) {
 
   
     
-    axios.post(`http://127.0.0.1:8000/api/account`,newAccount).then(res =>{
+    axiosClient.post(`/account`,newAccount).then(res =>{
         alert(res.data.message);
     })
     .catch(function(error){ 

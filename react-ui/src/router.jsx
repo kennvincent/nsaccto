@@ -20,11 +20,14 @@ import ImportBudget from "./components/budget/ImportBudget";
 import DisplayBudgets from "./components/budget/DisplayBudgets";
 import DashboardAccounting from "./components/DashboardAccounting";
 import ApprovedObrListBudget  from "./components/obligationrequest/ApprovedObrListBudget";
+import DisplayOffices from "./components/offices/DisplayOffices";
 
 const router = createBrowserRouter([
     {
         path:'/',
         element:<Login/>
+        // path:'/',
+        // element:<DisplayOffices/>
     },
     {
         path:'/obrprintpreview',
