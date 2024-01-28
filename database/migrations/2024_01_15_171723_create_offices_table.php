@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('officecode');
             $table->string('officename');
             $table->string('officedesc');
+            $table->string('authorizedpersonnel');
+            $table->string('position');
             $table->timestamps();
         });
     }
