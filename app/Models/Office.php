@@ -11,6 +11,10 @@ class Office extends Model
     protected $fillable = [
         'officecode',
         'officename',
-        'officedesc'
+        'officedesc',
+        'officeaddress',
+        'authorizedpersonnel',
+        'position'
+
     ];
 }

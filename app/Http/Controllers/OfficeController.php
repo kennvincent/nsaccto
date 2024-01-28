@@ -33,6 +33,9 @@ class OfficeController extends Controller
             'officecode' => 'required',
             'officename' => 'required',
             'officedesc' => 'required',
+            'officeaddress' => 'required',
+            'authorizedpersonnel' =>'required',
+            'position' => 'required'
         ]);
         
         if($validator->fails()){
@@ -52,7 +55,9 @@ class OfficeController extends Controller
                 $office->officecode = $request->officecode;
                 $office->officename = $request->officename;
                 $office->officedesc = $request->officedesc;
-                
+                $office->officeaddress = $request->officeaddress;
+                $office->authorizedpersonnel = $request->authorizedpersonnel;
+                $office->position = $request->position;
                 $office->save();
 
                 if($office){
@@ -87,6 +92,9 @@ class OfficeController extends Controller
             'officecode' => 'required',
             'officename' => 'required',
             'officedesc' => 'required',
+            'officeaddress' => 'required',
+            'authorizedpersonnel' => 'required',
+            'position' => 'required',
             
         ]);
         
@@ -103,6 +111,9 @@ class OfficeController extends Controller
                     'officecode' => $request->officecode,
                     'officename' => $request->officename,
                     'officedesc' => $request->officedesc,
+                    'officeaddress' => $request->officeaddress,
+                    'authorizedpersonnel' => $request->authorizedpersonnel,
+                    'position' => $request->position,
                   
                 ]
             );

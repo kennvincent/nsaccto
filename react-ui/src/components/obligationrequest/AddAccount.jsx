@@ -78,18 +78,10 @@ if(!visible) return null;
                     </div>
                 </div>
 
-                <div className='w-full h-10 border border-black mt-2 pt-2 px-3'>
+                {/* <div className='w-full h-10 border border-black mt-2 pt-2 px-3'>
                     <p name='account' id='account'>{accountCode}</p>
                 </div>
-                {/* <div className="flex flex-col mt-3">
-                    <div>
-                        <label htmlFor="accountdesc">Description</label>
-                    </div>
-                    <div>
-                        <textarea className='w-full rounded-sm' name="" id="" cols="30" rows="5" 
-                        value={particulars} onChange={handleInput}></textarea>
-                    </div>
-                </div> */}
+               */}
 
                 <div className="flex flex-col mt-2">
                     <div>

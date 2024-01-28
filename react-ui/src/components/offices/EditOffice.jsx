@@ -65,6 +65,9 @@ useEffect(()=>{
         officecode : office.officecode,
         officename : office.officename,
         officedesc : office.officedesc,
+        officeaddress : office.officeaddress,
+        authorizedpersonnel : office.authorizedpersonnel,
+        position : office.position,
       }
     
      
@@ -126,6 +129,42 @@ if(!visible) return null
           <div>
               <input
               type="text" name="officedesc"  value={office?office.officedesc:''} onChange={handleInput}
+              className="border w-full border-gray-700 rounded mb-3"/>
+          </div>
+        </div>
+
+        
+        <div className="flex flex-col ">
+          <div>
+              <label htmlFor="officeaddress">Address</label>
+          </div>
+          <div>
+              <input
+              type="text" name="officeaddress"  value={office?office.officeaddress:''} onChange={handleInput}
+              className="border w-full border-gray-700 rounded mb-3"/>
+          </div>
+        </div>
+
+
+        <div className="flex flex-col ">
+          <div>
+              <label htmlFor="authorizedpersonnel">Department Head/Authorized Personnel</label>
+          </div>
+          <div>
+              <input
+              type="text" name="authorizedpersonnel"  value={office?office.authorizedpersonnel:''} onChange={handleInput}
+              className="border w-full border-gray-700 rounded mb-3"/>
+          </div>
+        </div>
+
+
+        <div className="flex flex-col ">
+          <div>
+              <label htmlFor="position">Position</label>
+          </div>
+          <div>
+              <input
+              type="text" name="position"  value={office?office.position:''} onChange={handleInput}
               className="border w-full border-gray-700 rounded mb-3"/>
           </div>
         </div>

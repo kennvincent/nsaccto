@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import axiosClient from '../../axios-client';
 
 export default function AddNewOffice({visible,onClose}) {
     const [office,setOffice] = useState('');
@@ -18,12 +19,13 @@ export default function AddNewOffice({visible,onClose}) {
           officecode : office.officecode,
           officename : office.officename,
           officedesc : office.officedesc,
-          officeaddress:"Catarman, Northern Samar"
+          officeaddress:office.officeaddress,
+          authorizedpersonnel :office.authorizedpersonnel,
+          position:office.position
         }
     
-    
+        console.log(newOffice)
       
-        
         axiosClient.post(`/office`,newOffice).then(res =>{
             alert(res.data.message);
         })
@@ -83,6 +85,42 @@ if(!visible) return null
               className="border w-full border-gray-700 rounded mb-3"/>
           </div>
         </div>
+        
+        <div className="flex flex-col ">
+          <div>
+              <label htmlFor="officeaddress">Address</label>
+          </div>
+          <div>
+              <input
+              type="text" name="officeaddress"  value={office?office.officeaddress:''} onChange={handleInput}
+              className="border w-full border-gray-700 rounded mb-3"/>
+          </div>
+        </div>
+
+
+        <div className="flex flex-col ">
+          <div>
+              <label htmlFor="authorizedpersonnel">Department Head/Authorized Personnel</label>
+          </div>
+          <div>
+              <input
+              type="text" name="authorizedpersonnel"  value={office?office.authorizedpersonnel:''} onChange={handleInput}
+              className="border w-full border-gray-700 rounded mb-3"/>
+          </div>
+        </div>
+
+
+        <div className="flex flex-col ">
+          <div>
+              <label htmlFor="position">Position</label>
+          </div>
+          <div>
+              <input
+              type="text" name="position"  value={office?office.position:''} onChange={handleInput}
+              className="border w-full border-gray-700 rounded mb-3"/>
+          </div>
+        </div>
+
 
         <div className="text-center gap-2 flex ">
           <button className="px-5 py-2 bg-green-700 text-white rounded" type='submit'>
