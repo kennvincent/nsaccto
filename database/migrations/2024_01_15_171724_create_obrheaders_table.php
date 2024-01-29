@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreign('officeid')->references('id')->on('offices');
             $table->text('particulars');
             $table->string('signatory1');
-            $table->string('posistion1');
+            $table->string('position1');
             $table->string('signatory2');
-            $table->string('posistion2');
+            $table->string('position2');
             $table->string('obrstatus');
             $table->string("ispaid");
             $table->timestamps();

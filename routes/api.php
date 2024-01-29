@@ -55,6 +55,7 @@ Route::delete('tempobligationrequest/{id}',[TempObligationRequestController::cla
 
 
 Route::post('obligationrequest',[ObligationRequestController::class,'insert']);
+
 Route::get('obligationrequest',[ObligationRequestController::class,'viewlist']);
 Route::get('obligationrequest/budgetview',[ObligationRequestController::class,'budgetviewlist']);
 Route::get('obligationrequest/budgetview/selected/{id}',[ObligationRequestController::class,'viewobr']);

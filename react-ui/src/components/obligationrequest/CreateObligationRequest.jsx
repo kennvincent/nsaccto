@@ -63,14 +63,14 @@ export default function CreateObligationRequest() {
             'obrdetails': details
             
         };
+        console.log(obr);
 
-       
         axiosClient.post(`/obligationrequest`,obr).then(res=>{
             
                 const obr_id = res.data.obr_id;
+
                 if(obr_id>0){
                     axiosClient.delete(`/tempobligationrequest/${officeid}`).then(res =>{
-                    //alert(res.data.message);
                     })
                 
                     setDetails([]);
@@ -83,12 +83,8 @@ export default function CreateObligationRequest() {
         }).catch(function(error){ 
             if(error.response){
                 if(error.response.status===422){
-                    // setInputErrorList(error.response.data.errors);
                 } else if(error.response.status===419){
-                    //setInputErrorList(error.response.data.errors);
-                    //console.log("ERROR " + error.response.status);
                 }else if(error.response.status===500){
-                    //console.log("ERROR DITO  " + error.response.status);
                 }
             }
         });
@@ -101,14 +97,13 @@ export default function CreateObligationRequest() {
        let account = [2];
        account = particulars.split(' ');
    
-        const obr = {
+        const temp_obr = {
             office_id:officeid,
             accountcode : account[0],
             amount:amount
           }
 
-
-            axiosClient.post(`/tempobligationrequest`,obr).then(res =>{
+            axiosClient.post(`/tempobligationrequest`,temp_obr).then(res =>{
             
             axiosClient.get(`/tempobligationrequest/${officeid}`).then(res =>{
                 setDetails(res.data.obr)

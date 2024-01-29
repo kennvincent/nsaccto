@@ -17,6 +17,6 @@ class Obrheader extends Model
         'signatory2',
         'position2',
         'obrstatus',
-        'ispaide'
+        'ispaid'
     ];
 }

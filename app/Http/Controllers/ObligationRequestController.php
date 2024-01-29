@@ -112,28 +112,27 @@ class ObligationRequestController extends Controller
     
     public function insert(Request $request){
           
-            DB::beginTransaction();
-            try{
-
+          
+            try
+            {
+                DB::beginTransaction();
                 $obr = new Obrheader;
                 $obr->payee = $request->payee;
                 $obr->officeid = $request->officeid;
-                $obr->particulars =$request->particulars;
+                $obr->particulars = $request->particulars;
                 $obr->signatory1 = $request->signatory1;
                 $obr->position1 = $request->position1;
                 $obr->signatory2 = $request->signatory2;
                 $obr->position2 = $request->position2;
-                $obr->obrstatus="1";
-                $obr->ispaid="0";
+                $obr->obrstatus='1';
+                $obr->ispaid='0';
                 $obr->save();
 
                 $details = $request->obrdetails;
-                //$obrid = DB::table('obrheaders')->select('id')->lastInsertedId();
-                // $obrid = $obrid->id;
+                // // //$obrid = DB::table('obrheaders')->select('id')->lastInsertedId();
+                // // // $obrid = $obrid->id;
                 
                 $obrid = DB::getPdo()->lastInsertId();
-             
-
                 foreach($details as $key => $detail){
                     $obrDetail['accountcode'] = $detail['accountcode'];
                     $obrDetail['amount'] = $detail['amount'];
@@ -144,7 +143,6 @@ class ObligationRequestController extends Controller
 
                 DB::commit();
                 return response()->json(['obr_id'=>$obrid]);
-                // return response()->json(['message'=>'Obligation Request have been created!!!']);
                 //  Toastr::success('Obligation Request have been created!!!');
                 //  return redirect()->back();
             }catch(\Exception $e){
@@ -153,6 +151,6 @@ class ObligationRequestController extends Controller
                 return redirect()->back();
             }
 
-        }
-
+    }
+   
 }
