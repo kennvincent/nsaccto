@@ -131,7 +131,8 @@ class ObligationRequestController extends Controller
                 $details = $request->obrdetails;
                 // // //$obrid = DB::table('obrheaders')->select('id')->lastInsertedId();
                 // // // $obrid = $obrid->id;
-                
+
+                //This is the last update
                 $obrid = DB::getPdo()->lastInsertId();
                 foreach($details as $key => $detail){
                     $obrDetail['accountcode'] = $detail['accountcode'];
