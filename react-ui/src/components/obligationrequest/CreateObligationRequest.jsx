@@ -63,7 +63,7 @@ export default function CreateObligationRequest() {
             'obrdetails': details
             
         };
-        console.log(obr);
+
 
         axiosClient.post(`/obligationrequest`,obr).then(res=>{
             
@@ -73,6 +73,7 @@ export default function CreateObligationRequest() {
                     axiosClient.delete(`/tempobligationrequest/${officeid}`).then(res =>{
                     })
                 
+                    window.localStorage.setItem('obr_id',obr_id)
                     setDetails([]);
                     setTotal(0);
                     navigate('/obrprintpreview');
