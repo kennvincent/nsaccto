@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Obrheader;
 use App\Models\Obrdetail;
+use App\Models\Currentbudgetyear;
 use Illuminate\Support\Facades\DB;
 
 class ObligationRequestController extends Controller
@@ -19,6 +20,8 @@ class ObligationRequestController extends Controller
         return response()->json(['obrlist'=>$obrlist]);
     }
 
+    
+    
     public function viewobr($id){
         $obrlist = DB::table('vw_obr')
                     ->select('id','payee','particulars','officecode','officename',
@@ -30,12 +33,7 @@ class ObligationRequestController extends Controller
 
     public function printpreview($id){
 
-        // $obr = DB::table('vw_obr')
-                //  ->select('id','payee',DB::raw('SUM(amount) as total'))
-                //  ->groupBy('id')
-                //  ->where('id','=',[$id])
-                // ->get();
-
+      
         $obr = DB::table('vw_obr')
                 ->select('id',
                         'payee',
@@ -65,12 +63,28 @@ class ObligationRequestController extends Controller
 
     public function budgetviewlist(){
         $obrlist = DB::table('vw_obrheaders')
-                    ->select('id','payee','particulars','officecode','officename',
-                    'officedesc','officeaddress','totalamount','obrstatus')
+                    ->select('id',
+                            'payee',
+                            'particulars',
+                            'officecode',
+                            'officename',
+                            'officedesc',
+                            'officeaddress',
+                            'totalamount',
+                            'obrstatus')
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
     }
 
+    public function viewofficeobrlist($officename){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                             'officedesc','officeaddress','totalamount','obrstatus')
+                    ->where('officename',[$officename])
+                    ->orderBy('id','DESC')
+                    ->get();
+        return response()->json(['obrlist'=>$obrlist]);
+    }
 
     public function accountingviewlist(){
         $obrlist = DB::table('vw_obrheaders')
@@ -109,7 +123,14 @@ class ObligationRequestController extends Controller
         return response()->json(['message'=>"Obligation Request have been rejected"]);
     }
 
-    
+    public function getobryear(){
+        $year=DB::table("currentbudgetyears")
+                ->select('budgetyear')
+                ->get();
+        
+        return response()->json(['obryear'=>$year]);
+    }
+
     public function insert(Request $request){
           
           
@@ -120,6 +141,7 @@ class ObligationRequestController extends Controller
                 $obr->payee = $request->payee;
                 $obr->officeid = $request->officeid;
                 $obr->particulars = $request->particulars;
+                $obr->obryear = $request->obryear;
                 $obr->signatory1 = $request->signatory1;
                 $obr->position1 = $request->position1;
                 $obr->signatory2 = $request->signatory2;

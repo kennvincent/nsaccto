@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('officeid');
             $table->foreign('officeid')->references('id')->on('offices');
             $table->text('particulars');
+            $table->string('obryear');
             $table->string('signatory1');
             $table->string('position1');
             $table->string('signatory2');

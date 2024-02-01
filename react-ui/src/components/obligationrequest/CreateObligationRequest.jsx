@@ -23,6 +23,7 @@ export default function CreateObligationRequest() {
     const [total,setTotal]=useState([]);
     const [details,setDetails] =useState([]);
     const [office,setOffice] = useState([]);    
+    const [obryear,setObrYear] = useState([]);
     const navigate = useNavigate();
 
     const handleShowAddParticulars = ()=>{
@@ -56,6 +57,7 @@ export default function CreateObligationRequest() {
             'payee' : payee,
             'officeid' : officeid,
             'particulars':particulars,
+            'obryear': obryear,
             'signatory1':'S1',
             'position1' : 'P1',
             'signatory2' : 'S2',
@@ -154,6 +156,15 @@ export default function CreateObligationRequest() {
             catch(e){
     
             }
+
+            try{
+                await axiosClient.get(`/getobryear`).then(res =>{
+                  
+                    setObrYear(res.data.obryear[0].budgetyear);
+                });
+            }catch(e){
+
+            }
         }
         
 
@@ -163,8 +174,8 @@ export default function CreateObligationRequest() {
    
     
   return (
-    <div className='card  overflow-hidden'>
-
+    <div className='card  overflow-hidden p-2'>
+        <h5>Budget Year: {obryear}</h5>
         <div className='card-header text-center bg-white'>
             <p className='font-bold p-0 m-0'>Republic of the Philippines</p>
             <p className='font-bold text-lg p-0 m-0'>PROVINCE OF NORTHERN SAMAR</p>

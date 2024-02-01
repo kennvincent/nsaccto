@@ -25,12 +25,13 @@ return new class extends Migration
             t2.officeaddress,
             t3.accountcode,
             t3.amount,
+            t1.obryear,
             (SELECT SUM(t4.amount) FROM obrdetails t4 WHERE t1.id=t4.obrid) as totalamount,
             CASE 
                 WHEN t1.obrstatus='0' THEN 'Cancelled'
                 WHEN t1.obrstatus='1' THEN 'For Approval'
-                WHEN t1.obrstatus='2' THEN 'Obligated'
-                WHEN t1.obrstatus='3' THEN 'Approved'
+                WHEN t1.obrstatus='2' THEN 'Approved'
+                WHEN t1.obrstatus='3' THEN 'Obligated'
             END AS obrstatus,
             t1.ispaid
             FROM obrheaders t1

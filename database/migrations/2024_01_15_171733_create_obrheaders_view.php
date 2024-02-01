@@ -15,6 +15,7 @@ return new class extends Migration
             t1.id,
             t1.payee,
             t1.particulars,
+            t1.obryear,
             t2.officecode,
             t2.officename,
             t2.officedesc,
@@ -23,8 +24,8 @@ return new class extends Migration
             CASE 
                 WHEN t1.obrstatus='0' THEN 'Cancelled'
                 WHEN t1.obrstatus='1' THEN 'For Approval'
-                WHEN t1.obrstatus='2' THEN 'Obligated'
-                WHEN t1.obrstatus='3' THEN 'Approved'
+                WHEN t1.obrstatus='2' THEN 'Approved'
+                WHEN t1.obrstatus='3' THEN 'Obligated'
             END AS obrstatus
             FROM obrheaders t1
             LEFT JOIN offices t2 ON t1.officeid=t2.id

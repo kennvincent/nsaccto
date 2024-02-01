@@ -53,11 +53,12 @@ Route::get('tempobligationrequest/sum/{id}',[TempObligationRequestController::cl
 Route::post('tempobligationrequest',[TempObligationRequestController::class,'insert']);
 Route::delete('tempobligationrequest/{id}',[TempObligationRequestController::class,'delete']);
 
-
+Route::get('getobryear',[ObligationRequestController::class,'getobryear']);
 Route::post('obligationrequest',[ObligationRequestController::class,'insert']);
 
 Route::get('obligationrequest',[ObligationRequestController::class,'viewlist']);
-Route::get('obligationrequest/budgetview',[ObligationRequestController::class,'budgetviewlist']);
+Route::get('obligationrequest/{officename}',[ObligationRequestController::class,'viewofficeobrlist']);
+Route::get('obligationrequest/budget/view',[ObligationRequestController::class,'budgetviewlist']);
 Route::get('obligationrequest/budgetview/selected/{id}',[ObligationRequestController::class,'viewobr']);
 Route::get('obligationrequest/budgetview/selected/sum/{id}',[ObligationRequestController::class,'sum']);
 Route::get('obligationrequest/budgetview/selected/approve/{id}',[ObligationRequestController::class,'approve']);

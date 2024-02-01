@@ -46,9 +46,7 @@ export default function ShowObrBudget() {
     <div>
         <div className='card-body h-[800px] overflow-scroll'>
             <div className='text-center p-0'>
-                <h4>OBLIGATION REQUEST</h4>
-                {/* <h3> {obr.map((obr)=>{obrstatus = obr.obrstatus})}
-                <p>{obrstatus}</p></h3> */}
+                <h4>OBLIGATION REQUESTS</h4>
             </div>
             <div className='flex'>
                 <div className='w-[15rem] h-8 items-center border py-0 px-2'>
