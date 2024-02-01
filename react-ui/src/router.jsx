@@ -21,6 +21,7 @@ import DisplayBudgets from "./components/budget/DisplayBudgets";
 import DashboardAccounting from "./components/DashboardAccounting";
 import ApprovedObrListBudget  from "./components/obligationrequest/ApprovedObrListBudget";
 import DisplayOffices from "./components/offices/DisplayOffices";
+import ApprovedOBRPreview from "./components/obligationrequest/ApprovedOBRPreview";
 
 const router = createBrowserRouter([
     {
@@ -85,6 +86,11 @@ const router = createBrowserRouter([
                 element:<ShowObrBudget/>
            }
            ,
+           {
+                path:'/approvedobrpreview',
+                element:<ApprovedOBRPreview/>
+            }
+            ,
            {
             path:'/acctobrview',
             element:<AcctObrView/>

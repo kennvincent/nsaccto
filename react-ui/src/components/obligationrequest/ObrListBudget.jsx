@@ -9,10 +9,10 @@ export default function ObrListBudget() {
     
     useEffect(()=>{
 
-      axiosClient.get(`/obligationrequest/budget/view`).then(res =>{
+      axiosClient.get(`obligationrequest/budget/forapprovalobr/view`).then(res =>{
         setObrList(res.data.obrlist);
       });
-      
+
     },[]);
  
     

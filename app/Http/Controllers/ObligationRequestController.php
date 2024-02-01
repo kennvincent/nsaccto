@@ -61,7 +61,7 @@ class ObligationRequestController extends Controller
     }
 
 
-    public function budgetviewlist(){
+    public function foraprrovalobr(){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id',
                             'payee',
@@ -72,6 +72,24 @@ class ObligationRequestController extends Controller
                             'officeaddress',
                             'totalamount',
                             'obrstatus')
+                    ->where('obrstatus','Approved')
+                    ->get();
+        return response()->json(['obrlist'=>$obrlist]);
+    }
+
+    public function approvedobr(){
+        // Obligated
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id',
+                            'payee',
+                            'particulars',
+                            'officecode',
+                            'officename',
+                            'officedesc',
+                            'officeaddress',
+                            'totalamount',
+                            'obrstatus')
+                    ->where('obrstatus','Obligated')
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
     }
