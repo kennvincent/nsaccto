@@ -108,7 +108,7 @@ class ObligationRequestController extends Controller
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                     'officedesc','officeaddress','totalamount','obrstatus')
-                    ->where('obrstatus','=','Approved')
+                    ->where('obrstatus','=','Obligated')
                     ->get();
 
         return response()->json(['obrlist'=>$obrlist]);

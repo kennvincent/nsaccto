@@ -8,8 +8,7 @@ export default function AcctObrView() {
     const navigate = useNavigate();
     
     useEffect(()=>{
-      axiosClient.get(`/obligationrequest/accountingview`).then(res =>{
-        console.log(res.data.obrlist);
+      axiosClient.get(`/obligationrequest/accounting/payable/view`).then(res =>{
         setObrList(res.data.obrlist);
       });
     },[]);
@@ -19,6 +18,20 @@ export default function AcctObrView() {
       navigate("/acctobrviewselected",{state:{obrid:obrid}});
     }
 
+    const payableOBR = obrlist.map((obr)=>{
+      return(
+        <tr key={obr.id} className='p-0 m-0 border hover:bg-slate-100'> 
+          <td className='py-1'>{obr.payee}</td>
+          <td className='py-1'>{obr.officecode}</td>
+          <td className='py-1'>{obr.officename}</td>
+          <td className='py-1'>{obr.officedesc}</td>
+          <td className='py-1'>{obr.particulars}</td>
+          <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
+          <td className='py-1'>{obr.obrstatus}</td>
+          <td className='py-1'><button className='btn btn-success btn-sm' onClick={()=>handleShowOBR(obr.id)}>Pay</button></td>
+        </tr>
+      )
+    })
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div>
@@ -39,19 +52,7 @@ export default function AcctObrView() {
             </tr>
           </thead>
           <tbody>
-            {obrlist.map((obr)=>(
-              <tr key={obr.id} className='p-0 m-0 border hover:bg-slate-100'> 
-                <td className='py-1'>{obr.payee}</td>
-                <td className='py-1'>{obr.officecode}</td>
-                <td className='py-1'>{obr.officename}</td>
-                <td className='py-1'>{obr.officedesc}</td>
-                <td className='py-1'>{obr.particulars}</td>
-                <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
-                <td className='py-1'>{obr.obrstatus}</td>
-                <td className='py-1'><button className='btn btn-success btn-sm' onClick={()=>handleShowOBR(obr.id)}>Pay</button></td>
-              </tr>
-            ))}
-
+           {payableOBR}
           </tbody>
         </table>
         

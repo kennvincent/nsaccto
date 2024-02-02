@@ -71,7 +71,7 @@ Route::get('obligationrequest/budgetview/selected/reject/{id}',[ObligationReques
 Route::get('obligationrequest/printpreview/{id}',[ObligationRequestController::class,'printpreview']);
 Route::get('obligationrequest/obrsum/{id}',[ObligationRequestController::class,'obrsum']);
 
-Route::get('obligationrequest/accountingview',[ObligationRequestController::class,'accountingviewlist']);
+Route::get('obligationrequest/accounting/payable/view',[ObligationRequestController::class,'accountingviewlist']);
 
 Route::post('register',[RegisterController::class,'register']);
 Route::post('login',[LoginController::class,'login']);
