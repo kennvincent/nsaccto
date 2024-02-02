@@ -9,6 +9,7 @@ export default function AcctObrViewSelected() {
   const [obr,setObr] = useState([]);
   let obrid = location.state.obrid;
   
+  const [accoutcode,setAccountcCode] = useState([]);
   let payee="";
   let officedesc="";
   let officename="";
@@ -16,26 +17,42 @@ export default function AcctObrViewSelected() {
   let particulars="";
   let officecode="";
   let obrstatus="";
+  let totalamount="";
+  let amountpaid="";
 
   useEffect(()=>{
-    axiosClient.get(`/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
-
+    axiosClient.get(`/obligationrequest/accounting/selected/view/${location.state.obrid}`).then(res=>{
         setObr(res.data.obr);
-      
       });
 
-    // axios.get(`http://127.0.0.1:8000/api/obligationrequest/budgetview/selected/sum/${location.state.obrid}`).then(res=>{
-    //     setObrTotal(res.data[0].obrtotal)
-    //   });
- },[]);
+    },[]);
 
+    const obrDetails = obr.map((detail)=>{
+   
+        return (
+            <>
+                <tr>
+                    <td>{detail.accountcode}</td>
+                    <td><input type="text" name="" id="accountcode[]" value={detail.accountcode} className='p-1'/></td>
+                    <td className='w-40'></td>
+                    <td className='text-right'>{Number(detail.amount).toLocaleString()}</td>
+                    <td><input type="text"  name="" id="" value={detail.amount} className='text-right p-1'/></td>
+                </tr>
+             
+            </>
+        )
+    })
+
+    const handleClickSave=(e)=>{
+        e.preventDefault();
+
+        
+    }
   return (
     <div className='bg-white'>
         <div className='card-body '>
             <div className='text-center p-0'>
                 <h4>OBLIGATION REQUEST - PAYMENT</h4>
-                {/* <h3> {obr.map((obr)=>{obrstatus = obr.obrstatus})}
-                <p>{obrstatus}</p></h3> */}
             </div>
 
             <div className='flex'>
@@ -62,52 +79,38 @@ export default function AcctObrViewSelected() {
                     <div className='w-[15rem] border px-2'>
                             <p>Account(s)</p>
                     </div>
-                    <div className='w-[30rem] border px-2'>
-                        {obr.map((obr,index)=>(
-                            <div className='p-2'>
-                                 <p className='inline w-10 mr-2'> {obr.accountcode}</p> 
-                                 <input type="text" name={index} id="" value={obr.accountcode} className='h-8' />
-                            </div>
-                           
-                       
-                        ))}
-                    
-                    </div>
-
-                    <div className='w-[20rem] border px-2'>
-                        {obr.map((obr,index)=>(
-                            <div>
-                                <p className='text-right'> {Number(obr.amount).toLocaleString()}</p>
-                                {/* <input type="text" name={index} id="" value={obr.accountcode} className='h-8' /> */}
-                            </div>
+                   
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colSpan="2">Account Code</th>
+                                    <th></th>
+                                    <th>Payable</th>
+                                    <th className='text-right'>Amount Paid</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {obrDetails}
+                                <tr>
+                                {obr.map((obr)=>{totalamount = obr.totalamount})}
+                                    <td className='text-right font-bold'>Total Amount</td>
+                                    <td colSpan="3" className='text-right font-bold'>{Number(totalamount).toLocaleString()}</td>
+                                    <td colSpan="3" className='text-right font-bold px-3'>{Number(totalamount).toLocaleString()}</td>
+                                </tr>
+                            </tbody>
                             
-                        ))}
-                    
+                        </table>
                     </div>
                    
                 </div>
 
                 <div className='flex'>
-                <div className='w-[15rem] h-8 border px-2'>
-                        <p>Total Amount</p>
-                </div>
-                <div className='w-[50rem] h-8 border px-2'>
-                    {obr.map((obr,index)=>(
-                         <p className='text-right font-bold'> {Number(obr.totalamount).toLocaleString()}</p>
-                    ))}
-                   
-                </div>
+
+               
             </div>
             
-            <div className='flex'>
-                <div className='w-[15rem] h-11 border px-2'>
-                        <p className='font-bold'>Amount paid</p>
-                </div>
-                <div className='w-[85rem] h-11 border px-1' >
-                    <input type="text" name="amount" id="amount" className='h-9 font-bold w-[50rem]' />
-                </div>
-            </div>
-
+         
             <div className='flex'>
                 <div className='w-[15rem] h-11 border px-2 '>
                         <p className='font-bold'>Check Number</p>
@@ -132,7 +135,7 @@ export default function AcctObrViewSelected() {
                         
                 </div>
                 <div className='w-[85rem] h-11 border p-1'>
-                    <button className='btn btn-primary btn-sm w-[15rem]'>Save</button>
+                    <button onClick={handleClickSave} className='btn btn-primary btn-sm w-[15rem]'>Save</button>
                 </div>
             </div>
 
