@@ -22,6 +22,7 @@ import DashboardAccounting from "./components/DashboardAccounting";
 import ApprovedObrListBudget  from "./components/obligationrequest/ApprovedObrListBudget";
 import DisplayOffices from "./components/offices/DisplayOffices";
 import ApprovedOBRPreview from "./components/obligationrequest/ApprovedOBRPreview";
+import DynamicInput from "./components/accounting/DynamicInput";
 
 const router = createBrowserRouter([
     {
@@ -116,10 +117,14 @@ const router = createBrowserRouter([
             element:<DisplayBudgets/>
            }
            ,
-           ,
            {
             path:'/register',
             element:<RegisterUser/>
+           }
+           ,
+           {
+            path:'/dynamicinput',
+            element:<DynamicInput/>
            }
         ]
     }

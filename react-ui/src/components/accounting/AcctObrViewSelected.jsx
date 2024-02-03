@@ -9,7 +9,7 @@ export default function AcctObrViewSelected() {
   const [obr,setObr] = useState([]);
   let obrid = location.state.obrid;
   
-  const [accoutcode,setAccountcCode] = useState([]);
+  const [accountcode,setAccountCode] = useState([]);
   let payee="";
   let officedesc="";
   let officename="";
@@ -23,12 +23,12 @@ export default function AcctObrViewSelected() {
   useEffect(()=>{
     axiosClient.get(`/obligationrequest/accounting/selected/view/${location.state.obrid}`).then(res=>{
         setObr(res.data.obr);
+        
       });
-
+     
     },[]);
 
     const obrDetails = obr.map((detail)=>{
-   
         return (
             <>
                 <tr>
@@ -43,10 +43,12 @@ export default function AcctObrViewSelected() {
         )
     })
 
+    const handleInput = (e)=>{
+        
+    }
     const handleClickSave=(e)=>{
         e.preventDefault();
 
-        
     }
   return (
     <div className='bg-white'>
