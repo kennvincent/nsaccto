@@ -34,7 +34,7 @@ class ObligationRequestController extends Controller
     public function accountingselectedviewobr($id){
         $obrlist = DB::table('vw_obr')
                     ->select('id','obr_detail_id','payee','particulars','officecode','officename',
-                        'officedesc','officeaddress','accountcode','amount','totalamount','obrstatus')
+                        'officedesc','officeaddress','accountcode1','accountcode','amount','totalamount','obrstatus')
                     ->where('id','=',[$id])
                     ->get();
         return response()->json(['obr'=>$obrlist]);

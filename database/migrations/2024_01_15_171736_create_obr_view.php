@@ -24,6 +24,7 @@ return new class extends Migration
             t2.officename,
             t2.officedesc,
             t2.officeaddress,
+            t3.accountcode as accountcode1,
             t3.accountcode,
             t3.amount,
             t1.obryear,
