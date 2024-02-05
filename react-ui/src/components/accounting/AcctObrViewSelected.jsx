@@ -11,7 +11,10 @@ export default function AcctObrViewSelected() {
   let obrid = location.state.obrid;
   
   const [accountcode,setAccountCode] = useState([]);
-  const[totalamount,setTotalAmount]=useState();
+  const [totalamount,setTotalAmount]=useState();
+  const [checknumber,setCheckNumber] =useState();
+  const [bankname,setBankname] =useState();
+
   let payee="";
   let officedesc="";
   let officename="";
@@ -40,23 +43,44 @@ export default function AcctObrViewSelected() {
  
 
 
+  const checkNumberOnChange = (e)=>{
+    setCheckNumber(e.target.value);
+  }
+
+  const bankNameOnChange = (e)=>{
+    setBankname(e.target.value);
+  }
 
     const handleClickSave=(e)=>{
         e.preventDefault();
         
-        let newField =[];
+        let paymentDetails =[];
         obr2.map((data)=>{
             
-            newField.push({
+            paymentDetails.push({
                 obrid:data.id,
                 obr_detail_id:data.obr_detail_id,
                 accountcode:data.accountcode,
-                amount:data.amount
+                amountpaid:data.amount
             })
            
         })
+
+        const payments = {
+            'checknumber':checknumber,
+            'bankname':bankname,
+            'obrid':obrid,
+            'totalamount':totalamount,
+            'totalamountpaid':100000,
+            'details':paymentDetails
+        }
+        console.log(payments);
         
-        console.log(newField)
+        axiosClient.post(`obligationrequest/accounting/payment`,payments).then(res=>{
+            alert(res.data.message);
+
+        });
+        
     }
 
 
@@ -174,7 +198,8 @@ export default function AcctObrViewSelected() {
                         <p className='font-bold'>Check Number</p>
                 </div>
                 <div className='w-[85rem] h-11 border  px-1' >
-                    <input type="text" name="checknumber" id="checknumber" className='h-9 mt-1 font-bold w-[50rem]' />
+                    <input type="text" name="checknumber" id="checknumber" onChange={checkNumberOnChange}  
+                    className='h-9 mt-1 font-bold w-[53rem]' />
                 </div>
             </div>
 
@@ -184,7 +209,7 @@ export default function AcctObrViewSelected() {
                         <p className='font-bold'>Bank Name</p>
                 </div>
                 <div className='w-[85rem] h-11 border px-1' >
-                    <input type="text" name="bankname" id="bankname" className='h-9 mt-1 font-bold w-[50rem]' />
+                    <input type="text" name="bankname" id="bankname" onChange={bankNameOnChange} className='h-9 mt-1 font-bold w-[53rem]' />
                 </div>
             </div>
 

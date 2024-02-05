@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Obrheader;
 use App\Models\Obrdetail;
 use App\Models\Currentbudgetyear;
+use App\Models\Paymentheader;
+use App\Models\Paymentdetail;
 use Illuminate\Support\Facades\DB;
 
 class ObligationRequestController extends Controller
@@ -202,6 +204,36 @@ class ObligationRequestController extends Controller
                 return redirect()->back();
             }
 
+    }
+
+
+    public function savepayment(Request $request){
+        try{
+            DB::beginTransaction();
+            $payment = new Paymentheader;
+            $payment->obrid = $request->obrid;
+            $payment->checknumber = $request->checknumber;
+            $payment->bankname = $request->bankname;
+            $payment->userid=2;
+            $payment->save();
+
+            $paymentid = DB::getPdo()->lastInsertId();
+            $details = $request->details;
+
+            foreach($details as $key => $detail){
+                $paymentDetail['obr_detail_id'] = $detail['obr_detail_id'];
+                $paymentDetail['accountcode'] = $detail['accountcode'];
+                $paymentDetail['amountpaid'] = $detail['amountpaid'];
+                $paymentDetail['paymentid'] = $paymentid;
+                Paymentdetail::create($paymentDetail);
+            }
+            DB::commit();
+            return response()->json(['message'=>'Payment have been saved']);
+        }catch(e){
+
+        }
+           
+        
     }
    
 }

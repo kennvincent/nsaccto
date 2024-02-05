@@ -73,6 +73,8 @@ Route::get('obligationrequest/obrsum/{id}',[ObligationRequestController::class,'
 
 Route::get('obligationrequest/accounting/payable/view',[ObligationRequestController::class,'accountingviewlist']);
 Route::get('obligationrequest/accounting/selected/view/{id}',[ObligationRequestController::class,'accountingselectedviewobr']);
+Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);
+
 
 Route::post('register',[RegisterController::class,'register']);
 Route::post('login',[LoginController::class,'login']);
