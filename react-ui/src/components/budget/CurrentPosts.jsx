@@ -32,8 +32,8 @@ const CurrentPosts = ({posts}) => {
                         <td className='py-1 text-right'>0.00</td>
                         <td className='py-1 text-right'>{Number(budget.proposedamount).toLocaleString()}</td>
                         <td className='py-1 text-right'>{budget.totalobligated>0?Number(budget.totalobligated).toLocaleString():""}</td>
-                        <td className='py-1 text-right'>0.00</td>
-                        <td className='py-1 text-right'>{Number(budget.proposedamount).toLocaleString()}</td>
+                        <td className='py-1 text-right'>{budget.utilized>0?Number(budget.utilized).toLocaleString():""}</td>
+                        <td className='py-1 text-right'>{Number(budget.proposedamount - budget.totalobligated).toLocaleString()}</td>
                     </tr>
                 );
                
