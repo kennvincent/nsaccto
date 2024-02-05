@@ -11,6 +11,7 @@ export default function AcctObrViewSelected() {
   let obrid = location.state.obrid;
   
   const [accountcode,setAccountCode] = useState([]);
+  const[totalamount,setTotalAmount]=useState();
   let payee="";
   let officedesc="";
   let officename="";
@@ -18,7 +19,6 @@ export default function AcctObrViewSelected() {
   let particulars="";
   let officecode="";
   let obrstatus="";
-  let totalamount="";
   let amountpaid="";
 
   const [inputFields, setInputFields] = useState([]);
@@ -29,23 +29,37 @@ export default function AcctObrViewSelected() {
     axiosClient.get(`/obligationrequest/accounting/selected/view/${location.state.obrid}`).then(res=>{
         setObr(res.data.obr);
         setObr2(res.data.obr);
+        obr.map((data)=>{
+            setTotalAmount(data.totalamount)
+        })
       });
+    
     
   },[]);
 
-
-
-
  
 
-  
-   
+
+
     const handleClickSave=(e)=>{
         e.preventDefault();
-        // console.log(obr)
-        // console.log(obr2)
-   
+        
+        let newField =[];
+        obr2.map((data)=>{
+            
+            newField.push({
+                obrid:data.id,
+                obr_detail_id:data.obr_detail_id,
+                accountcode:data.accountcode,
+                amount:data.amount
+            })
+           
+        })
+        
+        console.log(newField)
     }
+
+
 
     const handleAccountCodeChange = (index, event) => {
          let data = [...obr2];
@@ -54,9 +68,9 @@ export default function AcctObrViewSelected() {
     }
 
       const handleAmountChange = (index, event) => {
-        // let data = [...inputFields];
-        // data[index][event.target.name] = event.target.value;
-        // setInputFields(data);
+        let data = [...obr2];
+        data[index]['amount'] = event.target.value;
+        setObr2(data);
         
       }
       
@@ -75,6 +89,10 @@ export default function AcctObrViewSelected() {
                 onChange={(e)=>handleAccountCodeChange(index,e)} className='py-1' /></td>
                 <td className='p-1'><input type="text" name="accountcode" value={detail.accountcode} 
                 onChange={(e)=>handleAccountCodeChange(index,e)} className='py-1' /></td>
+                 <td className='p-1'><input type="text" name="amount1" value={detail.amount1} 
+                onChange={(e)=>handleAmountChange(index,e)} className='py-1 text-right' /></td>
+                <td className='p-1'><input type="text" name="amount" value={detail.amount} 
+                onChange={(e)=>handleAmountChange(index,e)} className='py-1  text-right' /></td>
             </tr>
         )
     })
@@ -114,13 +132,26 @@ export default function AcctObrViewSelected() {
                    
                     <div className='flex'>
                         <div>
-                            <div className='p-1'><h5>Account Code</h5></div>
                             <div className='flex'>
                                 <div>
                                     <table>
-                                        <thead></thead>
+                                        <thead>
+                                            <tr>
+                                                <th>Budget Account Code</th>
+                                                <th>Accounting Account Code</th>
+                                                <th className='text-right'>Amount Payable</th>
+                                                <th className='text-right'>Amount Paid</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                             {obrDetails}
+                                            <tr>
+                                               
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td> 
+                                                <td className='p-1'><input type="text" name="totalamount" value={totalamount} className='py-1 text-right'/></td>
+                                                <td className='p-1'><input type="text" name="totalamountpaid" value={totalamount} className='py-1 text-right'/></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

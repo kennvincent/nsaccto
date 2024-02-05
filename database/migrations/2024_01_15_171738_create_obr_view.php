@@ -26,6 +26,7 @@ return new class extends Migration
             t2.officeaddress,
             t3.accountcode as accountcode1,
             t3.accountcode,
+            t3.amount as amount1,
             t3.amount,
             t1.obryear,
             (SELECT SUM(t4.amount) FROM obrdetails t4 WHERE t1.id=t4.obrid) as totalamount,
