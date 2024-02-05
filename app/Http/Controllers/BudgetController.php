@@ -10,15 +10,6 @@ use App\Models\Office;
 class BudgetController extends Controller
 {
     public function officebudget($officename){
-        // $budgets = DB::table('budgets')
-        //             ->select('id',
-        //                     'particulars',
-        //                      'accountcode',
-        //                      'proposedamount',
-        //                      'accountclassification',
-        //                      'funding')
-        //             ->where('office',$officename)
-        //             ->get();
 
         $budgets = DB::table('budgets as t1')
                     ->select('t1.id',
@@ -33,6 +24,8 @@ class BudgetController extends Controller
                                           and t1.accountcode=t2.accountcode
                                           and t2.obryear=2024
                                           and t2.obrstatus="Obligated"),0) as totalobligated'))
+                    ->addSelect(DB::raw('(SELECT SUM()) FROM vw_payments as t3
+                                         WHERE t1.accountcode=t3.accountcode'))
                     ->get();
 
         return response()->json(['budgets'=>$budgets]);

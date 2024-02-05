@@ -121,6 +121,7 @@ class ObligationRequestController extends Controller
                     ->select('id','payee','particulars','officecode','officename',
                     'officedesc','officeaddress','totalamount','obrstatus')
                     ->where('obrstatus','=','Obligated')
+                    ->orderBy('id','DESC')
                     ->get();
 
         return response()->json(['obrlist'=>$obrlist]);

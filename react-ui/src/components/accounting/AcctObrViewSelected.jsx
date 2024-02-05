@@ -32,12 +32,11 @@ export default function AcctObrViewSelected() {
     axiosClient.get(`/obligationrequest/accounting/selected/view/${location.state.obrid}`).then(res=>{
         setObr(res.data.obr);
         setObr2(res.data.obr);
-        obr.map((data)=>{
-            setTotalAmount(data.totalamount)
-        })
+       
       });
     
-    
+      setTotalAmount(obr.totalamount)
+      
   },[]);
 
  
