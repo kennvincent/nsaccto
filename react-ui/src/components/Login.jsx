@@ -68,24 +68,22 @@ export default function handleLogin() {
               // window.localStorage.setItem('usertype','USR');
               // window.localStorage.setItem('officename','PGO 24');
 
+              
               axiosClient.get(`/login/${userlogin.username}`).then(res=>{
                 window.localStorage.setItem('usertype',res.data.office[0].usertype);
                 window.localStorage.setItem('officename',res.data.office[0].officename);
               });
 
              
-        
-        // const result = await response.json();
-        
-        
-
-              // axios.get(`http://127.0.0.1:8000/api/login/${userlogin.username}`).then(res=>{
-              //   axios.get(`https://api.vincentsabelao.com/api/login/${userlogin.username}`).then(res=>{
-              //   window.localStorage.setItem('usertype',res.data.office[0].usertype);
-              //   window.localStorage.setItem('officename',res.data.office[0].officename);
-              // });
-
-             navigate("/dashboard");
+            var usertype = window.localStorage.getItem('usertype');
+            if(usertype=="ACTG"){
+              navigate("/acctobrview");
+            } else if(usertype=="BDGT"){
+              navigate("/acctobrview");
+            } else if(usertype=="USR"){
+              navigate("/officebudget");
+            }
+          
              
             }else{
               alert(res.data.login);

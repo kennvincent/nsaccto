@@ -43,9 +43,11 @@ import Pagination from './Pagination';
     var user = window.localStorage.getItem('user');
     var officename = window.localStorage.getItem('officename');
     setOfficeName(officename);
-    axiosClient.get(`/displayofficebudget/${officename}`).then(res=>{
+    
+  
+    axiosClient.get(`/displayofficebudget/${officename}`,).then(res=>{
       setBudgets(res.data.budgets);
-
+     
     });
 
 

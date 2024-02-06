@@ -10,7 +10,6 @@ use App\Models\Office;
 class BudgetController extends Controller
 {
     public function officebudget($officename){
-
         $budgets = DB::table('budgets as t1')
                     ->select('t1.id',
                             't1.particulars',
