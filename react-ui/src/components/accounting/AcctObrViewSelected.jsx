@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios';
 import axiosClient from '../../axios-client';
+import PaymentHistory from './PaymentHistory';
 
 export default function AcctObrViewSelected() {
   const location = useLocation();
@@ -11,7 +12,10 @@ export default function AcctObrViewSelected() {
   let obrid = location.state.obrid;
   
   const [accountcode,setAccountCode] = useState([]);
-  const [totalamount,setTotalAmount]=useState();
+  const [totalamount,setTotalAmount]=useState(0);
+  const [totalamountpaid,setTotalAmountPaid]=useState(0);
+  const [totalbalance,setTotalBalance]=useState(0);
+  const [amounttopay,setAmountToPay]=useState(0);
   const [checknumber,setCheckNumber] =useState();
   const [bankname,setBankname] =useState();
 
@@ -26,21 +30,28 @@ export default function AcctObrViewSelected() {
 
   const [inputFields, setInputFields] = useState([]);
 
-  
-
   useEffect(()=>{
     axiosClient.get(`/obligationrequest/accounting/selected/view/${location.state.obrid}`).then(res=>{
         setObr(res.data.obr);
         setObr2(res.data.obr);
-       
+        
       });
-    
-      setTotalAmount(obr.totalamount)
-      
   },[]);
 
- 
+  let _total_amount =0;
+  let _total_amount_paid=0;
+  let _total_balance=0;
+  let _total_amount_to_pay=0;
 
+  obr.map((_obr)=>{
+    _total_amount = _obr.totalamount;
+    _total_amount_paid =_obr.totalamountpaid;
+    _total_balance = _obr.totalbalance;
+    _total_amount_to_pay = _obr.totalbalance;
+  })
+
+  
+   
 
   const checkNumberOnChange = (e)=>{
     setCheckNumber(e.target.value);
@@ -53,6 +64,7 @@ export default function AcctObrViewSelected() {
     const handleClickSave=(e)=>{
         e.preventDefault();
         
+   
         let paymentDetails =[];
         obr2.map((data)=>{
             
@@ -60,7 +72,7 @@ export default function AcctObrViewSelected() {
                 obrid:data.id,
                 obr_detail_id:data.obr_detail_id,
                 accountcode:data.accountcode,
-                amountpaid:data.amount
+                amountpaid:data.balance
             })
            
         })
@@ -69,11 +81,8 @@ export default function AcctObrViewSelected() {
             'checknumber':checknumber,
             'bankname':bankname,
             'obrid':obrid,
-            'totalamount':totalamount,
-            'totalamountpaid':100000,
             'details':paymentDetails
         }
-        console.log(payments);
         
         axiosClient.post(`obligationrequest/accounting/payment`,payments).then(res=>{
             alert(res.data.message);
@@ -88,15 +97,28 @@ export default function AcctObrViewSelected() {
          let data = [...obr2];
         data[index]['accountcode'] = event.target.value;
         setObr2(data);
+        console.log(obr2);
     }
 
       const handleAmountChange = (index, event) => {
-        let data = [...obr2];
-        data[index]['amount'] = event.target.value;
-        setObr2(data);
-        
+        let data2 = [...obr2];
+        data2[index]['balance'] = parseFloat(event.target.value);
+      
+        setObr2(data2);
+   
+        let totalamt=0;
+        obr2.map((amt)=>{
+            
+            totalamt = parseFloat(totalamt) + parseFloat(amt.balance)
+        })
+
+        _total_amount_to_pay = totalamt;
+        setAmountToPay(totalamt);
       }
       
+      const handleNoChange = ()=>{
+
+      }
       const addFields = (e) => {
         e.preventDefault();
         
@@ -110,17 +132,31 @@ export default function AcctObrViewSelected() {
             <tr key={index} className='p-0'>
                 <td className='p-1'><input type="text" name="accountcode1" value={detail.accountcode1} 
                 onChange={(e)=>handleAccountCodeChange(index,e)} className='py-1' /></td>
+                
                 <td className='p-1'><input type="text" name="accountcode" value={detail.accountcode} 
                 onChange={(e)=>handleAccountCodeChange(index,e)} className='py-1' /></td>
-                 <td className='p-1'><input type="text" name="amount1" value={detail.amount1} 
+                 
+                <td className='p-1'><input type="text" name="amount1" value={Number(detail.amount1).toLocaleString()} 
                 onChange={(e)=>handleAmountChange(index,e)} className='py-1 text-right' /></td>
-                <td className='p-1'><input type="text" name="amount" value={detail.amount} 
+
+                <td className='p-1'><input type="text" name="paid" value={Number(detail.paid).toLocaleString()} 
+                onChange={handleNoChange} className='py-1 text-right' /></td>
+
+                <td className='p-1'><input type="text" name="balance1" value={Number(detail.balance1).toLocaleString()} 
+                onChange={handleNoChange} className='py-1 text-right' /></td>
+                
+
+                <td className='p-1'><input type="text" name="balance" value={detail.balance} 
                 onChange={(e)=>handleAmountChange(index,e)} className='py-1  text-right' /></td>
             </tr>
         )
     })
 
-
+    const paymentHistory = ()=>{
+        return(
+            <PaymentHistory />
+        )
+    }
   return (
     <div className='bg-white'>
         <div className='card-body '>
@@ -163,7 +199,9 @@ export default function AcctObrViewSelected() {
                                                 <th>Budget Account Code</th>
                                                 <th>Accounting Account Code</th>
                                                 <th className='text-right'>Amount Payable</th>
-                                                <th className='text-right'>Amount Paid</th>
+                                                <th className='text-right'>Paid Amount</th>
+                                                <th className='text-right'>balance</th>
+                                                <th className='text-right'>Amount to pay</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -172,8 +210,11 @@ export default function AcctObrViewSelected() {
                                                
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td> 
-                                                <td className='p-1'><input type="text" name="totalamount" value={totalamount} className='py-1 text-right'/></td>
-                                                <td className='p-1'><input type="text" name="totalamountpaid" value={totalamount} className='py-1 text-right'/></td>
+                                                
+                                                <td className='p-1'><input type="text" onChange={handleNoChange} name="totalamount" value={Number(_total_amount).toLocaleString()} className='py-1 text-right'/></td>
+                                                <td className='p-1'><input type="text" onChange={handleNoChange} name="totalamountpaid" value={Number(_total_amount_paid).toLocaleString()} className='py-1 text-right'/></td>
+                                                <td className='p-1'><input type="text" onChange={handleNoChange} name="totalamountpaid" value={Number(_total_balance).toLocaleString()} className='py-1 text-right'/></td>
+                                                <td className='p-1'><input type="text" onChange={handleNoChange} name="totalamountpaid" value={amounttopay>0? Number(amounttopay).toLocaleString():Number(_total_amount_to_pay).toLocaleString()} className='py-1 text-right'/></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -222,8 +263,11 @@ export default function AcctObrViewSelected() {
             </div>
 
            
+           
+
         </div>
 
+     
     </div>
   )
 }

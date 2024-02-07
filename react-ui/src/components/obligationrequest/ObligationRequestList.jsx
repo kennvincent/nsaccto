@@ -59,7 +59,7 @@ export default function OBRList() {
                 {/* <th>Responsibility Center</th>
                 <th>Office Description</th>
                 <th>Particulars</th> */}
-                <th>Total Amount</th>
+                <th className='text-right'>Total Amount</th>
                 <th>Status</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
@@ -74,7 +74,7 @@ export default function OBRList() {
                 <td className='p-2'>{obr.officename}</td>
                 <td className='p-2'>{obr.officedesc}</td> */}
                 <td className='p-2'>{obr.particulars}</td>
-                <td className='p-2'>{obr.totalamount}</td>
+                <td className='p-2 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
                 <td className='p-2'>{obr.obrstatus}</td>
                 <td className='p-2'><a href="#" onClick={(e) => onClickApprove(e,{id:obr.id})}>{obr.obrstatus==='For Approval' && 'Approve'}</a></td>
                 <td className='p-2'><a href="#" onClick={(e) => onClickCancel(e,{id:obr.id})}>{obr.obrstatus==='For Approval' && 'Cancel'}</a></td>

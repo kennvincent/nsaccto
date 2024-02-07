@@ -27,8 +27,9 @@ export default function AcctObrView() {
           <td className='py-1'>{obr.officedesc}</td>
           <td className='py-1'>{obr.particulars}</td>
           <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
-          <td className='py-1'>{obr.obrstatus}</td>
-          <td className='py-1'><button className='btn btn-success btn-sm' onClick={()=>handleShowOBR(obr.id)}>Pay</button></td>
+          <td className='py-1 text-right'>{Number(obr.totalamountpaid).toLocaleString()}</td>
+          <td className='py-1 text-right'>{Number(obr.balance).toLocaleString()}</td>
+          <td className='py-1'>{obr.balance>0?<button className='btn btn-success btn-sm' onClick={()=>handleShowOBR(obr.id)}>Pay</button>:''}</td>
         </tr>
       )
     })
@@ -47,7 +48,8 @@ export default function AcctObrView() {
               <th>Office Description</th>
               <th>Particulars</th>
               <th>Total Amount</th>
-              <th>Status</th>
+              <th>Amount Paid</th>
+              <th>Balance</th>
               <th>|||</th>
             </tr>
           </thead>

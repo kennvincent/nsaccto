@@ -79,7 +79,7 @@ export default function handleLogin() {
             if(usertype=="ACTG"){
               navigate("/acctobrview");
             } else if(usertype=="BDGT"){
-              navigate("/acctobrview");
+              navigate("/obrlistbudget");
             } else if(usertype=="USR"){
               navigate("/officebudget");
             }

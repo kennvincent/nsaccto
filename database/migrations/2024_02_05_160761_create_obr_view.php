@@ -30,7 +30,13 @@ return new class extends Migration
             t3.amount,
             t1.obryear,
             (SELECT SUM(t4.amount) FROM obrdetails t4 WHERE t1.id=t4.obrid) as totalamount,
-            CASE 
+            IFNULL((SELECT SUM(t5.amountpaid) FROM vw_payments t5 WHERE t1.id=t5.obrid AND t3.id=t5.obr_detail_id ),0) as paid,
+            t3.amount - IFNULL((SELECT SUM(t6.amountpaid) FROM vw_payments t6 WHERE t3.id=t6.obr_detail_id),0) as balance1,
+            t3.amount - IFNULL((SELECT SUM(t6.amountpaid) FROM vw_payments t6 WHERE t3.id=t6.obr_detail_id),0) as balance,
+            IFNULL((SELECT SUM(t5.amountpaid) FROM vw_payments t5 WHERE t1.id=t5.obrid),0) as totalamountpaid,
+            (SELECT SUM(t4.amount) FROM obrdetails t4 WHERE t1.id=t4.obrid) - 
+            IFNULL((SELECT SUM(t5.amountpaid) FROM vw_payments t5 WHERE t1.id=t5.obrid),0) as totalbalance,
+              CASE 
                 WHEN t1.obrstatus='0' THEN 'Cancelled'
                 WHEN t1.obrstatus='1' THEN 'For Approval'
                 WHEN t1.obrstatus='2' THEN 'Approved'
@@ -40,7 +46,6 @@ return new class extends Migration
             FROM obrheaders t1
             LEFT JOIN offices t2 ON t1.officeid=t2.id
             LEFT JOIN obrdetails t3 on t1.id = t3.obrid
-        
  
         ");
     }

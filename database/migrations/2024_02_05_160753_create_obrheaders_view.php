@@ -21,6 +21,8 @@ return new class extends Migration
             t2.officedesc,
             t2.officeaddress,
             (SELECT SUM(t3.amount) FROM obrdetails t3 WHERE t1.id=t3.obrid) as totalamount,
+            IFNULL((SELECT SUM(t4.amountpaid) FROM vw_payments t4 WHERE t1.id=t4.obrid),0) as totalamountpaid,
+            IFNULL((SELECT SUM(t5.amount) FROM obrdetails t5 WHERE t1.id=t5.obrid) - IFNULL((SELECT SUM(t6.amountpaid) FROM vw_payments t6 WHERE t1.id=t6.obrid),0),0) as balance,
             CASE 
                 WHEN t1.obrstatus='0' THEN 'Cancelled'
                 WHEN t1.obrstatus='1' THEN 'For Approval'
