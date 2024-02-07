@@ -25,6 +25,12 @@ export default function AcctObrView() {
       navigate("/acctobrviewselected",{state:{obrid:obrid}});
     }
 
+
+    const handlePaidPreview = (obrid)=>{
+      navigate("/acctobrviewselected",{state:{obrid:obrid}});
+    }
+
+    
     const payableOBR = obrlist.map((obr)=>{
       return(
         <tr key={obr.id} className='p-0 m-0 border hover:bg-slate-100'> 
@@ -36,7 +42,9 @@ export default function AcctObrView() {
           <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
           <td className='py-1 text-right'>{Number(obr.totalamountpaid).toLocaleString()}</td>
           <td className='py-1 text-right'>{Number(obr.balance).toLocaleString()}</td>
-          <td className='py-1'>{obr.balance>0?<button className='btn btn-success btn-sm' onClick={()=>handleShowOBR(obr.id)}>Pay</button>:''}</td>
+          <td className='py-1'>{obr.balance>0?<button className='btn btn-success btn-sm w-[5rem]' 
+            onClick={()=>handleShowOBR(obr.id)}>Pay</button>:<button className='btn btn-success btn-sm w-[5rem]'  
+            onClick={()=>handleShowOBR(obr.id)}>Preview</button>}</td>
         </tr>
       )
     })
