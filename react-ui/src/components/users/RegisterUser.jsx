@@ -38,8 +38,7 @@ export default function registeruser() {
           }
       
           
-          
-          axiosClient.get(`/register`,newUser).then(res =>{
+          axiosClient.post(`/register`,newUser).then(res =>{
               alert(res.data.message);
           })
           .catch(function(error){ 
@@ -123,6 +122,7 @@ export default function registeruser() {
                                     <option value="ACTG">ACTG</option>
                                     <option value="BDGT">BDGT</option>
                                     <option value="VWR">VWR</option>
+                                    <option value="APRV">APRV</option>
                                 </select>
                             </td>
                         </tr>

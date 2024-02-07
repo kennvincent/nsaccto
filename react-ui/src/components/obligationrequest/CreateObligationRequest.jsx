@@ -192,7 +192,7 @@ export default function CreateObligationRequest() {
                     <p>Payee</p>
                 </div>
                 <div className='w-[85rem] h-8 border p-0'>
-                   <input type="text" name="payee" id="payee"   className='w-full py-0 px-2' onChange={handlePayeeInput}/>
+                   <input type="text" autocomplete="off" name="payee" id="payee"   className='w-full py-0 px-2' onChange={handlePayeeInput}/>
                 </div>
             </div>
             <div className='flex'>

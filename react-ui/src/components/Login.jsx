@@ -82,6 +82,8 @@ export default function handleLogin() {
               navigate("/obrlistbudget");
             } else if(usertype=="USR"){
               navigate("/officebudget");
+            } else if(usertype=="APRV"){
+              navigate("/officebudget");
             }
           
              

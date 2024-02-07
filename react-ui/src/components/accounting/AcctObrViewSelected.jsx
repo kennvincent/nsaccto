@@ -102,10 +102,15 @@ export default function AcctObrViewSelected() {
 
       const handleAmountChange = (index, event) => {
         let data2 = [...obr2];
-        data2[index]['balance'] = parseFloat(event.target.value);
-      
+        
+        if (parseFloat(event.target.value)<=parseFloat(data2[index]['balance1'])){
+            data2[index]['balance'] = parseFloat(event.target.value);
+        } else{
+            data2[index]['balance'] = data2[index]['balance1'];
+        }
+
         setObr2(data2);
-   
+            
         let totalamt=0;
         obr2.map((amt)=>{
             
