@@ -24,7 +24,6 @@ export default function AddNewOffice({visible,onClose}) {
           position:office.position
         }
     
-        console.log(newOffice)
       
         axiosClient.post(`/office`,newOffice).then(res =>{
             alert(res.data.message);
