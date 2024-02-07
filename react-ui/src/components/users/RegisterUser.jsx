@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useState,useReducer } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axiosClient from '../../axios-client';
 
 
 export default function registeruser() {
@@ -38,7 +39,7 @@ export default function registeruser() {
       
           
           
-          axios.post(`http://127.0.0.1:8000/api/register`,newUser).then(res =>{
+          axiosClient.get(`/register`,newUser).then(res =>{
               alert(res.data.message);
           })
           .catch(function(error){ 
@@ -57,7 +58,7 @@ export default function registeruser() {
   
 
     useEffect(()=>{
-        axios.get(`http://127.0.0.1:8000/api/offices`).then(res=>{
+        axiosClient.get(`/offices`).then(res=>{
             setOffices(res.data.offices);
         }).catch(function(error){
             console.log("ERROR " + error.response.status);

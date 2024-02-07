@@ -66,6 +66,7 @@ export default function CreateObligationRequest() {
             
         };
 
+        console.log(obr);
 
         axiosClient.post(`/obligationrequest`,obr).then(res=>{
             

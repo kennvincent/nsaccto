@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate,Link } from 'react-router-dom';
 import axiosClient from '../../axios-client';
+import LoadOfficesDropDown from '../shared/LoadOfficesDropDown';
 
 export default function ObrListBudget() {
     const [obrlist,setObrList] = useState([]);
@@ -40,6 +41,7 @@ export default function ObrListBudget() {
       <div>
         <h3 className="text-gray-700 font-medium">Obligation Requests</h3>
       </div>
+      <LoadOfficesDropDown />
       <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">
         <table className='w-full text-gray-700 border-collapse  border-slate-400 border mt-2'>
           <thead className='sticky top-0 bg-slate-200'>

@@ -72,7 +72,7 @@ useEffect(()=>{
     
      
       
-      axios.put(`http://127.0.0.1:8000/api/office/update`,updateData).then(res =>{
+      axiosClient.put(`/office/update`,updateData).then(res =>{
           alert(res.data.message);
       })
       .catch(function(error){ 
