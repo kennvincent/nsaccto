@@ -16,6 +16,7 @@ return new class extends Migration
             t1.payee,
             t1.particulars,
             t1.obryear,
+            t1.officeid,
             t2.officecode,
             t2.officename,
             t2.officedesc,

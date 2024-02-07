@@ -137,12 +137,26 @@ class ObligationRequestController extends Controller
                     ->select('id','payee','particulars','officecode','officename',
                     'officedesc','officeaddress','totalamount','totalamountpaid',
                     'balance','obrstatus')
-                    ->where('obrstatus','=','Obligated')
                     ->orderBy('id','DESC')
                     ->get();
 
         return response()->json(['obrlist'=>$obrlist]);
     }
+
+    public function accountingviewlistselectedoffice($id){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                    'officedesc','officeaddress','totalamount','totalamountpaid',
+                    'balance','obrstatus')
+                    ->where('officeid','=',$id)
+                    ->orderBy('id','DESC')
+                    ->get();
+
+        return response()->json(['obrlist'=>$obrlist]);
+    }
+
+
+
     public function approve($obrid){
         $affected = DB::table('obrheaders')
               ->where('id', $obrid)

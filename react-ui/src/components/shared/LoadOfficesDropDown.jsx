@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axiosClient from '../../axios-client';
 
-export default function LoadOfficesDropDown() {
+export default function LoadOfficesDropDown({onChangeOffice}) {
     const [offices,setOffices] = useState([]);
 
     useEffect(()=>{
@@ -18,9 +18,11 @@ export default function LoadOfficesDropDown() {
           <option value={office.id} key={office.id}>{office.officename}</option>
         );
       });
+
+     
   return (
     <div>
-        <select className='p-1 w-[20rem]' >
+        <select className='p-1 w-[20rem]' onChange={(e)=>onChangeOffice(e)}>
             <option value="" ></option>
             {loadOffices}
         </select>

@@ -72,6 +72,8 @@ Route::get('obligationrequest/printpreview/{id}',[ObligationRequestController::c
 Route::get('obligationrequest/obrsum/{id}',[ObligationRequestController::class,'obrsum']);
 
 Route::get('obligationrequest/accounting/payable/view',[ObligationRequestController::class,'accountingviewlist']);
+Route::get('obligationrequest/accounting/selectedoffice/view/{id}',[ObligationRequestController::class,'accountingviewlistselectedoffice']);
+
 Route::get('obligationrequest/accounting/selected/view/{id}',[ObligationRequestController::class,'accountingselectedviewobr']);
 Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);
 

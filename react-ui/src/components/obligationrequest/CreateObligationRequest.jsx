@@ -355,9 +355,7 @@ export default function CreateObligationRequest() {
         onAdd={handleAddParticulars} passArrayData={getArrayData}/>
 
 
-        {/* <AddParticulars visible={showParticulars} onClose={handleHideAddParticulars} 
-        onAdd={handleAddParticulars} passParticulars={getData} 
-        passAccountCode={getAccountCode} passAmount={getAmount} passArrayData={getArrayData}/> */}
+     
     
     
     </div>

@@ -35,14 +35,6 @@ const handleSubmit = (e)=>{
 }
 
 
-// const getAccount = (e)=>{
-//     const id = e.target.value;
-//     axios.get(`http://127.0.0.1:8000/api/getaccount/${id}`).then(res=>{
-//         setAccountCode(res.data.account[0].accountcode);
-//         console.log(accountCode);
-//     });
-    
-// }
 
 const accountsList = accounts.map((account) =>{
     return(
@@ -78,10 +70,7 @@ if(!visible) return null;
                     </div>
                 </div>
 
-                {/* <div className='w-full h-10 border border-black mt-2 pt-2 px-3'>
-                    <p name='account' id='account'>{accountCode}</p>
-                </div>
-               */}
+               
 
                 <div className="flex flex-col mt-2">
                     <div>
@@ -97,8 +86,7 @@ if(!visible) return null;
 
                 <div className="text-center gap-2 flex mt-2">
                     <button  className="px-5 py-2 bg-green-700 text-white rounded" 
-                        // onClick={()=>{passParticulars(particulars),passAccountCode(account.accountcode),passAmount(amount),passArrayData(arrayData)}} 
-                        // onClick={()=>passArrayData(particulars,account.id, account.accountcode,amount)}
+                       
                         onClick={()=>passArrayData(particulars,amount)}
                         >
                         Add
