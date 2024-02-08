@@ -60,13 +60,8 @@ export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
 		label: 'Register User',
 		path: '/register',
 		icon: <HiOutlineDocumentText />
-	},
-	{
-		key: 'dynamicinput',
-		label: 'Dynamic Input',
-		path: '/dynamicinput',
-		icon: <HiOutlineDocumentText />
-	},
+	}
+	
 ]
 
 export const DASHBOARD_SIDEBAR_LINKS = [

@@ -23,6 +23,7 @@ import ApprovedObrListBudget  from "./components/obligationrequest/ApprovedObrLi
 import DisplayOffices from "./components/offices/DisplayOffices";
 import ApprovedOBRPreview from "./components/obligationrequest/ApprovedOBRPreview";
 import DynamicInput from "./components/accounting/DynamicInput";
+import AcctPaidPreview from "./components/accounting/AcctPaidPreview";
 
 const router = createBrowserRouter([
     {
@@ -100,7 +101,12 @@ const router = createBrowserRouter([
            {
             path:'/acctobrviewselected',
             element:<AcctObrViewSelected/>
+           },
+           {
+            path:'/acctpaidpreview',
+            element:<AcctPaidPreview/>
            }
+           
            ,
            {
             path:'/settings',
