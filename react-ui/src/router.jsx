@@ -24,6 +24,7 @@ import DisplayOffices from "./components/offices/DisplayOffices";
 import ApprovedOBRPreview from "./components/obligationrequest/ApprovedOBRPreview";
 import DynamicInput from "./components/accounting/DynamicInput";
 import AcctPaidPreview from "./components/accounting/AcctPaidPreview";
+import CreateVoucher from "./components/accounting/CreateVoucher";
 
 const router = createBrowserRouter([
     {
@@ -106,7 +107,11 @@ const router = createBrowserRouter([
             path:'/acctpaidpreview',
             element:<AcctPaidPreview/>
            }
-           
+           ,
+           {
+            path:'/createvoucher',
+            element:<CreateVoucher/>
+           }
            ,
            {
             path:'/settings',

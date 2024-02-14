@@ -3,9 +3,9 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
   app.use(
-    'https://api.vincentsabelao.com', // the endpoint you want to proxy
+    'https://api.nsaccto.com', // the endpoint you want to proxy
     createProxyMiddleware({
-      target: 'https://api.vincentsabelao.com/api', // the domain you want to proxy to
+      target: 'https://api.nsaccto.com/api', // the domain you want to proxy to
       changeOrigin: true,
     })
   );
