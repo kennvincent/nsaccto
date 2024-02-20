@@ -50,6 +50,12 @@ export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
 		icon: <HiOutlineDocumentText />,
 	},
 	{
+		key: 'acctobrpaidview',
+		label: 'Paid Obligation Request',
+		path: '/acctobrpaidview',
+		icon: <HiOutlineDocumentText />,
+	},
+	{
 		key: 'importbudget',
 		label: 'Import Budget',
 		path: '/importbudget',

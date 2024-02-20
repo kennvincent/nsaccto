@@ -137,6 +137,19 @@ class ObligationRequestController extends Controller
                     ->select('id','payee','particulars','officecode','officename',
                     'officedesc','officeaddress','totalamount','totalamountpaid',
                     'balance','obrstatus')
+                    ->where('balance','>',0)
+                    ->orderBy('id','DESC')
+                    ->get();
+
+        return response()->json(['obrlist'=>$obrlist]);
+    }
+
+    public function accountingviewobrpaidlist(){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                    'officedesc','officeaddress','totalamount','totalamountpaid',
+                    'balance','obrstatus')
+                    ->where('balance','=',0)
                     ->orderBy('id','DESC')
                     ->get();
 

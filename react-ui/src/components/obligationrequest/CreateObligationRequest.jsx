@@ -66,7 +66,7 @@ export default function CreateObligationRequest() {
             
         };
 
-        console.log(obr);
+        
 
         axiosClient.post(`/obligationrequest`,obr).then(res=>{
             
@@ -184,7 +184,6 @@ export default function CreateObligationRequest() {
         </div>
         <div className='card-body h-[800px] overflow-scroll'>
             <div className='text-center p-0'>
-              
                 <h4>OBLIGATION REQUEST</h4>
             </div>
             <div className='flex'>
