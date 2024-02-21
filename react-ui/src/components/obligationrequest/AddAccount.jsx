@@ -14,6 +14,7 @@ const [arrayData,SetArrayDate]=useState(['AccountCode','Amount'])
 const handleInput=(e)=>{
     setParticulars(e.target.value);
 }
+
 const handleInputAmount=(e)=>{
     setAmount(e.target.value);
 }

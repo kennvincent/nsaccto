@@ -17,6 +17,7 @@ export default function CreateObligationRequest() {
     const [officeCode,setOfficeCode] = useState();
     const [authorizedPersonnel,setAuthorizedPersonnel] = useState();
     const [personnelPosition,setPersonnelPosition] = useState();
+    
     const [showParticulars,setShowParticulars] = useState(false);
     const [particulars,setParticulars] = useState("");
     const [payee,setPayee] = useState("");

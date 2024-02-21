@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axiosClient from '../../axios-client';
+import VoucherFloatingButtons from './VoucherFloatingButtons';
+import AddDeduction from './AddDeduction';
 
 export default function CreateVoucher() {
     const location = useLocation();
@@ -10,7 +12,20 @@ export default function CreateVoucher() {
     const [governor,setGovernor]= useState();
     const [provincialTreasurer,setProvincialTreasurer] = useState();
 
-    
+    const [deductions,setDeductions] = useState([
+
+    ]);
+
+    const [showAddDeduction,setShowAddDeduction]=useState(false);
+
+    const [inputFields, setInputFields] = useState([
+      { deduction: '' }
+    ])
+
+
+   
+
+   
 
     let obrid = location.state.obrid;
 
@@ -29,10 +44,58 @@ export default function CreateVoucher() {
       }
 
       setProvincialAccountant('ATTY. MARY GRACE S. ROYO, CPA');
-    setGovernor('EDWIN MARINO C. ONGCHUAN');
-    setProvincialTreasurer('ALLAN G. VALENCIANO');
+      setGovernor('EDWIN MARINO C. ONGCHUAN');
+      setProvincialTreasurer('ALLAN G. VALENCIANO');
       fetchData();
     },[])
+    
+    const handleDeductionClick = ()=>{
+      setShowAddDeduction(true);
+    }
+    
+    const handleDeductionClose = ()=>{
+      setShowAddDeduction(false);
+    }
+
+    const removeDeduction = (index)=>{
+      let data = [...deductions];
+      data.splice(index, 1)
+      setDeductions(data)
+    
+    }
+
+    const getArrayData =(deduction,amount)=>{
+
+      let newfield = { description: deduction, amount: amount }
+
+      setDeductions([...deductions, newfield])
+      setShowAddDeduction(false);
+
+    }
+
+   
+  
+      
+    var totalDeductionsAmmount=0;
+    var grandTotal=0;
+
+    const deductionsLists = deductions.map((deduct,index)=>{
+      totalDeductionsAmmount += parseFloat(deduct.amount)
+      grandTotal = totalAmount - totalDeductionsAmmount
+      return(
+        <>
+          
+          <tr key={index} className='p-0 m-0'>
+            <td className='p-0 m-0 text-lg'>{deduct.description}</td>
+            <td className='text-right text-lg p-0 m-0'>{deduct.amount>0?Number(deduct.amount).toLocaleString():''}</td>
+            <td className='text-right text-rose-600 p-0 m-0'><button onClick={() => removeDeduction(index)}>Remove</button></td>
+          </tr>
+         
+        </>
+        
+       
+      )
+    })
     
   return (
     <div className='w-[full] h-[800px] overflow-scroll'>
@@ -105,11 +168,36 @@ export default function CreateVoucher() {
 
         {/* Deductions */}
         <div className='flex h-[250px]'>
-          <div className='p-0 px-1 border-r border-black w-[740px] font-sans '>
-            <p className='p-0 mt-0 '></p>
+
+          <div className='p-0 border-r border-black w-[739px] font-sans '>
+            <div className='flex h-[220px]  w-[740px] '>
+              <div className='w-[370px] h-[220px] text-right after:block'><p>{totalDeductionsAmmount>0?'Less:':''}</p></div>
+              <div className='w-[369px] h-[220px] text-4xl px-3'>
+                <table className='w-[200px]'>
+                  <tbody>
+                    {deductionsLists}
+                    
+                    <tr>
+                      <td className='p-0 m-0 text-lg'>{totalDeductionsAmmount>0?'Total:':''}</td>
+                      <td className='text-right text-lg p-0 m-0'>{totalDeductionsAmmount>0?Number(totalDeductionsAmmount).toLocaleString():''}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+              </div>
+            </div>
+            <div className='h-[50px]  w-[740px] text-center'>
+              <button onClick={handleDeductionClick} className='btn btn-primary btn-sm'>Add deduction</button>
+            </div>
           </div>
-          <div className='p-1  w-[284px]'>
-            <p className='p-0 mt-2 '></p>
+
+          <div className='p-1  w-[284px] text-right font-sans text-lg'>
+            <div>
+              <p>{totalDeductionsAmmount>0?'-' + Number(totalDeductionsAmmount).toLocaleString():''}</p>
+            </div>
+            <div>
+              <p>{grandTotal>0?Number(grandTotal).toLocaleString():''}</p>
+            </div>
           </div>
         </div>
 
@@ -314,10 +402,12 @@ export default function CreateVoucher() {
             </div>
           </div>
         </div>
-
-
+        
       </div>
+
+      <AddDeduction visible={showAddDeduction} onClose={handleDeductionClose} passArrayData={getArrayData}/>
     </div>
+    
   )
 
 }
