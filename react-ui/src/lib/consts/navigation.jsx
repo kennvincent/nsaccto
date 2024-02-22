@@ -56,6 +56,12 @@ export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
 		icon: <HiOutlineDocumentText />,
 	},
 	{
+		key: 'voucherlist',
+		label: 'Vouchers List',
+		path: '/voucherslist',
+		icon: <HiOutlineDocumentText />,
+	},
+	{
 		key: 'importbudget',
 		label: 'Import Budget',
 		path: '/importbudget',

@@ -52,4 +52,10 @@ class VoucherController extends Controller
     public function printpreview(){
         
     }
+
+    public function voucherslist(){
+        $vouchers = Voucher::all();
+        return response()->json(['vouchers'=>$vouchers]);
+    }
+
 }

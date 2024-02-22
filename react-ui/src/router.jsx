@@ -27,6 +27,7 @@ import AcctPaidPreview from "./components/accounting/AcctPaidPreview";
 import CreateVoucher from "./components/voucher/CreateVoucher";
 import AccObrPaidView from "./components/accounting/AccObrPaidView";
 import VoucherPrintPreview from "./components/Voucher/VoucherPrintPreview";
+import VoucherList from "./components/Voucher/VoucherList";
 
 const router = createBrowserRouter([
     {
@@ -122,6 +123,11 @@ const router = createBrowserRouter([
            {
             path:'/createvoucher',
             element:<CreateVoucher/>
+           }
+           ,
+           {
+            path:'/voucherslist',
+            element:<VoucherList/>
            }
            ,
            {

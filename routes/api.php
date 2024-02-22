@@ -94,3 +94,4 @@ Route::get('budget/view',[BudgetController::class,'samplebudget']);
 
 Route::post('voucher',[VoucherController::class,'savevoucher']);
 Route::get('voucher/printpreview/{id}',[VoucherController::class,'printpreview']);
+Route::get('voucher/list',[VoucherController::class,'voucherslist']);
