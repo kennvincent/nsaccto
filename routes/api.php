@@ -12,7 +12,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BudgetImportController;
 use App\Http\Controllers\BudgetController;
-
+use App\Http\Controllers\VoucherController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -91,3 +91,6 @@ Route::get('getaccounts/{officename}',[BudgetController::class,'accountsperoffic
 Route::get('getaccount/{id}',[BudgetController::class,'getaccount']);
 
 Route::get('budget/view',[BudgetController::class,'samplebudget']);
+
+Route::post('voucher',[VoucherController::class,'savevoucher']);
+Route::get('voucher/printpreview/{id}',[VoucherController::class,'printpreview']);

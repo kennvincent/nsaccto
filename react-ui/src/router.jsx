@@ -26,6 +26,7 @@ import DynamicInput from "./components/accounting/DynamicInput";
 import AcctPaidPreview from "./components/accounting/AcctPaidPreview";
 import CreateVoucher from "./components/voucher/CreateVoucher";
 import AccObrPaidView from "./components/accounting/AccObrPaidView";
+import VoucherPrintPreview from "./components/Voucher/VoucherPrintPreview";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
     {
         path:'/obrprintpreview',
         element:<ObligationRequestPrintPreview/>
+    },
+    {
+        path:'voucherprintpreview',
+        element:<VoucherPrintPreview />
     },
     {
         path:'/acctlogin',

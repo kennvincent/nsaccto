@@ -1,161 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import axiosClient from '../../axios-client';
-import VoucherFloatingButtons from './VoucherFloatingButtons';
-import AddDeduction from './AddDeduction';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
 
-export default function CreateVoucher() {
-    const location = useLocation();
-    const [totalAmount,setTotalAmount] = useState();
-    const [obrnumber,setObrNumber] = useState();
-    const [payee,setPayee] = useState();
-    const [explanation,setExplanation] = useState();
-    const [address,setAddress] = useState();
-    const [bank,setBank] = useState();
-    const [officeName,setOfficeName] = useState();
-    const [signatory1,setSignatory1] = useState();
-    const [signatory1Position,setSignatory1Position] = useState();
-    const [signatory2,setSignatory2] = useState();
-    const [signatory2Position,setSignatory2Position] = useState();
-    const [signatory3,setSignatory3] = useState();
-    const [signatory3Position,setSignatory3Position] = useState();
-    const navigate = useNavigate();
-    const [deductions,setDeductions] = useState([]);
-
-    const [showAddDeduction,setShowAddDeduction]=useState(false);
-
-    const [inputFields, setInputFields] = useState([
-      { deduction: '' }
-    ])
-
-
-   
-
-   
-
-    let obrid = location.state.obrid;
-
-    useEffect(()=>{
-      const fetchData = async()=>{
-        try{
-          await axiosClient.get(`/obligationrequest/accounting/selected/view/${obrid}`).then(res =>{
-            setTotalAmount(res.data.obr[0].totalamount)
-            setOfficeName(res.data.obr[0].officename)
-            setObrNumber('temp-0001');
-        
-          })
-        }
-        catch(e){
-
-        }
-      }
-
-      setSignatory1('ATTY. MARY GRACE S. ROYO, CPA');
-      setSignatory1Position('Provincial Accountant')
-      setSignatory2('ALLAN G. VALENCIANO');
-      setSignatory2Position('Provincial Treasurer')
-      setSignatory3('EDWIN MARINO C. ONGCHUAN');
-      setSignatory3Position('Governor')
-      
-      fetchData();
-    },[])
-    
-    const handleDeductionClick = ()=>{
-      setShowAddDeduction(true);
-    }
-    
-    const handleDeductionClose = ()=>{
-      setShowAddDeduction(false);
-    }
-
-    const removeDeduction = (index)=>{
-      let data = [...deductions];
-      data.splice(index, 1)
-      setDeductions(data)
-    
-    }
-
-    const getArrayData =(deduction,amount)=>{
-
-      let newfield = { description: deduction, amount: amount }
-
-      setDeductions([...deductions, newfield])
-      setShowAddDeduction(false);
-
-    }
-
-   const handlePayeeInput = (e)=>{
-    e.preventDefault();
-    setPayee(e.target.value)
-   }
-
-   const handleExplanationInput = (e)=>{
-    e.preventDefault();
-    setExplanation(e.target.value)
-   }
-
-   const handleAddressInput = (e)=>{
-    e.preventDefault();
-    setAddress(e.target.value);
-   }
-
-   const handleBankInput = (e)=>{
-    e.preventDefault();
-    setBank(e.target.value);
-   }
-  
-      
-    var totalDeductionsAmmount=0;
-    var grandTotal=0;
-
-    const deductionsLists = deductions.map((deduct,index)=>{
-      totalDeductionsAmmount += parseFloat(deduct.amount)
-      grandTotal = totalAmount - totalDeductionsAmmount
-      return(
-        <>
-          
-          <tr key={index} className='p-0 m-0'>
-            <td className='p-0 m-0 text-lg'>{deduct.description}</td>
-            <td className='text-right text-lg p-0 m-0'>{deduct.amount>0?Number(deduct.amount).toLocaleString():''}</td>
-            <td className='text-right text-rose-600 p-0 m-0'><button onClick={() => removeDeduction(index)}>Remove</button></td>
-          </tr>
-         
-        </>
-        
-       
-      )
-    })
-    
-    const createDisbursementVoucher = ()=>{
-
-      const voucherData = {
-        'obrnumber' : obrnumber,
-        'payee' :payee,
-        'explanation':explanation,
-        'address' : address,
-        'bank' : bank,
-        'deductions' : deductions,
-        'signatory1' :signatory1,
-        'signatory1position':signatory1Position,
-        'signatory2' : signatory2,
-        'signatory2position' : signatory2Position,
-        'signatory3' : signatory3,
-        'signatory3position' : signatory3Position
-      }
-
-      
-      axiosClient.post('/voucher',voucherData).then(res=>{
-        if(res.data.voucher>0){
-          alert('Disbursement Voucher have been created successfully!!');
-          navigate('/voucherprintpreview');
-        }
-      })
-    }
-
-    const handleClose = ()=>{
-      navigate('/acctobrview');
-    }
+export default function VoucherPrintPreview() {
   return (
     <div className='w-[full] h-[800px] overflow-scroll'>
       <div className='font-serif w-[1024px] border border-black  m-auto bg-white'>
@@ -185,7 +30,7 @@ export default function CreateVoucher() {
             <p className='p-0 mt-2 '>Payee</p>
           </div>
           <div className='p-0 px-1 border-r border-black w-[630px]'>
-            <p className='p-0 mt-2 '><input type="text" onChange={handlePayeeInput} name="payee" id="payee" className='w-full' /></p>
+            <p className='p-0 mt-2 '>Name of Payee</p>
           </div>
           <div className='p-1  w-[284px]'>
             <p className='p-0 mt-2 '>Oblication Request No</p>
@@ -197,7 +42,7 @@ export default function CreateVoucher() {
             <p className='p-0 mt-2 '>Address</p>
           </div>
           <div className='p-0 px-1 border-r border-black w-[630px]'>
-            <p className='p-0 mt-2 '><p className='p-0 mt-2 '><input type="text" onChange={handleAddressInput} name="address" id="address" className='w-full' /></p></p>
+            <p className='p-0 mt-2 '>Address of payee</p>
           </div>
           <div className='flex p-1 w-[284px]'>
             <p className='p-0 mt-2'>Responsibility Center</p>
@@ -218,7 +63,7 @@ export default function CreateVoucher() {
 
         <div className='border-t border-black flex h-[250px]'>
           <div className='p-0  border-r border-black w-[740px] font-sans '>
-            <textarea name="explanation" id="" onChange={handleExplanationInput} cols="30" rows="10" className='w-full border-0'></textarea>
+            <p>Explanation.....</p>
           </div>
           <div className='p-1  w-[284px] text-right'>
             <p className='p-0 mt-2 font-sans font-bold text-lg'>{Number(totalAmount).toLocaleString()}</p>
@@ -396,7 +241,7 @@ export default function CreateVoucher() {
             <div className='flex w-[300px] h-7 border-r border-black px-1'>
               <div className='w-[90px]'><p>Bank Name</p></div>
               <div className='w-[210px] h-7'>
-                <input type="text" onChange={handleBankInput} name="bankname" id="bankname"  className='w-[210px] h-7' />
+                <p>Name of the bank</p>
               </div>
 
             </div>
@@ -465,13 +310,7 @@ export default function CreateVoucher() {
         
       </div>
 
-      <div className='w-[1024px] h-10  m-auto mt-2 text-right'>
-        <button onClick={createDisbursementVoucher} className='btn btn-primary'>Create Disbursement Voucher</button>
-        <button onClick={handleClose} className='btn btn-primary w-[120px] ml-2'>Close</button>
-      </div>
-      <AddDeduction visible={showAddDeduction} onClose={handleDeductionClose} passArrayData={getArrayData}/>
+      
     </div>
-    
   )
-
 }
