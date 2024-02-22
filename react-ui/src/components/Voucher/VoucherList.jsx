@@ -22,11 +22,12 @@ export default function VoucherList() {
        
    const vouchers = vouchersList.map((voucher)=>{
     return(
-        <tr key={voucher.id}>
-            <td>{voucher.payee}</td>
-            <td>{voucher.address}</td>
-            <td>{voucher.explanation}</td>
-            <td><button onClick={handleVoucherView} className='btn btn-primary btn-sm'>View</button></td>
+        <tr key={voucher.id} className=' hover:bg-slate-100'>
+            <td className='p-1'>{voucher.obrnumber}</td>
+            <td className='p-1'>{voucher.payee}</td>
+            <td className='p-1'>{voucher.address}</td>
+            <td className='p-1'>{voucher.explanation}</td>
+            <td className='p-1'><button onClick={handleVoucherView} className='btn btn-primary btn-sm'>View</button></td>
         </tr>
     )
    })
@@ -38,9 +39,10 @@ export default function VoucherList() {
         <div className='card'>
             <div className='card-header'>Vouchers List</div>
             <div className='card-body'>
-                <table>
-                    <thead>
+                <table className='w-full border-collapse border  border-slate-400'>
+                    <thead className='sticky top-0 bg-slate-200'>
                         <tr>
+                            <th>OBR Number</th>
                             <th>Payee</th>
                             <th>Address</th>
                             <th>Explanation</th>

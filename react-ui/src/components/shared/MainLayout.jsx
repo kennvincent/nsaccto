@@ -9,6 +9,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import AccountingSidebar from './AccountingSidebar'
 import BudgetSidebar from './BudgetSidebar'
 import {signal} from "@preact/signals-react"
+import OfficeHeadSidebar from './OfficeHeadSidebar'
 
 export default function MainLayout() {
   
@@ -28,6 +29,7 @@ export default function MainLayout() {
       {usertype ==="USR" &&  <Sidebar/>}
       {usertype ==="ACTG" && <AccountingSidebar/>}
       {usertype ==="BDGT" && <BudgetSidebar/>}
+      {usertype ==="APRV" && <OfficeHeadSidebar/>}
 
       <div className='flex-1'>
         <Header/>

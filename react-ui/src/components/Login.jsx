@@ -83,7 +83,7 @@ export default function handleLogin() {
             } else if(usertype=="USR"){
               navigate("/officebudget");
             } else if(usertype=="APRV"){
-              navigate("/officebudget");
+              navigate("/obrofficeforapproval");
             }
           
              

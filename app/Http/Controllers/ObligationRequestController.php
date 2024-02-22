@@ -181,7 +181,7 @@ class ObligationRequestController extends Controller
         $affected = DB::table('obrheaders')
               ->where('id', $obrid)
               ->update(['obrstatus' => 2]);
-        return response()->json(['message'=>"Saved as obligated"]);
+        return response()->json(['message'=>"Obligation Request have been approved"]);
     }
 
     public function officecancel($obrid){

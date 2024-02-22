@@ -28,6 +28,8 @@ import CreateVoucher from "./components/voucher/CreateVoucher";
 import AccObrPaidView from "./components/accounting/AccObrPaidView";
 import VoucherPrintPreview from "./components/Voucher/VoucherPrintPreview";
 import VoucherList from "./components/Voucher/VoucherList";
+import OfficeForApprovalObligationRequestList from "./components/obrofficeapproval/OfficeForApprovalObligationRequestList";
+import OfficeApprovedObligationRequest from "./components/obrofficeapproval/OfficeApprovedObligationRequest";
 
 const router = createBrowserRouter([
     {
@@ -118,6 +120,15 @@ const router = createBrowserRouter([
            {
             path:'/acctpaidpreview',
             element:<AcctPaidPreview/>
+           }
+           ,
+           {
+            path:'/obrofficeforapproval',
+            element:<OfficeForApprovalObligationRequestList/>
+           },
+           {
+            path:'/obrofficeapproved',
+            element:<OfficeApprovedObligationRequest/>
            }
            ,
            {

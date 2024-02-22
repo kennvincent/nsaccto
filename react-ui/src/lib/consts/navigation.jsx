@@ -99,6 +99,26 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 	
 ]
 
+export const DASHBOARD_OFFICEHEAD_SIDEBAR_LINKS = [
+
+	
+	
+	{
+		key: 'obrforapprovallist',
+		label: 'OBR for Approval',
+		path: '/obrofficeforapproval',
+		icon: <HiOutlineDocumentText />,
+	},
+	{
+		key: 'officeapproveobr',
+		label: 'Approved OBR',
+		path: '/obrofficeapproved',
+		icon: <HiOutlineDocumentText />,
+	},
+	
+]
+
+
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
 	{
 		key: 'settings',

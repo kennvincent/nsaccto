@@ -3,9 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import axiosClient from '../../axios-client';
 
-
-export default function OBRList() {
-
+export default function OfficeApprovedObligationRequest() {
   const [obrlist,setObrList] = useState([]);
   const navigate = useNavigate();
 
@@ -76,7 +74,6 @@ export default function OBRList() {
                 <td className='p-2'>{obr.particulars}</td>
                 <td className='p-2 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
                 <td className='p-2'>{obr.obrstatus}</td>
-                <td className='p-2'><a href="#" onClick={(e) => onClickCancel(e,{id:obr.id})}>{obr.obrstatus==='For Approval' && 'Cancel'}</a></td>
                 <td className='p-2'><a href="#" onClick={(e) => onClickPreview(e,{id:obr.id})}>Print Preview</a></td>
                 
               </tr>
@@ -87,7 +84,5 @@ export default function OBRList() {
         
       </div>
     </div>
-
-
   )
 }
