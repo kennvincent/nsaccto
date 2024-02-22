@@ -1,8 +1,62 @@
-import React from 'react'
+
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import axiosClient from '../../axios-client';
+import AddDeduction from './AddDeduction';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function VoucherPrintPreview() {
+    const location = useLocation();
+    const [totalAmount,setTotalAmount] = useState();
+    const [obrnumber,setObrNumber] = useState();
+    const [payee,setPayee] = useState();
+    const [explanation,setExplanation] = useState();
+    const [address,setAddress] = useState();
+    const [bank,setBank] = useState();
+    const [officeName,setOfficeName] = useState();
+    const [signatory1,setSignatory1] = useState();
+    const [signatory1Position,setSignatory1Position] = useState();
+    const [signatory2,setSignatory2] = useState();
+    const [signatory2Position,setSignatory2Position] = useState();
+    const [signatory3,setSignatory3] = useState();
+    const [signatory3Position,setSignatory3Position] = useState();
+    const navigate = useNavigate();
+    const [deductions,setDeductions] = useState([]);
+
+    useEffect(()=>{
+        setSignatory1('ATTY. MARY GRACE S. ROYO, CPA');
+        setSignatory1Position('Provincial Accountant')
+        setSignatory2('ALLAN G. VALENCIANO');
+        setSignatory2Position('Provincial Treasurer')
+        setSignatory3('EDWIN MARINO C. ONGCHUAN');
+        setSignatory3Position('Governor')
+    },[])
+    
+
+    var totalDeductionsAmmount=0;
+    var grandTotal=0;
+
+    const deductionsLists = deductions.map((deduct,index)=>{
+        totalDeductionsAmmount += parseFloat(deduct.amount)
+        grandTotal = totalAmount - totalDeductionsAmmount
+        return(
+          <>
+            
+            <tr key={index} className='p-0 m-0'>
+              <td className='p-0 m-0 text-lg'>{deduct.description}</td>
+              <td className='text-right text-lg p-0 m-0'>{deduct.amount>0?Number(deduct.amount).toLocaleString():''}</td>
+              <td className='text-right text-rose-600 p-0 m-0'><button onClick={() => removeDeduction(index)}>Remove</button></td>
+            </tr>
+           
+          </>
+          
+         
+        )
+      })
+    
   return (
-    <div className='w-[full] h-[800px] overflow-scroll'>
+    <div className='w-[full] h-auto'>
       <div className='font-serif w-[1024px] border border-black  m-auto bg-white'>
         <div className='text-center p-1 '>
           <p className='p-0 m-0'>Republic of the Philippines</p>
@@ -90,9 +144,7 @@ export default function VoucherPrintPreview() {
                 
               </div>
             </div>
-            <div className='h-[50px]  w-[740px] text-center'>
-              <button onClick={handleDeductionClick} className='btn btn-primary btn-sm'>Add deduction</button>
-            </div>
+            
           </div>
 
           <div className='p-1  w-[284px] text-right font-sans text-lg'>

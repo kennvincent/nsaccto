@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axiosClient from '../../axios-client';
-import VoucherFloatingButtons from './VoucherFloatingButtons';
 import AddDeduction from './AddDeduction';
 import { useNavigate } from 'react-router-dom';
 
