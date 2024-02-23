@@ -16,8 +16,10 @@ export default function VoucherList() {
     },[]);
 
 
-    const handleVoucherView = (e)=>{
-        navigate('/voucherprintpreview');
+    const handleVoucherView = (voucher_id)=>{
+        window.localStorage.setItem('voucher_id',voucher_id);
+        navigate('/voucherprintpreview',{state:{voucher_id:voucher_id}});
+        
        }
        
    const vouchers = vouchersList.map((voucher)=>{
@@ -27,7 +29,7 @@ export default function VoucherList() {
             <td className='p-1'>{voucher.payee}</td>
             <td className='p-1'>{voucher.address}</td>
             <td className='p-1'>{voucher.explanation}</td>
-            <td className='p-1'><button onClick={handleVoucherView} className='btn btn-primary btn-sm'>View</button></td>
+            <td className='p-1'><button onClick={()=>handleVoucherView(voucher.id)} className='btn btn-primary btn-sm'>View</button></td>
         </tr>
     )
    })

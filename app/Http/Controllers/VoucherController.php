@@ -19,6 +19,7 @@ class VoucherController extends Controller
             $voucher->payee = $request->payee;
             $voucher->explanation = $request->explanation;
             $voucher->address = $request->address;
+            $voucher->obramount = $request->obramount;
             $voucher->bank = $request->bank;
             $voucher->signatory1 = $request->signatory1;
             $voucher->signatory1position = $request->signatory1position;
@@ -56,6 +57,29 @@ class VoucherController extends Controller
     public function voucherslist(){
         $vouchers = Voucher::all();
         return response()->json(['vouchers'=>$vouchers]);
+    }
+
+
+    public function selectedvoucher($voucher_id){
+        $voucher = DB::table('vw_voucher')
+                    ->select('id',
+                            'obrnumber',
+                            'payee',
+                            'explanation',
+                            'address',
+                            'obramount',
+                            'description',
+                            'amount',
+                            'bank',
+                            'signatory1',
+                            'signatory1position',
+                            'signatory2',
+                            'signatory2position',
+                            'signatory3',
+                            'signatory3position')
+                    ->where('id','=',[$voucher_id])
+                    ->get();
+            return response()->json(['voucher'=>$voucher]);
     }
 
 }

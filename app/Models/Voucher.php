@@ -13,6 +13,7 @@ class Voucher extends Model
         'payee',
         'explanation',
         'address',
+        'obramount',
         'bank',
         'signatory1',
         'signatory1position',

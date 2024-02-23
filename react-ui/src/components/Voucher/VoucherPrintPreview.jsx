@@ -1,13 +1,12 @@
 
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import axiosClient from '../../axios-client';
 import AddDeduction from './AddDeduction';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 
 
 export default function VoucherPrintPreview() {
-    const location = useLocation();
+
     const [totalAmount,setTotalAmount] = useState();
     const [obrnumber,setObrNumber] = useState();
     const [payee,setPayee] = useState();
@@ -23,6 +22,11 @@ export default function VoucherPrintPreview() {
     const [signatory3Position,setSignatory3Position] = useState();
     const navigate = useNavigate();
     const [deductions,setDeductions] = useState([]);
+    const [voucherid,setVoucherId] =useState();
+    const [voucher,setVoucher] = useState([]);
+    const location = useLocation();
+
+    let voucher_id = location.state.voucher_id;
 
     useEffect(()=>{
         setSignatory1('ATTY. MARY GRACE S. ROYO, CPA');
@@ -31,13 +35,30 @@ export default function VoucherPrintPreview() {
         setSignatory2Position('Provincial Treasurer')
         setSignatory3('EDWIN MARINO C. ONGCHUAN');
         setSignatory3Position('Governor')
+        let voucher_id = window.localStorage.getItem('voucher_id');
+
+        
+        axiosClient.get(`voucher/${voucher_id}`).then(res=>{
+          setVoucher(res.data.voucher);
+          setPayee(res.data.voucher[0].payee);
+          setAddress(res.data.voucher[0].address);
+          setBank(res.data.voucher[0].bank);
+          setExplanation(res.data.voucher[0].explanation);
+          setTotalAmount(res.data.voucher[0].obramount)
+          console.log(totalAmount);
+
+        });
+
+
     },[])
     
+    
+
 
     var totalDeductionsAmmount=0;
     var grandTotal=0;
 
-    const deductionsLists = deductions.map((deduct,index)=>{
+    const deductionsLists = voucher.map((deduct,index)=>{
         totalDeductionsAmmount += parseFloat(deduct.amount)
         grandTotal = totalAmount - totalDeductionsAmmount
         return(
@@ -46,7 +67,6 @@ export default function VoucherPrintPreview() {
             <tr key={index} className='p-0 m-0'>
               <td className='p-0 m-0 text-lg'>{deduct.description}</td>
               <td className='text-right text-lg p-0 m-0'>{deduct.amount>0?Number(deduct.amount).toLocaleString():''}</td>
-              <td className='text-right text-rose-600 p-0 m-0'><button onClick={() => removeDeduction(index)}>Remove</button></td>
             </tr>
            
           </>
@@ -84,7 +104,7 @@ export default function VoucherPrintPreview() {
             <p className='p-0 mt-2 '>Payee</p>
           </div>
           <div className='p-0 px-1 border-r border-black w-[630px]'>
-            <p className='p-0 mt-2 '>Name of Payee</p>
+            <p className='p-0 mt-2 '>{payee}</p>
           </div>
           <div className='p-1  w-[284px]'>
             <p className='p-0 mt-2 '>Oblication Request No</p>
@@ -96,7 +116,7 @@ export default function VoucherPrintPreview() {
             <p className='p-0 mt-2 '>Address</p>
           </div>
           <div className='p-0 px-1 border-r border-black w-[630px]'>
-            <p className='p-0 mt-2 '>Address of payee</p>
+            <p className='p-0 mt-2 '>{address}</p>
           </div>
           <div className='flex p-1 w-[284px]'>
             <p className='p-0 mt-2'>Responsibility Center</p>
@@ -117,7 +137,7 @@ export default function VoucherPrintPreview() {
 
         <div className='border-t border-black flex h-[250px]'>
           <div className='p-0  border-r border-black w-[740px] font-sans '>
-            <p>Explanation.....</p>
+            <p>{explanation}</p>
           </div>
           <div className='p-1  w-[284px] text-right'>
             <p className='p-0 mt-2 font-sans font-bold text-lg'>{Number(totalAmount).toLocaleString()}</p>
@@ -291,9 +311,9 @@ export default function VoucherPrintPreview() {
               <p>Check No</p>
             </div>
             <div className='flex w-[300px] h-7 border-r border-black px-1'>
-              <div className='w-[90px]'><p>Bank Name</p></div>
+              <div className='w-[90px]'><p>Bank Name:</p></div>
               <div className='w-[210px] h-7'>
-                <p>Name of the bank</p>
+                <p>{bank}</p>
               </div>
 
             </div>

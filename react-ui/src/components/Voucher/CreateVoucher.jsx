@@ -133,6 +133,7 @@ export default function CreateVoucher() {
         'payee' :payee,
         'explanation':explanation,
         'address' : address,
+        'obramount':totalAmount,
         'bank' : bank,
         'deductions' : deductions,
         'signatory1' :signatory1,
@@ -143,11 +144,13 @@ export default function CreateVoucher() {
         'signatory3position' : signatory3Position
       }
 
-      
+      console.log(voucherData)
       axiosClient.post('/voucher',voucherData).then(res=>{
         if(res.data.voucher>0){
-          alert('Disbursement Voucher have been created successfully!!');
-          navigate('/voucherprintpreview');
+          const voucher_id = res.data.voucher;
+          window.localStorage.setItem('voucher_id',voucher_id)
+          navigate('/voucherprintpreview',{state:{voucherData:voucherData}});
+          
         }
       })
     }
