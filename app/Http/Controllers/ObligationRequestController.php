@@ -177,6 +177,14 @@ class ObligationRequestController extends Controller
         return response()->json(['message'=>"Obligation Request have been approved"]);
     }
 
+    public function updateobrnumber(Request $request){
+        
+        $affected = DB::table('obrheaders')
+              ->where('id', $obrid)
+              ->update(['obrnumber' => $obrnumber]);
+        
+    }
+
     public function officeapprove($obrid){
         $affected = DB::table('obrheaders')
               ->where('id', $obrid)

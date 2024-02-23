@@ -9,6 +9,7 @@ class Obrheader extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'obrnumber',
         'payee',
         'officeid',
         'particulars',

@@ -8,6 +8,7 @@ export default function ShowObrBudget() {
 
  const [obr,setObr] = useState([]);
  const [obrtotal,setObrTotal]=useState([]);
+ const [obrnumber,setObrNumber] =useState();
  let obrid = location.state.obrid;
  
  let payee="";
@@ -32,15 +33,21 @@ export default function ShowObrBudget() {
 
  const handleApproveObr = ()=>{
  
+   
     axiosClient.get(`/obligationrequest/budgetview/selected/approve/${location.state.obrid}`).then(res=>{
-        alert('here: ' + res.data.message)
+        alert(res.data.message)
     });
+
  }
 
  const handleRejectObr = ()=>{
     axiosClient.get(`/obligationrequest/budgetview/selected/reject/${location.state.obrid}`).then(res=>{
         alert(res.data.message)
     });
+ }
+
+ const handleObrNumberInput = (e)=>{
+    setObrNumber(e.target.value);
  }
   return (
     <div>
@@ -52,9 +59,13 @@ export default function ShowObrBudget() {
                 <div className='w-[15rem] h-8 items-center border py-0 px-2'>
                     <p>Payee</p>
                 </div>
-                <div className='w-[85rem] h-8 border px-2'>
+                <div className='w-[70rem] h-8 border px-2'>
                     {obr.map((obr)=>{payee = obr.payee})}
                     <p>{payee}</p>
+                </div>
+                <div className='flex w-[15rem] h-8 border p-0'>
+                    <div className='w-[5rem]'><p>No.</p></div>
+                    <div className='w-[10rem]'><input type="text" name="obrnumber" id="" onChange={handleObrNumberInput} className='h-7 w-full' /></div>
                 </div>
             </div>
             <div className='flex'>

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('obrheaders', function (Blueprint $table) {
             $table->id();
             $table->string('payee');
+            $table->string('obrnumber')->nullable();
             $table->unsignedBigInteger('officeid');
             $table->foreign('officeid')->references('id')->on('offices');
             $table->text('particulars');
