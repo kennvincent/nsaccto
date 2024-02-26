@@ -68,6 +68,12 @@ export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
 		icon: <HiOutlineDocumentText />,
 	},
 	{
+		key: 'payments',
+		label: 'Payments',
+		path: '/payments',
+		icon: <HiOutlineDocumentText />,
+	},
+	{
 		key: 'register',
 		label: 'Register User',
 		path: '/register',

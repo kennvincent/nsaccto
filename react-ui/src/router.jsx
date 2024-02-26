@@ -30,6 +30,7 @@ import VoucherPrintPreview from "./components/Voucher/VoucherPrintPreview";
 import VoucherList from "./components/Voucher/VoucherList";
 import OfficeForApprovalObligationRequestList from "./components/obrofficeapproval/OfficeForApprovalObligationRequestList";
 import OfficeApprovedObligationRequest from "./components/obrofficeapproval/OfficeApprovedObligationRequest";
+import Payments from "./components/accounting/Payments";
 
 const router = createBrowserRouter([
     {
@@ -139,6 +140,11 @@ const router = createBrowserRouter([
            {
             path:'/voucherslist',
             element:<VoucherList/>
+           }
+           ,
+           {
+            path:'/payments',
+            element:<Payments/>
            }
            ,
            {

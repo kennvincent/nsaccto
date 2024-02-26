@@ -13,6 +13,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BudgetImportController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -101,3 +102,5 @@ Route::put('voucher/obr/update',[VoucherController::class,'updateobr']);
 Route::get('voucher/printpreview/{id}',[VoucherController::class,'printpreview']);
 Route::get('voucher/list',[VoucherController::class,'voucherslist']);
 Route::get('voucher/{id}',[VoucherController::class,'selectedvoucher']);
+
+Route::get('payment/display',[PaymentController::class,'displaypayments']);

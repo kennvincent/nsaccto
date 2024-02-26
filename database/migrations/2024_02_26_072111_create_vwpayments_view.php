@@ -24,7 +24,9 @@ return new class extends Migration
                 t2.obr_detail_id,
                 t2.accountcode,
                 t5.accountdesc,
-                t2.amountpaid
+                t2.amountpaid,
+                month(t1.created_at) as payment_month,
+                year(t1.created_at) as payment_year
         FROM paymentheaders t1
         INNER JOIN paymentdetails t2 ON t1.id=t2.paymentid
         INNER JOIN obrheaders t3 on t1.obrid=t3.id
