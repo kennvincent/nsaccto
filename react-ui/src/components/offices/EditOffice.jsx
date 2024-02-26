@@ -32,31 +32,7 @@ useEffect(()=>{
 
   
 
-    // const addOffice=(e)=>{
-    //     e.preventDefault();
-       
-    //     const newOffice = {
-    //       officecode : office.officecode,
-    //       officename : office.officename,
-    //       officedesc : office.officedesc
-    //     }
     
-        
-    //     axios.post(`http://127.0.0.1:8000/api/office`,newOffice).then(res =>{
-    //         alert(res.data.message);
-    //     })
-    //     .catch(function(error){ 
-          
-    //         if(error.response){
-    //             if(error.response.status===422){
-    //                 setInputErrorList(error.response.data.errors);
-    //             } else if(error.response.status===419){
-    //               //setInputErrorList(error.response.data.errors);
-    //               console.log("ERROR " + error.response.status);
-    //           }
-    //         }
-    //     });
-    //   }
 
   const updateOffice=(e)=>{
       e.preventDefault();

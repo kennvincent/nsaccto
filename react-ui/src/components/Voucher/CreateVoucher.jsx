@@ -41,7 +41,7 @@ export default function CreateVoucher() {
           await axiosClient.get(`/obligationrequest/accounting/selected/view/${obrid}`).then(res =>{
             setTotalAmount(res.data.obr[0].totalamount)
             setOfficeName(res.data.obr[0].officename)
-            setObrNumber('temp-0001');
+            setObrNumber(res.data.obr[0].obrnumber);
         
           })
         }
@@ -189,8 +189,10 @@ export default function CreateVoucher() {
           <div className='p-0 px-1 border-r border-black w-[630px]'>
             <p className='p-0 mt-2 '><input type="text" onChange={handlePayeeInput} name="payee" id="payee" className='w-full' /></p>
           </div>
-          <div className='p-1  w-[284px]'>
-            <p className='p-0 mt-2 '>Oblication Request No</p>
+          <div className='flex p-1  w-[284px]'>
+            <p className='p-0 mt-2 '>Oblication Request No:</p>
+            <p className='p-0 px-2 mt-2 '>{obrnumber}</p>
+            
           </div>
         </div>
 

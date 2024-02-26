@@ -16,6 +16,7 @@ return new class extends Migration
             AS
             SELECT
             t1.id,
+            t1.obrnumber,
             t3.id as obr_detail_id,
             t1.payee,
             t1.particulars,

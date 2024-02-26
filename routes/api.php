@@ -56,13 +56,17 @@ Route::delete('tempobligationrequest/{id}',[TempObligationRequestController::cla
 Route::get('getobryear',[ObligationRequestController::class,'getobryear']);
 Route::post('obligationrequest',[ObligationRequestController::class,'insert']);
 
+Route::get('obligationrequest/getobrid',[ObligationRequestController::class,'getobrid']);
 Route::get('obligationrequest',[ObligationRequestController::class,'viewlist']);
 Route::get('obligationrequest/{officename}',[ObligationRequestController::class,'viewofficeobrlist']);
 Route::get('obligationrequest/budget/forapprovalobr/view',[ObligationRequestController::class,'foraprrovalobr']);
 Route::get('obligationrequest/budget/approvedobr/view',[ObligationRequestController::class,'approvedobr']);
 Route::get('obligationrequest/budgetview/selected/{id}',[ObligationRequestController::class,'viewobr']);
 Route::get('obligationrequest/budgetview/selected/sum/{id}',[ObligationRequestController::class,'sum']);
-Route::get('obligationrequest/budgetview/selected/approve/{id}',[ObligationRequestController::class,'approve']);
+
+// Route::get('obligationrequest/budgetview/selected/approve/{id}',[ObligationRequestController::class,'approve']);
+Route::put('obligationrequest/budgetview/selected/approve',[ObligationRequestController::class,'approve']);
+
 
 Route::get('obligationrequest/officeapprove/{id}',[ObligationRequestController::class,'officeapprove']);
 Route::get('obligationrequest/officecancel/{id}',[ObligationRequestController::class,'officecancel']);

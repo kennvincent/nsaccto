@@ -9,6 +9,7 @@ export default function ShowObrBudget() {
  const [obr,setObr] = useState([]);
  const [obrtotal,setObrTotal]=useState([]);
  const [obrnumber,setObrNumber] =useState();
+ const [lastobrid,setLastObrId] = useState();
  let obrid = location.state.obrid;
  
  let payee="";
@@ -22,21 +23,58 @@ export default function ShowObrBudget() {
 
 
  useEffect(()=>{
-    axiosClient.get(`/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
-        setObr(res.data.obr);
-      });
 
-      axiosClient.get(`/obligationrequest/budgetview/selected/sum/${location.state.obrid}`).then(res=>{
-        setObrTotal(res.data[0].obrtotal)
-      });
+    const fetchData = async()=>{
+        axiosClient.get(`/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
+            setObr(res.data.obr);
+          });
+    
+        axiosClient.get(`/obligationrequest/budgetview/selected/sum/${location.state.obrid}`).then(res=>{
+            setObrTotal(res.data[0].obrtotal);
+          });
+    
+    
+          axiosClient.get(`/obligationrequest/getobrid`).then(res=>{
+            setLastObrId(res.data.obrid[0].obrid + 1)
+        
+          });
+          generate_obr_number(lastobrid);
+    };
+
+    
+    fetchData();
+   
+   
+
+    
  },[]);
 
+ function generate_obr_number($lastobrid){
+    try{
+        if($lastobrid.toString().length==1){
+            setObrNumber("00000" + $lastobrid);
+        }
+    }
+    catch(e){
+
+    }
+  
+    
+ }
+
  const handleApproveObr = ()=>{
- 
-   
-    axiosClient.get(`/obligationrequest/budgetview/selected/approve/${location.state.obrid}`).then(res=>{
+    const data = {
+        'obrid':location.state.obrid,
+        'obrnumber' : obrnumber
+    }
+
+    axiosClient.put(`/obligationrequest/budgetview/selected/approve`,data).then(res=>{
         alert(res.data.message)
     });
+
+    // axiosClient.get(`/obligationrequest/budgetview/selected/approve/${location.state.obrid}`).then(res=>{
+    //     alert(res.data.message)
+    // });
 
  }
 
@@ -51,7 +89,7 @@ export default function ShowObrBudget() {
  }
   return (
     <div>
-        <div className='card-body h-[800px] overflow-scroll'>
+        <div className='card-body h-[800px] overflow-scroll bg-white p-2'>
             <div className='text-center p-0'>
                 <h4>OBLIGATION REQUESTS</h4>
             </div>
@@ -65,7 +103,7 @@ export default function ShowObrBudget() {
                 </div>
                 <div className='flex w-[15rem] h-8 border p-0'>
                     <div className='w-[5rem]'><p>No.</p></div>
-                    <div className='w-[10rem]'><input type="text" name="obrnumber" id="" onChange={handleObrNumberInput} className='h-7 w-full' /></div>
+                    <div className='w-[10rem]'><input type="text" name="obrnumber" id="" value={obrnumber} onChange={handleObrNumberInput} className='h-7 w-full' /></div>
                 </div>
             </div>
             <div className='flex'>

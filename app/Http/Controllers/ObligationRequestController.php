@@ -36,6 +36,7 @@ class ObligationRequestController extends Controller
     public function accountingselectedviewobr($id){
         $obrlist = DB::table('vw_obr')
                     ->select('id',
+                            'obrnumber',
                             'obr_detail_id',
                             'payee',
                             'particulars',
@@ -170,11 +171,19 @@ class ObligationRequestController extends Controller
 
 
 
-    public function approve($obrid){
-        $affected = DB::table('obrheaders')
-              ->where('id', $obrid)
-              ->update(['obrstatus' => 3]);
-        return response()->json(['message'=>"Obligation Request have been approved"]);
+    // public function approve($obrid){
+    //     $affected = DB::table('obrheaders')
+    //           ->where('id', $obrid)
+    //           ->update(['obrstatus' => 3]);
+    //     return response()->json(['message'=>"Obligation Request have been approved"]);
+    // }
+    
+    public function approve(Request $request){
+        DB::table('obrheaders')
+                ->where('id',$request->obrid)
+                ->update(array('obrnumber' => $request->obrnumber,'obrstatus' => 3));
+
+        return response()->json(['message'=>'Obligation Request have been approved']);
     }
 
     public function updateobrnumber(Request $request){
@@ -285,8 +294,14 @@ class ObligationRequestController extends Controller
         }catch(e){
 
         }
-           
-        
+    }
+
+    public function getobrid(){
+        $obrid=DB::table("idcounters")
+        ->select('obrid')
+        ->get();
+
+        return response()->json(['obrid'=>$obrid]);
     }
    
 }
