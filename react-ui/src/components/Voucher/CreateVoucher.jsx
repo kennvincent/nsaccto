@@ -144,11 +144,13 @@ export default function CreateVoucher() {
         'signatory3position' : signatory3Position
       }
 
-      console.log(voucherData)
       axiosClient.post('/voucher',voucherData).then(res=>{
         if(res.data.voucher>0){
           const voucher_id = res.data.voucher;
           window.localStorage.setItem('voucher_id',voucher_id)
+          const obr ={'obrid': obrid}
+          axiosClient.put(`/voucher/obr/update`,obr).then(res=>{});
+
           navigate('/voucherprintpreview',{state:{voucherData:voucherData}});
           
         }

@@ -40,6 +40,8 @@ class VoucherController extends Controller
                 voucherdeduction::create($voucherDeduction);
             }
             
+            
+            
             DB::commit();
             return response()->json(['voucher'=>$voucher_id]);
         }
@@ -82,4 +84,12 @@ class VoucherController extends Controller
             return response()->json(['voucher'=>$voucher]);
     }
 
+    public function updateobr(Request $request){
+        DB::table('obrheaders')
+            ->where('id',$request->obrid)
+            ->update(array('withvoucher' => '1'));
+        
+        return response()->json($obrid);
+
+    }
 }

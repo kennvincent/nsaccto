@@ -23,11 +23,13 @@ return new class extends Migration
                 t1.bankname,
                 t2.obr_detail_id,
                 t2.accountcode,
+                t5.accountdesc,
                 t2.amountpaid
         FROM paymentheaders t1
         INNER JOIN paymentdetails t2 ON t1.id=t2.paymentid
         INNER JOIN obrheaders t3 on t1.obrid=t3.id
         INNER JOIN offices t4 on t3.officeid=t4.id
+        INNER JOIN accounts t5 on t2.accountcode=t5.accountcode
        ");
     }
 

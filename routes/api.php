@@ -97,6 +97,7 @@ Route::get('getaccount/{id}',[BudgetController::class,'getaccount']);
 Route::get('budget/view',[BudgetController::class,'samplebudget']);
 
 Route::post('voucher',[VoucherController::class,'savevoucher']);
+Route::put('voucher/obr/update',[VoucherController::class,'updateobr']);
 Route::get('voucher/printpreview/{id}',[VoucherController::class,'printpreview']);
 Route::get('voucher/list',[VoucherController::class,'voucherslist']);
 Route::get('voucher/{id}',[VoucherController::class,'selectedvoucher']);

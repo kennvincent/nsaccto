@@ -43,6 +43,7 @@ return new class extends Migration
                 WHEN t1.obrstatus='2' THEN 'Approved'
                 WHEN t1.obrstatus='3' THEN 'Obligated'
             END AS obrstatus,
+            t1.withvoucher,
             t1.ispaid
             FROM obrheaders t1
             LEFT JOIN offices t2 ON t1.officeid=t2.id

@@ -54,7 +54,8 @@ class ObligationRequestController extends Controller
                             'balance1',
                             'balance',
                             'totalbalance',
-                            'obrstatus')
+                            'obrstatus',
+                            'withvoucher')
                     ->where('id','=',[$id])
                     ->get();
         return response()->json(['obr'=>$obrlist]);
@@ -137,7 +138,7 @@ class ObligationRequestController extends Controller
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                     'officedesc','officeaddress','totalamount','totalamountpaid',
-                    'balance','obrstatus')
+                    'balance','obrstatus','withvoucher')
                     ->where('balance','>',0)
                     ->orderBy('id','DESC')
                     ->get();
@@ -239,6 +240,7 @@ class ObligationRequestController extends Controller
                 $obr->signatory2 = $request->signatory2;
                 $obr->position2 = $request->position2;
                 $obr->obrstatus='1';
+                $obr->withvoucher='0';
                 $obr->ispaid='0';
                 $obr->save();
 
