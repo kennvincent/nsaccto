@@ -104,3 +104,4 @@ Route::get('voucher/list',[VoucherController::class,'voucherslist']);
 Route::get('voucher/{id}',[VoucherController::class,'selectedvoucher']);
 
 Route::get('payment/display',[PaymentController::class,'displaypayments']);
+Route::get('utilization/display',[PaymentController::class,'utilization']);

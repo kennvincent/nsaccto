@@ -55,7 +55,7 @@ export default function Accounts() {
 
   var accountList = accounts.map((account)=>{
     return(
-        <tr key={account.id} className='border border-indigo-600'>
+        <tr key={account.id} className='border border-indigo-600 hover:bg-slate-200'>
             
             <td className='p-1 '>{account.accountdesc}</td>
             <td className='p-1'>{account.accountcode}</td>
@@ -69,17 +69,17 @@ export default function Accounts() {
         
         <section>
           
-          <div className='card w-full bg-red-600 flex'>
+          <div className='card w-[60rem] bg-red-600 flex'>
             <div className='card-header flex bg-black-200'><h4>Accounts List</h4>
               <button className='btn btn-success btn-sm right-6 absolute ' onClick={handlesetAddNew}>Add New</button>
             </div>
-            <div className='card-body p-0 overflow-scroll h-[45rem]'>
+            <div className='card-body p-0 overflow-y-auto '>
               <table className='table-auto w-full border-separate border border-slate-700'>
                 <thead>
                   <tr>
-                    <th>Account Description</th>
-                    <th>Account Code</th>
-                    <th>&nbsp;</th>
+                    <th className='w-[35rem]'>Account Description</th>
+                    <th className='w-[15rem]'>Account Code</th>
+                    <th className='w-[5rem]'>&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>

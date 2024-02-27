@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axiosClient from '../../axios-client';
 
-export default function Payments() {
-
-  const [month,setMonth] = useState();
+export default function Utilization() {
+    const [month,setMonth] = useState();
   const [year,setYear] = useState();
   const [paymentsData,setData]=useState([]);
 
@@ -30,7 +29,7 @@ export default function Payments() {
   }
   const fethData = async()=>{
     try{
-      const response = await axiosClient.get(`/payment/display?month=${month}&year=${year}`).then(res =>{
+      const response = await axiosClient.get(`/utilization/display?month=${month}&year=${year}`).then(res =>{
         setData(res.data.payments);
       });
     }catch(e){
@@ -41,13 +40,12 @@ export default function Payments() {
   var grandTotal=0;
 
   const list = paymentsData.map((data,index)=>{
-    grandTotal = grandTotal + parseFloat(data.amountpaid);
+    grandTotal = grandTotal + parseFloat(data.totalpayments);
     return(
       <tr key={index} className='hover:bg-slate-200'>
-        <td className='p-1'>{data.officename}</td>
         <td className='p-1'>{data.accountdesc}</td>
         <td className='p-1'>{data.accountcode}</td>
-        <td className='p-1 text-right '>{Number(data.amountpaid).toLocaleString()}</td>
+        <td className='p-1 text-right '>{data.totalpayments>0?Number(data.totalpayments).toLocaleString():''}</td>
       </tr>
     )
   });
@@ -63,10 +61,13 @@ export default function Payments() {
     );
     
   })
+
+
   return (
+   
     <div>
-      <div className='card'>
-        <div className='card-header bg-green-600'><h5>Payments</h5></div>
+      <div className='card bg-white'>
+        <div className='card-header bg-green-600'><h5>Utilization Summary</h5></div>
         <div className='card-body'>
           <div>
             <select value={month} onChange={onChangeMonth} className='p-1 w-[10rem]'>
@@ -82,8 +83,7 @@ export default function Payments() {
             <table className='border'>
               <thead>
                 <tr>
-                  <th className='w-[10rem]'>Office name</th>
-                  <th  className='w-[25rem]'>Description</th>
+                  <th  className='w-[35rem]'>Description</th>
                   <th  className='w-[15rem]'>Account Code</th>
                   <th  className='w-[10rem] text-right'>Total Amount</th>
                 </tr>
@@ -92,9 +92,8 @@ export default function Payments() {
                 {list}
                 <tr className='border'>
                   <td className='p-1'></td>
-                  <td className='p-1'></td>
                   <td className='p-1 text-right'>Grand Total</td>
-                  <td className='p-1 text-right font-bold'>{Number(grandTotal).toLocaleString()}</td>
+                  <td className='p-1 text-right font-bold'>{grandTotal>0?Number(grandTotal).toLocaleString():''}</td>
                 </tr>
               </tbody>
             </table>

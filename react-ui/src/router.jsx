@@ -31,6 +31,7 @@ import VoucherList from "./components/Voucher/VoucherList";
 import OfficeForApprovalObligationRequestList from "./components/obrofficeapproval/OfficeForApprovalObligationRequestList";
 import OfficeApprovedObligationRequest from "./components/obrofficeapproval/OfficeApprovedObligationRequest";
 import Payments from "./components/accounting/Payments";
+import Utilization from "./components/accounting/Utilization";
 
 const router = createBrowserRouter([
     {
@@ -145,6 +146,11 @@ const router = createBrowserRouter([
            {
             path:'/payments',
             element:<Payments/>
+           }
+           ,
+           {
+            path:'/utilization',
+            element:<Utilization/>
            }
            ,
            {
