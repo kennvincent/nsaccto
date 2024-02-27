@@ -5,6 +5,7 @@ export default function Utilization() {
     const [month,setMonth] = useState();
   const [year,setYear] = useState();
   const [paymentsData,setData]=useState([]);
+  const [term,setTerm]=useState("monthly");
 
   useEffect(()=>{
     let newDate = new Date();
@@ -19,6 +20,11 @@ export default function Utilization() {
     setMonth(e.target.value);
   }
 
+  const onChangeTerm = (e)=>{
+    setTerm(e.target.value);
+   
+  }
+
   const onChangeYear = (e)=>{
     e.preventDefault();
     setYear(e.target.value);
@@ -26,6 +32,7 @@ export default function Utilization() {
 
   const onClickDisplay = ()=>{
     fethData();
+    console.log(term)
   }
   const fethData = async()=>{
     try{
@@ -50,10 +57,12 @@ export default function Utilization() {
     )
   });
 
+
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
+
 
   const optionData = months.map((month,index)=>{
     return(
@@ -70,14 +79,18 @@ export default function Utilization() {
         <div className='card-header bg-green-600'><h5>Utilization Summary</h5></div>
         <div className='card-body'>
           <div>
-            <select value={month} onChange={onChangeMonth} className='p-1 w-[10rem]'>
+            <select onChange={onChangeTerm} className='p-1 mr-1 w-[10rem]'>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+            <select value={month} onChange={onChangeMonth} className='p-1 mr-1 w-[10rem]'>
               {optionData}
             </select>
             <select name="" id="" onChange={onChangeYear} className='p-1 w-[6rem]'>
               <option value="2024">2024</option>
               <option value="2023">2023</option>
             </select>
-            <button onClick={onClickDisplay} className='w-[10rem] hover:bg-slate-400 hover:text-white ml-2 p-1 border border-black'>Display</button>
+            <button onClick={onClickDisplay} className='w-[10rem] bg-green-100 hover:bg-slate-400 hover:text-white ml-2 p-1 border border-black'>Display</button>
           </div>
           <div className='mt-2'>
             <table className='border'>
