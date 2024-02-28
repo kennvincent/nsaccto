@@ -111,7 +111,7 @@ export default function CreateVoucher() {
 
     const deductionsLists = deductions.map((deduct,index)=>{
       totalDeductionsAmmount += parseFloat(deduct.amount)
-      grandTotal = totalAmount - totalDeductionsAmmount
+      grandTotal = balance - totalDeductionsAmmount
       return(
         <>
           
