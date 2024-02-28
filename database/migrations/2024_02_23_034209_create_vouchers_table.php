@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('explanation');
             $table->text('address');
             $table->decimal('obramount',18,2);
-            $table->decimal('voucheramount',18,2);
             $table->string('bank');
             $table->string('signatory1');
             $table->string('signatory1position');

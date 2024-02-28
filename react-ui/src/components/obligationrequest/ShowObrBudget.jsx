@@ -15,14 +15,15 @@ export default function ShowObrBudget() {
  let payee="";
  let officedesc="";
  let officename="";
- let officeaddress="";
+ let address="";
  let particulars="";
  let officecode="";
  let totalamount=0;
  let obrstatus="";
 
-
  useEffect(()=>{
+
+   
 
     const fetchData = async()=>{
         axiosClient.get(`/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
@@ -32,34 +33,39 @@ export default function ShowObrBudget() {
         axiosClient.get(`/obligationrequest/budgetview/selected/sum/${location.state.obrid}`).then(res=>{
             setObrTotal(res.data[0].obrtotal);
           });
-    
-    
+          
+       
           axiosClient.get(`/obligationrequest/getobrid`).then(res=>{
             setLastObrId(res.data.obrid[0].obrid + 1)
-        
+            
+            console.log('Last: ' + res.data.obrid[0].obrid + 1);
+            // setObrNumber(generate_obr_number(lastobrid));
           });
-          generate_obr_number(lastobrid);
+         
     };
 
     
-    fetchData();
-   
-   
+ 
 
     
  },[]);
 
- function generate_obr_number($lastobrid){
+
+
+ 
+ const generate_obr_number = ($lastobrid)=>{
     try{
         if($lastobrid.toString().length==1){
-            setObrNumber("00000" + $lastobrid);
+            var strNum = "00000" + $lastobrid;
+            
         }
+
     }
     catch(e){
 
     }
   
-    
+    return (strNum);
  }
 
  const handleApproveObr = ()=>{
@@ -120,8 +126,8 @@ export default function ShowObrBudget() {
                     <p>Address</p>
                 </div>
                 <div className='w-[85rem] h-8 border py-0 px-2'>
-                    {obr.map((obr)=>{officeaddress = obr.officeaddress})}
-                    <p>{officeaddress}</p>
+                    {obr.map((obr)=>{address = obr.address})}
+                    <p>{address}</p>
                 </div>
             </div>
 

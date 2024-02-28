@@ -41,11 +41,9 @@ import Pagination from './Pagination';
   
   useEffect(()=>{
     var user = window.localStorage.getItem('user');
-    var officename = window.localStorage.getItem('officename');
-    setOfficeName(officename);
+    // var officename = window.localStorage.getItem('officename');
     
-  
-    axiosClient.get(`/displayofficebudget/${officename}`,).then(res=>{
+    axiosClient.get(`/displayofficebudget/${location.state.officename}`,).then(res=>{
       setBudgets(res.data.budgets);
      
     });
@@ -66,10 +64,10 @@ import Pagination from './Pagination';
   }
   return (
     <div className='p-2 w-full bg-white'>
-        <h4>Office: {officename}</h4>
+        <h4>Office: {location.state.officename}</h4>
 
         <CurrentPosts posts={currentPosts} />
-        <Pagination totalPosts={budgets.length} postsPerPage={postsPerPage} onPageClicked={handlePageClick}/>
+        <Pagination totalPosts={budgets.length} postsPercPage={postsPerPage} onPageClicked={handlePageClick}/>
      
       
     </div>

@@ -1,6 +1,6 @@
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import axios from "../api/axios";
 import axiosClient from '../axios-client';
 import cors from "cors";
@@ -8,6 +8,7 @@ import cors from "cors";
 export default function handleLogin() {
   const [useraccount,setUserAccount] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
  
   const logged = window.localStorage.getItem('isLoggedIn');
@@ -57,21 +58,24 @@ export default function handleLogin() {
          axiosClient.post(`/login`,userlogin).then(res=>{
           // await axios.post(`https://api.vincentsabelo.com/api/login`,userlogin).then(res=>{
             if(res.data.login=='success'){
-              console.log(res.data.login);
+             
               window.localStorage.setItem('user',userlogin.username)
               window.localStorage.setItem('isLoggedIn',true)
               
 
               axiosClient.get(`/login/${userlogin.username}`).then(res=>{
                 window.localStorage.setItem('usertype',res.data.office[0].usertype);
-                window.localStorage.setItem('officename',res.data.office[0].officename);
-                var usertype = window.localStorage.getItem('usertype');
+                // window.localStorage.setItem('officename',res.data.office[0].officename);
+
+                var officename=res.data.office[0].officename;
+                var usertype = res.data.office[0].usertype;
+
                 if(usertype=="ACTG"){
                   navigate("/acctobrview");
                 } else if(usertype=="BDGT"){
                   navigate("/obrlistbudget");
                 } else if(usertype==="USR"){
-                  navigate("/officebudget");
+                  navigate("/officebudget",{state:{officename:officename}});
                 } else if(usertype=="APRV"){
                   navigate("/obrofficeforapproval");
                 }

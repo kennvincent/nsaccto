@@ -34,7 +34,7 @@ export default function ObligationRequestPrintPreview() {
         axiosClient.get(`/obligationrequest/printpreview/${obr_id}`).then(res=>{
             setPayee(res.data.obr[0].payee);
             setOfficeDesc(res.data.obr[0].officedesc);
-            setAddress(res.data.obr[0].officeaddress);
+            setAddress(res.data.obr[0].address);
             setOfficeName(res.data.obr[0].officename);
             setParticulars(res.data.obr[0].particulars);
             setOfficeCode(res.data.obr[0].officecode);

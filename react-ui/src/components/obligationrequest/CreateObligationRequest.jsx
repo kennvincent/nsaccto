@@ -50,6 +50,10 @@ export default function CreateObligationRequest() {
         setParticulars(e.target.value)
     }
 
+    const handleAddressInput = (e)=>{
+        e.preventDefault();
+        setAddress(e.target.value)
+    }
 
     const handleCreateOBR = ()=>{
     
@@ -58,6 +62,7 @@ export default function CreateObligationRequest() {
             'payee' : payee,
             'officeid' : officeid,
             'particulars':particulars,
+            'address': address,
             'obryear': obryear,
             'signatory1':'S1',
             'position1' : 'P1',
@@ -208,8 +213,9 @@ export default function CreateObligationRequest() {
                 <div className='w-[15rem] h-8 items-center border py-0 px-2'>
                     <p>Address</p>
                 </div>
-                <div className='w-[85rem] h-8 border py-0 px-2'>
-                    <p>{address}</p>
+                <div className='w-[85rem] h-8 border py-0'>
+                    <p><input type="text" name="address" value={address} onChange={handleAddressInput} 
+                        className='w-full h-7'/></p>
                 </div>
             </div>
 

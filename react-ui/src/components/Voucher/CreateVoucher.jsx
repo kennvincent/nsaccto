@@ -134,7 +134,7 @@ export default function CreateVoucher() {
         'payee' :payee,
         'explanation':explanation,
         'address' : address,
-        'obramount':totalAmount,
+        'obramount':balance,
         'bank' : bank,
         'deductions' : deductions,
         'signatory1' :signatory1,
@@ -144,6 +144,8 @@ export default function CreateVoucher() {
         'signatory3' : signatory3,
         'signatory3position' : signatory3Position
       }
+
+      console.log(voucherData);
 
       axiosClient.post('/voucher',voucherData).then(res=>{
         if(res.data.voucher>0){

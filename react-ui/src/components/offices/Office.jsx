@@ -39,8 +39,8 @@ export default function Office() {
     setReducer();
   }
 
-  const handleShowBudget = (id,ofc)=>{
-    navigate("/officebudget",{state:{id:id,office:ofc}});
+  const handleShowBudget = (officename,ofc)=>{
+    navigate("/officebudget",{state:{officename:officename,office:ofc}});
   }
   
   useEffect(()=>{
@@ -59,7 +59,7 @@ export default function Office() {
         <td>{ofc.officedesc}</td>
         <td className='px-0'><button onClick={() => handleShowEditOffice(ofc.id,ofc.officecode,ofc.officename,ofc.officedesc)} 
             className='btn btn-primary btn-sm w-16 p-0'>Edit</button></td>
-        <td className='w-fixed p-0'><button onClick={()=>handleShowBudget(ofc.id,ofc.officedesc)}
+        <td className='w-fixed p-0'><button onClick={()=>handleShowBudget(ofc.officename,ofc.officedesc)}
             className='btn btn-primary btn-sm w-16 p-0' >Budget</button></td>
       </tr>
     )
@@ -69,7 +69,7 @@ export default function Office() {
 
   return (
     <section>
-      <div className="card w-full">
+      <div className="card w-[1000px]">
         <div className="card-header flex">
           <h5>List of Offices/Departments</h5>
           <span className='absolute right-5 mt-1'>
@@ -80,10 +80,10 @@ export default function Office() {
           <table className="w-full text-gray-700 border-collapse border  border-slate-400">
             <thead className='sticky -top-1'>
               <tr>
-                <th>Office Code</th>
-                <th>Office Abbr</th>
-                <th>Office Name</th>
-                <th>&nbsp;</th>
+                <th className='w-[120px]'>Office Code</th>
+                <th className='w-[200px]'>Office Abbr</th>
+                <th className='w-[500px]'>Office Name</th>
+                <th className='w-[70px]'>&nbsp;</th>
                 <th>&nbsp;</th>
               </tr>
             </thead>

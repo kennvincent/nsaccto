@@ -16,7 +16,8 @@ class BudgetController extends Controller
                              't1.accountcode',
                              't1.proposedamount',
                              't1.accountclassification',
-                             't1.funding')
+                             't1.funding',
+                             't1.sector')
                     ->where('t1.office',$officename)
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(t2.amount) FROM vw_obr as t2 
                                           where t1.office=t2.officename

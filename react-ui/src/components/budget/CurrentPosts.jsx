@@ -17,7 +17,8 @@ const CurrentPosts = ({posts}) => {
                     <th className='w-[15rem] py-2 text-right'>Obligated</th>
                     <th className='w-[15rem] py-2 text-right'>Utilized</th>
                     <th className='w-[15rem] py-2 text-right'>Balance</th>
-            
+                    <th className='w-[15rem] py-2 text-right'>Funding</th>
+                    <th className='w-[15rem] py-2 text-right'>Sector</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +35,8 @@ const CurrentPosts = ({posts}) => {
                         <td className='py-1 text-right'>{budget.totalobligated>0?Number(budget.totalobligated).toLocaleString():""}</td>
                         <td className='py-1 text-right'>{budget.utilized>0?Number(budget.utilized).toLocaleString():""}</td>
                         <td className='py-1 text-right'>{Number(budget.proposedamount - budget.totalobligated).toLocaleString()}</td>
+                        <td className='py-1 text-right'>{budget.funding}</td>
+                        <td className='py-1 text-right'>{budget.sector}</td>
                     </tr>
                 );
                

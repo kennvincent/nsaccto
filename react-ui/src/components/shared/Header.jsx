@@ -8,7 +8,7 @@ export default function Header() {
   const nagivate = useNavigate();
   return (
     <div className='bg-white shadow h-16 px-4 flex justify-between items-center border-b border-gray-200'>
-      <div className='relative'>
+      {/* <div className='relative'>
         <HiOutlineSearch fontSize={20} className='text-gray-400 absolute top-1/2 -translate-y-1/2 left-2'/>
         <input type='text' className='text-sm focus:outline-none active:outline-none h-8 w-[25rem] 
         border border-gray-300 rounded-sm pl-8' placeholder='Search....' />
@@ -117,7 +117,7 @@ export default function Header() {
          </Menu>
          
        
-      </div>
+      </div> */}
     </div>
   )
 }
