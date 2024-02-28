@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function CreateVoucher() {
     const location = useLocation();
     const [totalAmount,setTotalAmount] = useState();
+    const [balance,setBalance] = useState();
     const [obrnumber,setObrNumber] = useState();
     const [payee,setPayee] = useState();
     const [explanation,setExplanation] = useState();
@@ -39,7 +40,7 @@ export default function CreateVoucher() {
       const fetchData = async()=>{
         try{
           await axiosClient.get(`/obligationrequest/accounting/selected/view/${obrid}`).then(res =>{
-            setTotalAmount(res.data.obr[0].totalamount)
+            setBalance(res.data.obr[0].balance)
             setOfficeName(res.data.obr[0].officename)
             setObrNumber(res.data.obr[0].obrnumber);
         
@@ -227,7 +228,7 @@ export default function CreateVoucher() {
             <textarea name="explanation" id="" onChange={handleExplanationInput} cols="30" rows="10" className='w-full border-0'></textarea>
           </div>
           <div className='p-1  w-[284px] text-right'>
-            <p className='p-0 mt-2 font-sans font-bold text-lg'>{Number(totalAmount).toLocaleString()}</p>
+            <p className='p-0 mt-2 font-sans font-bold text-lg'>{Number(balance).toLocaleString()}</p>
           </div>
         </div>
 

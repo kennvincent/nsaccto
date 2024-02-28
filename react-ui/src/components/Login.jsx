@@ -44,6 +44,7 @@ export default function handleLogin() {
 
 
  const handleLogin =  async()=>{
+  console.log('login click')
   // axios.post(`http://127.0.0.1:8000/api/login`,userlogin).then(res=>{
   //   alert(res.data.message);
     
@@ -56,37 +57,26 @@ export default function handleLogin() {
          axiosClient.post(`/login`,userlogin).then(res=>{
           // await axios.post(`https://api.vincentsabelo.com/api/login`,userlogin).then(res=>{
             if(res.data.login=='success'){
+              
               window.localStorage.setItem('user',userlogin.username)
               window.localStorage.setItem('isLoggedIn',true)
               
-              // const response =  axiosClient(`/login/${userlogin.username}`);
-              // console.log(response);
 
-              // window.localStorage.setItem('usertype',response.data.office[0].usertype);
-              // window.localStorage.setItem('officename',response.data.office[0].officename);
-              
-              // window.localStorage.setItem('usertype','USR');
-              // window.localStorage.setItem('officename','PGO 24');
-
-              
               axiosClient.get(`/login/${userlogin.username}`).then(res=>{
                 window.localStorage.setItem('usertype',res.data.office[0].usertype);
                 window.localStorage.setItem('officename',res.data.office[0].officename);
+                var usertype = window.localStorage.getItem('usertype');
+                if(usertype=="ACTG"){
+                  navigate("/acctobrview");
+                } else if(usertype=="BDGT"){
+                  navigate("/obrlistbudget");
+                } else if(usertype==="USR"){
+                  navigate("/officebudget");
+                } else if(usertype=="APRV"){
+                  navigate("/obrofficeforapproval");
+                }
               });
 
-             
-            var usertype = window.localStorage.getItem('usertype');
-            if(usertype=="ACTG"){
-              navigate("/acctobrview");
-            } else if(usertype=="BDGT"){
-              navigate("/obrlistbudget");
-            } else if(usertype=="USR"){
-              navigate("/officebudget");
-            } else if(usertype=="APRV"){
-              navigate("/obrofficeforapproval");
-            }
-          
-             
             }else{
               alert(res.data.login);
             }
