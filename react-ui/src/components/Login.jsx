@@ -44,7 +44,7 @@ export default function handleLogin() {
 
 
  const handleLogin =  async()=>{
-  console.log('login click')
+  
   // axios.post(`http://127.0.0.1:8000/api/login`,userlogin).then(res=>{
   //   alert(res.data.message);
     
@@ -57,7 +57,7 @@ export default function handleLogin() {
          axiosClient.post(`/login`,userlogin).then(res=>{
           // await axios.post(`https://api.vincentsabelo.com/api/login`,userlogin).then(res=>{
             if(res.data.login=='success'){
-              
+              console.log(res.data.login);
               window.localStorage.setItem('user',userlogin.username)
               window.localStorage.setItem('isLoggedIn',true)
               
