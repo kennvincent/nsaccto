@@ -90,8 +90,11 @@ export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
 	
 ]
 
-export const DASHBOARD_SIDEBAR_LINKS = [
+const win = window.sessionStorage;
 
+export const DASHBOARD_SIDEBAR_LINKS = [
+	
+	
 	{
 		key: 'officebudget',
 		label: 'Office Budgets',

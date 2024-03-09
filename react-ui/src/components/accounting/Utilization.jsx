@@ -6,6 +6,10 @@ export default function Utilization() {
   const [year,setYear] = useState();
   const [paymentsData,setData]=useState([]);
   const [term,setTerm]=useState("monthly");
+  const [isMonthly,setIsMonthly] =useState(true);
+  const [filterAll,setFilter] = useState('all');
+  const [offices,setOffices] =useState([]);
+  const [office,setOffice] = useState('');
 
   useEffect(()=>{
     let newDate = new Date();
@@ -13,7 +17,18 @@ export default function Utilization() {
     let current_year = newDate.getFullYear();
     setMonth(current_month);
     setYear(current_year);
+
+    axiosClient.get(`/offices`).then(res=>{
+      setOffices(res.data.offices);
+    });
+
   },[])
+
+  const officesList = offices.map((office) => {
+    return(
+      <option value={office.officename}>{office.officename}</option>
+    )
+  })
   
   const onChangeMonth = (e)=>{
     e.preventDefault();
@@ -21,8 +36,11 @@ export default function Utilization() {
   }
 
   const onChangeTerm = (e)=>{
-    setTerm(e.target.value);
-   
+    if(e.target.value==="monthly"){
+      setIsMonthly(true);
+    }else{
+      setIsMonthly(false);
+    }
   }
 
   const onChangeYear = (e)=>{
@@ -31,14 +49,27 @@ export default function Utilization() {
   }
 
   const onClickDisplay = ()=>{
+    if(!filterAll){
+      if(office.trim().length===0){
+        alert('Select Department');
+        return;
+      }
+    }
+
     fethData();
-    console.log(term)
+   
+    
   }
   const fethData = async()=>{
     try{
-      const response = await axiosClient.get(`/utilization/display?month=${month}&year=${year}`).then(res =>{
-        setData(res.data.payments);
-      });
+      if(isMonthly){
+        const response = await axiosClient.get(`/utilization/display?month=${month}&year=${year}`).then(res =>{
+          setData(res.data.payments);
+        });
+      } else {
+        alert("Fetch yearly data");
+      }
+
     }catch(e){
 
     }
@@ -63,6 +94,14 @@ export default function Utilization() {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
+  const filterData = (e) => {
+    if(e === "all"){
+      setFilter(true);
+    }else{
+      setFilter(false);
+    }
+    
+  }
 
   const optionData = months.map((month,index)=>{
     return(
@@ -71,6 +110,9 @@ export default function Utilization() {
     
   })
 
+  const handleSelectDepartment = (e) =>{
+    setOffice(e)
+  }
 
   return (
    
@@ -79,13 +121,25 @@ export default function Utilization() {
         <div className='card-header bg-green-600'><h5>Utilization Summary</h5></div>
         <div className='card-body'>
           <div>
-            <select onChange={onChangeTerm} className='p-1 mr-1 w-[10rem]'>
+            <select onChange={(e) => filterData(e.target.value)} className='p-1 mr-1 w-[10rem]'>
+              <option value="all">All</option>
+              <option value="bydepartment">By Department</option>
+            </select>
+            
+            {filterAll?'':<select onChange={(e) => handleSelectDepartment(e.target.value)} className='p-1 mr-1 w-[15rem]'>
+              <option value="">Select Department/Office</option>
+              {officesList}
+            </select>}
+
+            <select onChange={onChangeTerm} className='p-1 mr-10 w-[10rem]'>
               <option value="monthly">Monthly</option>
               <option value="yearly">Yearly</option>
             </select>
-            <select value={month} onChange={onChangeMonth} className='p-1 mr-1 w-[10rem]'>
+
+            {isMonthly? <select value={month} onChange={onChangeMonth} className='p-1 mr-1 w-[10rem]'>
               {optionData}
-            </select>
+            </select>:''}
+           
             <select name="" id="" onChange={onChangeYear} className='p-1 w-[6rem]'>
               <option value="2024">2024</option>
               <option value="2023">2023</option>
@@ -96,7 +150,7 @@ export default function Utilization() {
             <table className='border'>
               <thead>
                 <tr>
-                  <th  className='w-[35rem]'>Description</th>
+                  <th  className='w-[40rem]'>Description</th>
                   <th  className='w-[15rem]'>Account Code</th>
                   <th  className='w-[10rem] text-right'>Total Amount</th>
                 </tr>

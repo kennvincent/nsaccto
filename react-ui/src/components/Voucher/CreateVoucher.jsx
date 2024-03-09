@@ -70,6 +70,8 @@ export default function CreateVoucher() {
     }
 
     const removeDeduction = (index)=>{
+      
+      
       let data = [...deductions];
       data.splice(index, 1)
       setDeductions(data)

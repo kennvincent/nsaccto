@@ -7,7 +7,7 @@ export default function AddParticulars({visible,onClose,onAdd,passParticulars,pa
 const [particulars,setParticulars] = useState("");
 const [accounts,setAccounts] = useState([]);
 const [accountCode,setAccountCode] =useState();
-const [amount,setAmount] =useState(0);
+const [amount,setAmount] =useState('');
 
 const [arrayData,SetArrayDate]=useState(['AccountCode','Amount'])
 

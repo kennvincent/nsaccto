@@ -5,31 +5,27 @@ import axios from "../api/axios";
 import axiosClient from '../axios-client';
 import cors from "cors";
 
+
 export default function handleLogin() {
   const [useraccount,setUserAccount] = useState([]);
+  const [officename,setOfficeName] = useState();
+  const [userType,setUserType] = useState();
   const navigate = useNavigate();
   const location = useLocation();
+  const win = window.sessionStorage;
 
  
   const logged = window.localStorage.getItem('isLoggedIn');
-  useEffect(()=>{
-    if(logged){
-      navigate("/dashboard");
-    }
-  });
-  
-  // const onLogin = async (e)=>{
-  //   e.preventDefault();
-  //   try{
-  //     await axios.post('/login',{email,password});
-  //     setEmail("");
-  //     setPassword("");
-  //     navigate("/dashboard");
-  //   }catch(e){
-  //     console.log(e);
-  //   }
 
-  //  }
+  
+
+  // useEffect(()=>{
+  //   if(logged){
+  //     navigate("/dashboard");
+  //   }
+  // });
+  
+ 
 
   const handleInput = (e)=>{
     e.persist();
@@ -46,17 +42,11 @@ export default function handleLogin() {
 
  const handleLogin =  async()=>{
   
-  // axios.post(`http://127.0.0.1:8000/api/login`,userlogin).then(res=>{
-  //   alert(res.data.message);
-    
-  // });
-
   try{
     
-        //update 01/24/2024 1:46 PM
-        // await axios.post(`http://127.0.0.1:8000/api/login`,userlogin).then(res=>{
+       
          axiosClient.post(`/login`,userlogin).then(res=>{
-          // await axios.post(`https://api.vincentsabelo.com/api/login`,userlogin).then(res=>{
+          
             if(res.data.login=='success'){
              
               window.localStorage.setItem('user',userlogin.username)
@@ -65,17 +55,21 @@ export default function handleLogin() {
 
               axiosClient.get(`/login/${userlogin.username}`).then(res=>{
                 window.localStorage.setItem('usertype',res.data.office[0].usertype);
-                // window.localStorage.setItem('officename',res.data.office[0].officename);
+                
 
-                var officename=res.data.office[0].officename;
+                win.setItem('officename',res.data.office[0].officename);
+                win.setItem('username',userlogin.username);
+                setOfficeName(res.data.office[0].officename)
+                // var officename=res.data.office[0].officename;
                 var usertype = res.data.office[0].usertype;
+                win.setItem('usertype',usertype);
 
                 if(usertype=="ACTG"){
                   navigate("/acctobrview");
                 } else if(usertype=="BDGT"){
                   navigate("/obrlistbudget");
                 } else if(usertype==="USR"){
-                  navigate("/officebudget",{state:{officename:officename}});
+                  navigate("/officebudget",{state:{officename:win.getItem('officename')}});
                 } else if(usertype=="APRV"){
                   navigate("/obrofficeforapproval");
                 }

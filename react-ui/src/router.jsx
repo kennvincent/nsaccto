@@ -32,6 +32,7 @@ import OfficeForApprovalObligationRequestList from "./components/obrofficeapprov
 import OfficeApprovedObligationRequest from "./components/obrofficeapproval/OfficeApprovedObligationRequest";
 import Payments from "./components/accounting/Payments";
 import Utilization from "./components/accounting/Utilization";
+import CreateObr from "./components/obligationrequest/CreateObr";
 
 const router = createBrowserRouter([
     {
@@ -79,7 +80,8 @@ const router = createBrowserRouter([
            ,
            {
             path:'/obrcreate',
-            element:<CreateObligationRequest />
+            // element:<CreateObligationRequest />
+            element:<CreateObr />
            }
            
            ,

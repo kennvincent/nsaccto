@@ -12,6 +12,7 @@ import Pagination from './Pagination';
 
   export default function OfficeBudget() {
   const location = useLocation();
+  const win = window.sessionStorage;
 
   const [showAllocateBudget,setShowAllocateBudget] = useState(false);
 
@@ -41,33 +42,29 @@ import Pagination from './Pagination';
   
   useEffect(()=>{
     var user = window.localStorage.getItem('user');
-    // var officename = window.localStorage.getItem('officename');
-    
-    axiosClient.get(`/displayofficebudget/${location.state.officename}`,).then(res=>{
+    setOfficeName(win.getItem('officename'));
+    var office = win.getItem('officename')
+    // axiosClient.get(`/displayofficebudget/${location.state.officename}`,).then(res=>{
+    axiosClient.get(`/displayofficebudget/${office}`,).then(res=>{
       setBudgets(res.data.budgets);
-     
+
     });
-
-
-  
-    
 
   },[]);
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = budgets.slice(firstPostIndex,lastPostIndex);
-  
-  
+
 
   const handlePageClick = (page)=>{
    setCurrentPage(page);
   }
   return (
     <div className='p-2 w-full bg-white'>
-        <h4>Office: {location.state.officename}</h4>
+        <h4>Office: {officename}</h4>
 
         <CurrentPosts posts={currentPosts} />
-        <Pagination totalPosts={budgets.length} postsPercPage={postsPerPage} onPageClicked={handlePageClick}/>
+        <Pagination totalPosts={budgets.length} postsPerPage={postsPerPage} onPageClicked={handlePageClick}/>
      
       
     </div>

@@ -14,11 +14,13 @@ const linkClass = 'flex items-center gap-2 font-light px-3 py-2 hover:bg-neutral
 export default function Sidebar() {
 
 const navigate = useNavigate();
+const win = window.sessionStorage;
 
 const handleLogout = ()=>{
   window.localStorage.removeItem('isLoggedIn');
   window.localStorage.removeItem('user');
   window.localStorage.removeItem('usertype');
+  win.removeItem('username');
   navigate("/");
   }
 

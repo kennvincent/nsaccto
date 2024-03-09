@@ -12,16 +12,31 @@ import {signal} from "@preact/signals-react"
 import OfficeHeadSidebar from './OfficeHeadSidebar'
 
 export default function MainLayout() {
-  
+  const win = window.sessionStorage;
+  const username = win.getItem('username');
+  const usertype = win.getItem('usertype');
+
+  useEffect(()=>{
+    
+    try{
+      if(username==null){
+        navigate("/");
+      }
+    }catch(e){
+
+    }
+    
+  });
+
   const navigate = useNavigate();
   
- const logged = window.localStorage.getItem('isLoggedIn');
+//  const logged = window.localStorage.getItem('isLoggedIn');
 
-  const [usertype,setUserType] =useState();
-  setTimeout(()=>{
-    setUserType(window.localStorage.getItem('usertype'))
+//   const [usertype,setUserType] =useState();
+//   setTimeout(()=>{
+//     setUserType(window.localStorage.getItem('usertype'))
 
-  },1000)
+//   },1000)
 
   return (
     <div  className="flex flex-row bg-neutral-100 h-screen w-screen overflow-hidden">
