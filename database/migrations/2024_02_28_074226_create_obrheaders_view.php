@@ -13,6 +13,7 @@ return new class extends Migration
             AS
             SELECT
             t1.id,
+            t1.obrnumber,
             t1.payee,
             t1.particulars,
             t1.obryear,
@@ -29,6 +30,7 @@ return new class extends Migration
                 WHEN t1.obrstatus='1' THEN 'For Approval'
                 WHEN t1.obrstatus='2' THEN 'Approved'
                 WHEN t1.obrstatus='3' THEN 'Obligated'
+                WHEN t1.obrstatus='4' THEN 'Rejected'
             END AS obrstatus,
             withvoucher
             FROM obrheaders t1

@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //   2024_02_25_110234
             \DB::statement("
                 CREATE VIEW vw_voucher 
                 AS
@@ -18,6 +19,7 @@ return new class extends Migration
                 t1.id,
                 t1.obrnumber,
                 t1.payee,
+                t3.officename,
                 t1.explanation,
                 t1.address,
                 t1.obramount,
@@ -32,6 +34,7 @@ return new class extends Migration
                 t2.amount
                 FROM vouchers t1
                 LEFT JOIN voucherdeductions t2 ON t1.id = t2.voucher_id
+                LEFT JOIN vw_obrheaders t3 ON t1.obrnumber=t3.obrnumber
             ");
     }
 

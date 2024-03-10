@@ -35,13 +35,20 @@ export default function ObrListBudget() {
         </tr>
       )
     })
+
+    const onChangeOffice = (officename)=>{
+      alert(officename);
+    }
     
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div>
         <h3 className="text-gray-700 font-medium">Obligation Requests</h3>
       </div>
-      <LoadOfficesDropDown />
+      <div className='flex'>
+        <LoadOfficesDropDown onChangeOffice={onChangeOffice} />
+      </div>
+      
       <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">
         <table className='w-full text-gray-700 border-collapse  border-slate-400 border mt-2'>
           <thead className='sticky top-0 bg-slate-200'>

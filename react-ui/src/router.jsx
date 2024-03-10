@@ -33,6 +33,7 @@ import OfficeApprovedObligationRequest from "./components/obrofficeapproval/Offi
 import Payments from "./components/accounting/Payments";
 import Utilization from "./components/accounting/Utilization";
 import CreateObr from "./components/obligationrequest/CreateObr";
+import OBRRejectedList from "./components/obligationrequest/OBRRejectedList";
 
 const router = createBrowserRouter([
     {
@@ -105,6 +106,11 @@ const router = createBrowserRouter([
            {
                 path:'/approvedobrpreview',
                 element:<ApprovedOBRPreview/>
+            }
+            ,
+            {
+                path:'/obrrejectedlist',
+                element:<OBRRejectedList/>
             }
             ,
            {

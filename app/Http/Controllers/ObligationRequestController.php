@@ -210,12 +210,30 @@ class ObligationRequestController extends Controller
         return response()->json(['message'=>"Obligation Request have been cancelled"]);
     }
 
-    public function reject($obrid){
-        $affected = DB::table('obrheaders')
-              ->where('id', $obrid)
-              ->update(['obrstatus' => 3]);
+    public function reject(Request $request){
+            DB::table('obrheaders')
+              ->where('id',$request->obrid)
+              ->update(array('obrstatus' => 4,'remarks' => $request->remarks));
         return response()->json(['message'=>"Obligation Request have been rejected"]);
     }
+
+    public function rejectedobr(){
+        $obrlist = DB::table('vw_obrheaders')
+        ->select('id','payee','particulars','officecode','officename',
+        'officedesc','address','totalamount','totalamountpaid','balance')
+        ->where('obrstatus','=','Rejected')
+        ->orderBy('id','DESC')
+        ->get();
+
+        return response()->json(['obrlist'=>$obrlist]);
+    }
+
+    // public function reject($obrid){
+    //     $affected = DB::table('obrheaders')
+    //           ->where('id', $obrid)
+    //           ->update(['obrstatus' => 4]);
+    //     return response()->json(['message'=>"Obligation Request have been rejected"]);
+    // }
 
     public function getobryear(){
         $year=DB::table("currentbudgetyears")

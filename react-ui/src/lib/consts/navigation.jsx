@@ -27,6 +27,12 @@ export const DASHBOARD_BUDGET_SIDEBAR_LINKS =[
 		path: '/approvedobrlistbudget',
 		icon: <HiOutlineDocumentText />
 	},
+	{
+		key: 'obrrejectedlist',
+		label: 'Rejected OBR',
+		path: '/obrrejectedlist',
+		icon: <HiOutlineDocumentText />
+	},
 ]
 
 export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [

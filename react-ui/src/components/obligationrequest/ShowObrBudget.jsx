@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import axiosClient from '../../axios-client';
+import OBRRejectRemarks from './OBRRejectRemarks';
 
 export default function ShowObrBudget() {
  const location = useLocation();
+ const navigate =useNavigate();
 
  const [obr,setObr] = useState([]);
  const [obrtotal,setObrTotal]=useState([]);
- const [obrnumber,setObrNumber] =useState();
+ const [obrnumber,setObrNumber] = useState();
  const [lastobrid,setLastObrId] = useState();
- let obrid = location.state.obrid;
- 
+ const [showRemarks,setShowRemarks] =useState(false);
+ const obrid = location.state.obrid;
+
  let payee="";
  let officedesc="";
  let officename="";
@@ -21,33 +24,40 @@ export default function ShowObrBudget() {
  let totalamount=0;
  let obrstatus="";
 
- useEffect(()=>{
 
-   
+ 
+
+ useEffect(()=>{
+    axiosClient.get(`/obligationrequest/getobrid`).then(res=>{
+        setLastObrId(parseInt(res.data.obrid[0].obrid) + 1)
+        const obrnum = generate_obr_number(lastobrid);
+        setObrNumber(obrnum);
+      });
+ },[]);
+
+ useEffect(()=>{
+    
+    
 
     const fetchData = async()=>{
-        axiosClient.get(`/obligationrequest/budgetview/selected/${location.state.obrid}`).then(res=>{
+       
+       
+         
+
+        axiosClient.get(`/obligationrequest/budgetview/selected/${obrid}`).then(res=>{
             setObr(res.data.obr);
           });
-    
+          
+         
         axiosClient.get(`/obligationrequest/budgetview/selected/sum/${location.state.obrid}`).then(res=>{
             setObrTotal(res.data[0].obrtotal);
           });
           
        
-          axiosClient.get(`/obligationrequest/getobrid`).then(res=>{
-            setLastObrId(res.data.obrid[0].obrid + 1)
-            
-            console.log('Last: ' + res.data.obrid[0].obrid + 1);
-            // setObrNumber(generate_obr_number(lastobrid));
-          });
          
     };
 
-    
- 
-
-    
+    fetchData();
  },[]);
 
 
@@ -68,9 +78,10 @@ export default function ShowObrBudget() {
     return (strNum);
  }
 
+
  const handleApproveObr = ()=>{
     const data = {
-        'obrid':location.state.obrid,
+        'obrid':obrid,
         'obrnumber' : obrnumber
     }
 
@@ -84,12 +95,37 @@ export default function ShowObrBudget() {
 
  }
 
- const handleRejectObr = ()=>{
-    axiosClient.get(`/obligationrequest/budgetview/selected/reject/${location.state.obrid}`).then(res=>{
-        alert(res.data.message)
-    });
+ const handleShowReject = ()=>{
+   
+    setShowRemarks(true);
+
  }
 
+
+ const handleCloseRemarks = ()=>{
+    setShowRemarks(false);
+ }
+
+ const handleRejectOBR = (remarks)=>{
+    if(remarks.trim().length==0){
+        alert("Enter remarks");
+        return;
+    }
+
+    const data = {
+        'obrid': obrid,
+        'remarks':remarks
+    }
+    
+    console.log(data);
+    axiosClient.put(`/obligationrequest/budgetview/selected/reject`,data).then(res=>{
+        alert(res.data.message)
+        navigate('/obrlistbudget');
+    });
+
+    setShowRemarks(false);
+    
+ }
  const handleObrNumberInput = (e)=>{
     setObrNumber(e.target.value);
  }
@@ -112,6 +148,8 @@ export default function ShowObrBudget() {
                     <div className='w-[10rem]'><input type="text" name="obrnumber" id="" value={obrnumber} onChange={handleObrNumberInput} className='h-7 w-full' /></div>
                 </div>
             </div>
+
+            <div></div>
             <div className='flex'>
                 <div className='w-[15rem] h-8 items-center border py-0 px-2'>
                     <p>Office</p>
@@ -186,7 +224,7 @@ export default function ShowObrBudget() {
             <div className='flex'>
                 <div className='w-[100rem] border p-1 text-right'>
                         <button className='btn btn-primary btn-sm w-40' onClick={handleApproveObr}>Approve</button>
-                        <button className='btn btn-primary btn-sm w-40 ml-2' onClick={handleRejectObr}>Reject</button>
+                        <button className='btn btn-primary btn-sm w-40 ml-2' onClick={handleShowReject}>Reject</button>
                 </div>
             </div>
 
@@ -194,7 +232,9 @@ export default function ShowObrBudget() {
 
            
         </div>
-
+        
+        <OBRRejectRemarks visible={showRemarks} onClose={handleCloseRemarks} 
+         handleRejectOBR={handleRejectOBR}/>
     </div>
   )
 }
