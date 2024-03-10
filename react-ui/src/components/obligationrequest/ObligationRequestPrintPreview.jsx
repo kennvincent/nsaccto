@@ -42,7 +42,7 @@ export default function ObligationRequestPrintPreview() {
     
     useEffect(()=>{
         
-
+        console.log(items);
         
         // const obr_id = window.localStorage.getItem('obr_id');
        
@@ -96,7 +96,7 @@ export default function ObligationRequestPrintPreview() {
         
         var subtotal=0;
         items.map((item) =>{
-            subtotal = subtotal + parseFloat(item.amount);
+            subtotal = subtotal + parseFloat(item.name.amount);
             setTotal(subtotal);
         })
 
@@ -180,16 +180,18 @@ export default function ObligationRequestPrintPreview() {
                         <p>{officeCode}</p>
                     </div>
                     <div className='w-[15%] h-96 border py-0 px-2'>
-                        {items.map((item,index)=>(
+                        {items.map((item,index)=>{
+                            return(
+                                <p className='p-0 m-0' key={index}>{item.name.accountcode.split(' ')[0]}</p>
+                            );
+                        })}
                         
-                            <p className='p-0 m-0' key={index}>{item.accountcode.split(' ')[0]}</p>
-                        ))}
                     </div>
                     <div className='w-[15%] h-96 border py-0 px-2'>
                         
                         {items.map((item,index)=>(
                             
-                            <p className='p-0 m-0 text-right' key={index}> {Number(item.amount).toLocaleString()}</p>
+                            <p className='p-0 m-0 text-right' key={index}> {Number(item.name.amount).toLocaleString()}</p>
                         
                         ))}
                     </div>
