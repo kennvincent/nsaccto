@@ -23,10 +23,11 @@ export default function AddNewOffice({visible,onClose}) {
           authorizedpersonnel :office.authorizedpersonnel,
           position:office.position
         }
-    
+        setOffice([]);
       
         axiosClient.post(`/office`,newOffice).then(res =>{
             alert(res.data.message);
+            
         })
         .catch(function(error){ 
           
@@ -35,7 +36,7 @@ export default function AddNewOffice({visible,onClose}) {
                     setInputErrorList(error.response.data.errors);
                 } else if(error.response.status===419){
                   //setInputErrorList(error.response.data.errors);
-                  console.log("ERROR " + error.response.status);
+                 
               }
             }
         });

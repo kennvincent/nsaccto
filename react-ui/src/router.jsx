@@ -34,6 +34,7 @@ import Payments from "./components/accounting/Payments";
 import Utilization from "./components/accounting/Utilization";
 import CreateObr from "./components/obligationrequest/CreateObr";
 import OBRRejectedList from "./components/obligationrequest/OBRRejectedList";
+import DisplayOfficeBudget from "./components/accounting/DisplayOfficeBudget";
 
 const router = createBrowserRouter([
     {
@@ -130,6 +131,11 @@ const router = createBrowserRouter([
            {
             path:'/acctpaidpreview',
             element:<AcctPaidPreview/>
+           }
+           ,
+           {
+            path:'/displayofficebudget',
+            element:<DisplayOfficeBudget/>
            }
            ,
            {

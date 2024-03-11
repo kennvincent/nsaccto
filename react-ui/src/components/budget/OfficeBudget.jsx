@@ -39,6 +39,8 @@ import Pagination from './Pagination';
   const [currentPage,setCurrentPage] = useState(1);
   const postsPerPage=15;
 
+
+  
   
   useEffect(()=>{
     var user = window.localStorage.getItem('user');
@@ -59,13 +61,13 @@ import Pagination from './Pagination';
   const handlePageClick = (page)=>{
    setCurrentPage(page);
   }
+  
   return (
     <div className='p-2 w-full bg-white'>
         <h4>Office: {officename}</h4>
 
         <CurrentPosts posts={currentPosts} />
         <Pagination totalPosts={budgets.length} postsPerPage={postsPerPage} onPageClicked={handlePageClick}/>
-     
       
     </div>
   )

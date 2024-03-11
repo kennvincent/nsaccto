@@ -40,13 +40,13 @@ export default function Office() {
   }
 
   const handleShowBudget = (officename,ofc)=>{
-    navigate("/officebudget",{state:{officename:officename,office:ofc}});
+    navigate("/displayofficebudget",{state:{officename:officename,office:ofc}});
   }
   
   useEffect(()=>{
 
     axiosClient.get(`/offices`).then(res=>{
-      setOffices(res.data.offices);
+      setOffices(res.data.offices || []);
     });
   },[reducer]);
 
@@ -63,6 +63,7 @@ export default function Office() {
             className='btn btn-primary btn-sm w-16 p-0' >Budget</button></td>
       </tr>
     )
+    
     
   });
  

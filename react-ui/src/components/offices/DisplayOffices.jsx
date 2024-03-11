@@ -35,7 +35,7 @@ export default function DisplayOffices() {
    
   return (
     <div>
-        <h1>Cors Policy</h1>
+       
         <table>
             <thead>
                 <tr>
