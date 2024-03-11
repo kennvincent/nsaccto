@@ -11,18 +11,21 @@ use Storage;
 class BudgetImportController extends Controller
 {
     public function import(Request $request){
-        // $request->validate([
-        //     'file' => 'required|mimes:xlsx,xls',
-        // ]);
+        
+      
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
  
         // // Get the uploaded file
         // $file = $request->file('file');
-        // dd($file);
         
-        //return response()->json($request->file);
-        Excel::import(new BudgetImport,'D:\SYSTEM DEVELOPMENT OFFICIAL\Web Development\GAAImport.xlsx');
+        
+        
+        //Excel::import(new BudgetImport,'D:\SYSTEM DEVELOPMENT OFFICIAL\Web Development\GAAImport.xlsx');
         //Excel::import(new BudgetImport,$request->file('budget')->store('budgets'));
-        //Excel::import(new BudgetImport,$file);
+        $file = $request->file('file');
+        Excel::import(new BudgetImport,$file);
         // (new BudgetImport)->import($request->file('budget'));
         return response()->json(['message'=>'Budget have been imported!!!']);
     }

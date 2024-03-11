@@ -3,21 +3,35 @@ import React, { useState } from "react";
 import axiosClient from "../../axios-client";
 
 export default function ImportBudget() {
-    const [selectedFile,setSelectedFile] =useState([]);
+    const [selectedFile,setSelectedFile] =useState(null);
 
     var file;
     const onFileChange = (e)=>{
-        //setSelectedFile(e.target.files[0]);
         file =e.target.files[0];
+       
         console.log(file);
+
     }
 
-    const onClickUpload = ()=>{
+    const onClickUpload = async ()=>{
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await axiosClient.post('/import', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            alert(response.data.message);
+        } catch (error) {
+            console.error(error);
+        }
 
         
-        axiosClient.post(`/import`,file).then(res =>{
-           alert(res.data.message);
-        });
+        // axiosClient.post(`/import`,file).then(res =>{
+        //    alert(res.data.message);
+        // });
     }
 
   return (
@@ -30,7 +44,7 @@ export default function ImportBudget() {
                 <input
                         type="file"
                         onChange={onFileChange}
-                        name="fileupload"
+                        name="file"
                     />
                     <button className='btn btn-primary btn-sm right-0 absolute mr-2 w-[150px]' 
                     onClick={onClickUpload}>
