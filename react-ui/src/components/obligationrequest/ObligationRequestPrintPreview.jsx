@@ -2,7 +2,9 @@ import React,{Component, useRef,useEffect, useState} from 'react'
 import {useReactToPrint} from 'react-to-print'
 import axios from 'axios'
 import { LuPrinter } from "react-icons/lu";
-import { IoMdCloseCircleOutline } from "react-icons/io";
+import { IoMdCloseCircleOutline,IoIosSave  } from "react-icons/io";
+import { TiArrowBack } from "react-icons/ti";
+import { ImPrinter } from "react-icons/im";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../axios-client';
 import { tr } from 'date-fns/locale';
@@ -12,8 +14,29 @@ export default function ObligationRequestPrintPreview() {
     const win = window.sessionStorage;
 
     var officename = win.getItem('officename');
+
+    const [obryear,setObrYear] = useState();
+    const [officeid,setOfficeId] = useState();
+    // const [officeName,setOfficeName]=useState();
+    const [officeDesc,setOfficeDesc] = useState();
+    const [address,setAddress]= useState();
+    const [officeCode,setOfficeCode] = useState(); 
+    const [responsibilityCenter,setResponsibilityCenter] = useState();
+    const [showSave,setShowSave]=useState(true);
+    const [showBack,setShowBack]=useState(true);
+    const [showPrint,setShowPrint]=useState(false);
+    const [showClose,setShowClose]=useState(false);
+    
+    // const [particulars,setParticulars]= useState();
+    const [details,setDetails] = useState([]);
+    const [total,setTotal] = useState(0);
+
+    const items = location.state.items;
+
+    const particulars = location.state.particulars;
+    const payee = location.state.payee;
+
     var username = win.getItem('username');
-    console.log(username);
     
     const componentRef = useRef();
 
@@ -21,93 +44,152 @@ export default function ObligationRequestPrintPreview() {
         content: () => componentRef.current,
     });
 
-    const navigate = useNavigate();
-    const handleClose = ()=>{
-        navigate('/obrcreate',{state:{items,payee,particulars}});
-    }
-    // const [payee,setPayee] = useState();
-    const [officeName,setOfficeName]=useState();
-    const [officeDesc,setOfficeDesc] = useState();
-    const [address,setAddress]= useState();
-    const [officeCode,setOfficeCode] = useState(); 
-    const [responsibilityCenter,setResponsibilityCenter] = useState();
-    // const [particulars,setParticulars]= useState();
-    const [details,setDetails] = useState([]);
-    const [total,setTotal] = useState(0);
 
-    const items = location.state.items;
-    const particulars = location.state.particulars;
-    const payee = location.state.payee;
-
-    
     useEffect(()=>{
         
-        console.log(items);
-        
-        // const obr_id = window.localStorage.getItem('obr_id');
        
+        
+        
+        
+         
+         // const obr_id = window.localStorage.getItem('obr_id');
+     
+         // axiosClient.get(`/obligationrequest/printpreview/${obr_id}`).then(res=>{
+         //     setPayee(res.data.obr[0].payee);
+         //     setOfficeDesc(res.data.obr[0].officedesc);
+         //     setAddress(res.data.obr[0].address);
+         //     setOfficeName(res.data.obr[0].officename);
+         //     setParticulars(res.data.obr[0].particulars);
+         //     setOfficeCode(res.data.obr[0].officecode);
+         //     setDetails(res.data.obr);
+         // })
+ 
+         // axiosClient.get(`/obligationrequest/obrsum/${obr_id}`).then(res =>{
+         //     ///var temptotal = res.data[0];
+         //     setTotal(res.data[0].obrtotal)
+         // });
+         
+         const fetchData = async()=>{
+ 
+             try{
+                 await axiosClient.get(`/getobryear`).then(res =>{
+                     setObrYear(res.data.obryear[0].budgetyear);
+                 });
+             }catch(e){
+     
+             }
+ 
+             
+             try{
+                 await axiosClient.get(`/login/${username}`).then(res =>{
+                    
+ 
+                     setOfficeId(res.data.office[0].office_id);
+                     setOfficeCode(res.data.office[0].officecode);
+                     setOfficeDesc(res.data.office[0].officedesc);
+                     setAddress(res.data.office[0].officeaddress)
+                     setResponsibilityCenter(res.data.office[0].officename);
+                     setAuthorizedPersonnel(res.data.office[0].authorizedpersonnel);
+                     setPersonnelPosition(res.data.office[0].position);
+                     
+ 
+                 });
+             }
+             catch(e){
+     
+             }
+ 
+             try{
+                 await axiosClient.get(`/getobryear`).then(res =>{
+                   
+                     setObrYear(res.data.obryear[0].budgetyear);
+                 });
+             }catch(e){
+ 
+             }
+         }
+         
+ 
+         fetchData();
+         
+         var subtotal=0;
+         items.map((item) =>{
+
+             subtotal = subtotal + parseFloat(item.name.amount);
+             setTotal(subtotal);
+         })
+
+         
+ 
+     },[]);
+
+    const handleCreateOBR = ()=>{
     
-        // axiosClient.get(`/obligationrequest/printpreview/${obr_id}`).then(res=>{
-        //     setPayee(res.data.obr[0].payee);
-        //     setOfficeDesc(res.data.obr[0].officedesc);
-        //     setAddress(res.data.obr[0].address);
-        //     setOfficeName(res.data.obr[0].officename);
-        //     setParticulars(res.data.obr[0].particulars);
-        //     setOfficeCode(res.data.obr[0].officecode);
-        //     setDetails(res.data.obr);
-        // })
+       
+     
+        const obr = {
+            'payee' : payee,
+            'officeid' : officeid,
+            'particulars':particulars,
+            'address': address,
+            'obryear': obryear,
+            'signatory1':'S1',
+            'position1' : 'P1',
+            'signatory2' : 'S2',
+            'position2' : 'P2',
+            'obrdetails': items
+            
+        };
 
-        // axiosClient.get(`/obligationrequest/obrsum/${obr_id}`).then(res =>{
-        //     ///var temptotal = res.data[0];
-        //     setTotal(res.data[0].obrtotal)
-        // });
-        
-        const fetchData = async()=>{
-            try{
-                await axiosClient.get(`/login/${username}`).then(res =>{
-                    console.log(res.data.office[0].office_id);
-
-                    // setOfficeId(res.data.office[0].office_id);
-                    setOfficeCode(res.data.office[0].officecode);
-                    setOfficeofficeDesc(res.data.office[0].officedesc);
-                    setAddress(res.data.office[0].officeaddress)
-                    setResponsibilityCenter(res.data.office[0].officename);
-                    setAuthorizedPersonnel(res.data.office[0].authorizedpersonnel);
-                    setPersonnelPosition(res.data.office[0].position);
-
-                });
-            }
-            catch(e){
     
+       
+        axiosClient.post(`/obligationrequest`,obr).then(res=>{
+            
+                const obr_id = res.data.obr_id;
+
+                if(obr_id>0){
+                    setShowSave(false);
+                    setShowPrint(true);
+                    window.localStorage.setItem('obr_id',obr_id)
+                    setDetails([]);
+                    setTotal(0);
+                    // navigate('/obrprintpreview');
+                    alert('Obligation Request have been created');
+                }
+                
+          
+        }).catch(function(error){ 
+            if(error.response){
+                if(error.response.status===422){
+                } else if(error.response.status===419){
+                }else if(error.response.status===500){
+                }
             }
+        });
 
-            try{
-                await axiosClient.get(`/getobryear`).then(res =>{
-                  
-                    setObrYear(res.data.obryear[0].budgetyear);
-                });
-            }catch(e){
-
-            }
-        }
         
+    }
 
-        fetchData();
-        
-        var subtotal=0;
-        items.map((item) =>{
-            subtotal = subtotal + parseFloat(item.name.amount);
-            setTotal(subtotal);
-        })
 
-    },[]);
+    const navigate = useNavigate();
+    const handleBack = ()=>{
+        navigate('/obrcreate',{state:{items,payee,particulars}});
+    }
+    
+    const handleClose = ()=>{
+
+        navigate('/obrcreate');
+    }
+    
+
+    
+   
 
   
    
   return (
     
     <div >
-        
         
 
        <div ref={componentRef} className='overflow-hidden  text-xl w-[1200px] m-auto'>
@@ -138,7 +220,6 @@ export default function ObligationRequestPrintPreview() {
                         <p>Office</p>
                     </div>
                     <div className='w-[85%] h-10 border py-0 px-2'>
-                        
                         <p>{officeDesc}</p>
                     </div>
                 </div>
@@ -171,7 +252,7 @@ export default function ObligationRequestPrintPreview() {
 
                 <div className='flex w-[1024px] m-auto'>
                     <div className='w-[15%] h-96 items-center border py-0 px-2'>
-                        <p>{officeName}</p>
+                        <p>{responsibilityCenter}</p>
                     </div>
                     <div className='w-[45%] h-96  p-0 px-2'>
                         <p>{particulars}</p>
@@ -296,8 +377,12 @@ export default function ObligationRequestPrintPreview() {
                 </div>
             </div>
         </div>
-        <LuPrinter onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />
-                <IoMdCloseCircleOutline onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />
+        {showSave?<IoIosSave  onClick={handleCreateOBR} className='absolute right-[22rem] top-20 text-3xl' />:<ImPrinter  onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />}
+        
+        {showSave?<TiArrowBack  onClick={handleBack}className='absolute right-[19rem] top-20 text-3xl'  />:<IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />}
+        
+        
+         
     </div>
   )
 }

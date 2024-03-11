@@ -10,6 +10,7 @@ const CreateObr = () => {
     const [officename,setOfficename] = useState();
     const [accounts,setAccounts] = useState([]);
     const [items,setItems] = useState([]);
+    const [details,setDetails] = useState([]);
     const [accountcode,setAccountCode] = useState('');
     const [amount,setAmount] = useState('');
     const [particulars,setParticulars] = useState('');
@@ -59,13 +60,14 @@ const CreateObr = () => {
         alert("Invalid amount");
         return;
       }
+
       const newItem = {
-        accountcode:accountcode,
+        accountcode:accountcode.split(' ')[0],
         amount:amount
       }
 
       setItems([...items,{id:uuid(),name:newItem}]);
-      console.log(items);
+ 
       setAmount('');
       setAccountCode('');
     
@@ -129,6 +131,10 @@ const CreateObr = () => {
       }
 
 
+   
+
+     console.log(details);
+    
       if(items.length>0){
         navigate('/obrprintpreview',{state:{items,payee,particulars}});
       } else {

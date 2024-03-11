@@ -145,6 +145,7 @@ export default function CreateObligationRequest() {
     
 
     const [user,setUser] = useState();
+    
     useEffect(()=>  {
         setUser(window.localStorage.getItem('user'));
         const fetchData = async()=>{

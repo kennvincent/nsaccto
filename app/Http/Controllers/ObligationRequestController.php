@@ -141,6 +141,7 @@ class ObligationRequestController extends Controller
                     'officedesc','address','totalamount','totalamountpaid',
                     'balance','obrstatus','withvoucher')
                     ->where('balance','>',0)
+                    ->where('obrstatus','=','Obligated')
                     ->orderBy('id','DESC')
                     ->get();
 
@@ -271,8 +272,8 @@ class ObligationRequestController extends Controller
                 //This is the last update
                 $obrid = DB::getPdo()->lastInsertId();
                 foreach($details as $key => $detail){
-                    $obrDetail['accountcode'] = $detail['accountcode'];
-                    $obrDetail['amount'] = $detail['amount'];
+                    $obrDetail['accountcode'] = $detail['name']['accountcode'];
+                    $obrDetail['amount'] = $detail['name']['amount'];
                     $obrDetail['obrid'] = $obrid;
                     Obrdetail::create($obrDetail);
                 }
