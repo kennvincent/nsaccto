@@ -1,8 +1,11 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
 import axiosClient from '../../axios-client';
 import AddDeduction from './AddDeduction';
 import { useNavigate,useLocation } from 'react-router-dom';
+import {useReactToPrint} from 'react-to-print'
+import { ImPrinter } from "react-icons/im";
+import { IoMdCloseCircleOutline,IoIosSave  } from "react-icons/io";
 
 
 export default function VoucherPrintPreview() {
@@ -75,10 +78,19 @@ export default function VoucherPrintPreview() {
         )
       })
     
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+
+    const handleClose = ()=> {
+      navigate('/acctobrview');
+    }
+
   return (
-    <div className='w-[full] h-auto'>
-      <div className='font-serif w-[1024px] border border-black  m-auto bg-white'>
-        <div className='text-center p-1 '>
+    <div  className='w-[full] h-auto pt-10 mt-16 '>
+      <div ref={componentRef} className='font-serif w-[1024px] border border-black  m-auto mt-16  bg-white'>
+        <div className='text-center p-1 mt-16 '>
           <p className='p-0 m-0'>Republic of the Philippines</p>
           <p className='p-0 m-0'>PROVINCE OF NORTHERN SAMAR</p>
           <p className='p-0 m-0'>Catarman, Northern Samar</p>
@@ -382,7 +394,8 @@ export default function VoucherPrintPreview() {
         
       </div>
 
-      
+      <ImPrinter  onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />
+      <IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />
     </div>
   )
 }

@@ -9,10 +9,10 @@ export default function CreateVoucher() {
     const [totalAmount,setTotalAmount] = useState();
     const [balance,setBalance] = useState();
     const [obrnumber,setObrNumber] = useState();
-    const [payee,setPayee] = useState();
-    const [explanation,setExplanation] = useState();
-    const [address,setAddress] = useState();
-    const [bank,setBank] = useState();
+    const [payee,setPayee] = useState('');
+    const [explanation,setExplanation] = useState('');
+    const [address,setAddress] = useState('');
+    const [bank,setBank] = useState('');
     const [officeName,setOfficeName] = useState();
     const [signatory1,setSignatory1] = useState();
     const [signatory1Position,setSignatory1Position] = useState();
@@ -130,7 +130,29 @@ export default function CreateVoucher() {
     })
     
     const createDisbursementVoucher = ()=>{
+      if(payee.trim().length==0){
+        alert('Enter Paye name');
+        return;
+      }
 
+      if(address.trim().length==0){
+        alert('Enter Address');
+        return;
+      }
+      if(explanation.trim().length==0){
+        alert('Enter Explanation');
+        return;
+      }
+
+      if(bank.trim().length==0){
+        alert('Enter Bank name');
+        return;
+      }
+
+      if(deductions.length==0){
+        alert('Add deduction(s)');
+        return;
+      }
       const voucherData = {
         'obrnumber' : obrnumber,
         'payee' :payee,
@@ -147,7 +169,7 @@ export default function CreateVoucher() {
         'signatory3position' : signatory3Position
       }
 
-      console.log(voucherData);
+
 
       axiosClient.post('/voucher',voucherData).then(res=>{
         if(res.data.voucher>0){
@@ -155,7 +177,7 @@ export default function CreateVoucher() {
           window.localStorage.setItem('voucher_id',voucher_id)
           const obr ={'obrid': obrid}
           axiosClient.put(`/voucher/obr/update`,obr).then(res=>{});
-
+          alert('Voucher successfully creaed');
           navigate('/voucherprintpreview',{state:{voucherData:voucherData}});
           
         }

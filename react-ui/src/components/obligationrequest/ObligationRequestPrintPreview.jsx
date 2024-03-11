@@ -8,6 +8,7 @@ import { ImPrinter } from "react-icons/im";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../axios-client';
 import { tr } from 'date-fns/locale';
+
 export default function ObligationRequestPrintPreview() {
     const location = useLocation();
 
