@@ -71,6 +71,7 @@ const ObligationRequestPreviewOnly = () => {
              setParticulars(res.data.obr[0].particulars);
              setOfficeCode(res.data.obr[0].officecode);
              setDetails(res.data.obr);
+             console.log(res.data.obr);
           
             
          })
@@ -91,7 +92,7 @@ const ObligationRequestPreviewOnly = () => {
      const displayAccountCodes = ()=> {
         details.map((detail,index) => {
             return(
-                <p key={index}>{detail.accountcode}sdfdf</p>
+                <p key={index}>{detail.accountcode}</p>
             )
         })
      }
