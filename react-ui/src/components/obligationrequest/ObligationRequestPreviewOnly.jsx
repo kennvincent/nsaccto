@@ -9,35 +9,31 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../axios-client';
 import { tr } from 'date-fns/locale';
 
-export default function ObligationRequestPrintPreview() {
+
+const ObligationRequestPreviewOnly = () => {
     const location = useLocation();
+    const navigate = useNavigate();
 
-    const win = window.sessionStorage;
-
-    var officename = win.getItem('officename');
-
-    const [obryear,setObrYear] = useState();
-    const [officeid,setOfficeId] = useState();
-    // const [officeName,setOfficeName]=useState();
+    const [payee,setPayee] = useState();
+    const [officename,setOfficeName]=useState();
     const [officeDesc,setOfficeDesc] = useState();
     const [address,setAddress]= useState();
     const [officeCode,setOfficeCode] = useState(); 
     const [responsibilityCenter,setResponsibilityCenter] = useState();
-    const [showSave,setShowSave]=useState(true);
-    const [showBack,setShowBack]=useState(true);
     const [showPrint,setShowPrint]=useState(false);
     const [showClose,setShowClose]=useState(false);
-    
-    // const [particulars,setParticulars]= useState();
+    const [particulars,setParticulars]= useState();
+    const [items,setItems]=useState([]);
     const [details,setDetails] = useState([]);
+
     const [total,setTotal] = useState(0);
+    const [userType,setUserType]=useState();
 
-    const items = location.state.items;
+    
 
-    const particulars = location.state.particulars;
-    const payee = location.state.payee;
+  
 
-    var username = win.getItem('username');
+   
     
     const componentRef = useRef();
 
@@ -45,78 +41,46 @@ export default function ObligationRequestPrintPreview() {
         content: () => componentRef.current,
     });
 
+   
+
+    const handleClose  = ()=>{
+        if(userType=="USR"){
+            navigate('/obrlist');
+        }else if(userType=="APRV"){
+            navigate('/obrofficeforapproval');
+        }else if(userType=="BDGT"){
+            navigate('/obrlistbudget');
+        }
+
+        
+    }
 
     useEffect(()=>{
         
+         
+         
+        var obrid = window.localStorage.getItem('obrid');
+        setUserType(window.localStorage.getItem('usertype'));
+
+   
+         axiosClient.get(`/obligationrequest/printpreview/${obrid}`).then(res=>{
+             setPayee(res.data.obr[0].payee);
+             setOfficeDesc(res.data.obr[0].officedesc);
+             setAddress(res.data.obr[0].address);
+             setOfficeName(res.data.obr[0].officename);
+             setParticulars(res.data.obr[0].particulars);
+             setOfficeCode(res.data.obr[0].officecode);
+             setDetails(res.data.obr);
+          
+            
+         })
+         
        
-        
-        
-        
-         
-         // const obr_id = window.localStorage.getItem('obr_id');
-     
-         // axiosClient.get(`/obligationrequest/printpreview/${obr_id}`).then(res=>{
-         //     setPayee(res.data.obr[0].payee);
-         //     setOfficeDesc(res.data.obr[0].officedesc);
-         //     setAddress(res.data.obr[0].address);
-         //     setOfficeName(res.data.obr[0].officename);
-         //     setParticulars(res.data.obr[0].particulars);
-         //     setOfficeCode(res.data.obr[0].officecode);
-         //     setDetails(res.data.obr);
-         // })
- 
-         // axiosClient.get(`/obligationrequest/obrsum/${obr_id}`).then(res =>{
-         //     ///var temptotal = res.data[0];
-         //     setTotal(res.data[0].obrtotal)
-         // });
-         
-         const fetchData = async()=>{
- 
-             try{
-                 await axiosClient.get(`/getobryear`).then(res =>{
-                     setObrYear(res.data.obryear[0].budgetyear);
-                 });
-             }catch(e){
-     
-             }
- 
-             
-             try{
-                 await axiosClient.get(`/login/${username}`).then(res =>{
-                    
- 
-                     setOfficeId(res.data.office[0].office_id);
-                     setOfficeCode(res.data.office[0].officecode);
-                     setOfficeDesc(res.data.office[0].officedesc);
-                     setAddress(res.data.office[0].officeaddress)
-                     setResponsibilityCenter(res.data.office[0].officename);
-                     setAuthorizedPersonnel(res.data.office[0].authorizedpersonnel);
-                     setPersonnelPosition(res.data.office[0].position);
-                     
- 
-                 });
-             }
-             catch(e){
-     
-             }
- 
-             try{
-                 await axiosClient.get(`/getobryear`).then(res =>{
-                   
-                     setObrYear(res.data.obryear[0].budgetyear);
-                 });
-             }catch(e){
- 
-             }
-         }
-         
- 
-         fetchData();
          
          var subtotal=0;
-         items.map((item) =>{
+         details.map((detail) =>{
 
-             subtotal = subtotal + parseFloat(item.name.amount);
+             subtotal = subtotal + parseFloat(detail.amount);
              setTotal(subtotal);
          })
 
@@ -124,74 +88,16 @@ export default function ObligationRequestPrintPreview() {
  
      },[]);
 
-    const handleCreateOBR = ()=>{
-    
-       
+     const displayAccountCodes = ()=> {
+        details.map((detail,index) => {
+            return(
+                <p key={index}>{detail.accountcode}sdfdf</p>
+            )
+        })
+     }
      
-        const obr = {
-            'payee' : payee,
-            'officeid' : officeid,
-            'particulars':particulars,
-            'address': address,
-            'obryear': obryear,
-            'signatory1':'S1',
-            'position1' : 'P1',
-            'signatory2' : 'S2',
-            'position2' : 'P2',
-            'obrdetails': items
-            
-        };
-
-    
-       
-        axiosClient.post(`/obligationrequest`,obr).then(res=>{
-            
-                const obr_id = res.data.obr_id;
-
-                if(obr_id>0){
-                    setShowSave(false);
-                    setShowPrint(true);
-                    window.localStorage.setItem('obr_id',obr_id)
-                    setDetails([]);
-                    setTotal(0);
-                    // navigate('/obrprintpreview');
-                    alert('Obligation Request have been created');
-                }
-                
-          
-        }).catch(function(error){ 
-            if(error.response){
-                if(error.response.status===422){
-                } else if(error.response.status===419){
-                }else if(error.response.status===500){
-                }
-            }
-        });
-
-        
-    }
-
-
-    const navigate = useNavigate();
-    const handleBack = ()=>{
-        navigate('/obrcreate',{state:{items,payee,particulars}});
-    }
-    
-    const handleClose = ()=>{
-
-        navigate('/obrcreate');
-    }
-    
-
-    
-   
-
-  
-   
   return (
-    
-    <div >
-        
+    <div className='bg-white'>
 
        <div ref={componentRef} className='overflow-hidden  text-xl w-[1200px] m-auto'>
      
@@ -260,18 +166,18 @@ export default function ObligationRequestPrintPreview() {
                         <p>{officeCode}</p>
                     </div>
                     <div className='w-[15%] h-96 border py-0 px-2'>
-                        {items.map((item,index)=>{
+                        {/* Account Codes here */}
+                        {details.map((detail,index) => {
                             return(
-                                <p className='p-0 m-0' key={index}>{item.name.accountcode.split(' ')[0]}</p>
-                            );
+                                <p className='p-0 m-0 text-right' key={index}>{detail.accountcode}</p>
+                            )
                         })}
-                        
                     </div>
                     <div className='w-[15%] h-96 border py-0 px-2'>
                         
-                        {items.map((item,index)=>(
+                        {details.map((detail,index)=>(
                             
-                            <p className='p-0 m-0 text-right' key={index}> {Number(item.name.amount).toLocaleString()}</p>
+                            <p className='p-0 m-0 text-right' key={index}> {Number(detail.amount).toLocaleString()}</p>
                         
                         ))}
                     </div>
@@ -377,9 +283,11 @@ export default function ObligationRequestPrintPreview() {
             </div>
         </div>
 
-        {showSave?<IoIosSave  onClick={handleCreateOBR} className='absolute right-[22rem] top-20 text-3xl' />:<ImPrinter  onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />}
-        {showSave?<TiArrowBack  onClick={handleBack}className='absolute right-[19rem] top-20 text-3xl'  />:<IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />}
+        {userType=="USR"?<ImPrinter  onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />:""}
+        <IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />
          
     </div>
   )
 }
+
+export default ObligationRequestPreviewOnly

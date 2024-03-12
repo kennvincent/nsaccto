@@ -36,7 +36,7 @@ const DisplayOfficeBudget = () => {
 
   return (
     <div className='bg-white'>
-      <h5>Office Budget: {officename}</h5>
+      <h5>Office: {officename}</h5>
       
       <CurrentPosts posts={currentPosts} />
         <Pagination totalPosts={budgets.length} postsPerPage={postsPerPage} onPageClicked={handlePageClick}/>

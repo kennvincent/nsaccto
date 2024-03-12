@@ -35,6 +35,7 @@ import Utilization from "./components/accounting/Utilization";
 import CreateObr from "./components/obligationrequest/CreateObr";
 import OBRRejectedList from "./components/obligationrequest/OBRRejectedList";
 import DisplayOfficeBudget from "./components/accounting/DisplayOfficeBudget";
+import ObligationRequestPreviewOnly from "./components/obligationrequest/ObligationRequestPreviewOnly";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
     {
         path:'voucherprintpreview',
         element:<VoucherPrintPreview />
+    },
+    {
+        path:'/obrpreviewonly',
+        element:<ObligationRequestPreviewOnly />
     },
     {
         path:'/acctlogin',
@@ -91,6 +96,8 @@ const router = createBrowserRouter([
             path:'/obrlist',
             element:<OBRList />
            },
+           
+           
            {
                path:'/obrlistbudget',
                element:<ObrListBudget/> 

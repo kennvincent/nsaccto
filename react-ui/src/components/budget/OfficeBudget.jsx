@@ -12,6 +12,7 @@ import Pagination from './Pagination';
 
   export default function OfficeBudget() {
   const location = useLocation();
+  
   const win = window.sessionStorage;
 
   const [showAllocateBudget,setShowAllocateBudget] = useState(false);
@@ -40,19 +41,23 @@ import Pagination from './Pagination';
   const postsPerPage=15;
 
 
-  
+ 
   
   useEffect(()=>{
-    var user = window.localStorage.getItem('user');
-    setOfficeName(win.getItem('officename'));
-    var office = win.getItem('officename')
-    // axiosClient.get(`/displayofficebudget/${location.state.officename}`,).then(res=>{
-    axiosClient.get(`/displayofficebudget/${office}`,).then(res=>{
-      setBudgets(res.data.budgets);
-
-    });
+ 
+    var ofc = win.getItem('officename');
+      setOfficeName(ofc);
+      axiosClient.get(`/displayofficebudget/${ofc}`,).then(res=>{
+        setBudgets(res.data.budgets);
+  
+      });
+     
+  
 
   },[]);
+
+ 
+
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = budgets.slice(firstPostIndex,lastPostIndex);

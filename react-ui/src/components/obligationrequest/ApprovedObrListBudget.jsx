@@ -19,8 +19,8 @@ export default function ApprovedObrListBudget() {
 
   
   const handleShowOBR = (obrid)=>{
-  
-    navigate("/approvedobrpreview",{state:{obrid:obrid}});
+    navigate("/obrpreviewonly",{state:{obrid:obrid,usertype:"BDGT"}});
+    // navigate("/approvedobrpreview",{state:{obrid:obrid}});
   }
   
     const approvedOBR = obrlist.map((obr)=>{

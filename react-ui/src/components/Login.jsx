@@ -59,7 +59,7 @@ export default function handleLogin() {
 
                 win.setItem('officename',res.data.office[0].officename);
                 win.setItem('username',userlogin.username);
-                setOfficeName(res.data.office[0].officename)
+                //setOfficeName(res.data.office[0].officename)
                 // var officename=res.data.office[0].officename;
                 var usertype = res.data.office[0].usertype;
                 win.setItem('usertype',usertype);

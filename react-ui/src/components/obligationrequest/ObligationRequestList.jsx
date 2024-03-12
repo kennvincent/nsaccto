@@ -21,10 +21,11 @@ export default function OBRList() {
       setObrList(res.data.obrlist);
     });
   }
-  const onClickPreview = (e,obr)=>{
-    e.preventDefault();
-    window.localStorage.setItem('obr_id',obr['id']);
-    navigate('/obrprintpreview');
+  const onClickPreview = (obrid)=>{
+    window.localStorage.setItem('obrid',obrid);
+    window.localStorage.setItem('usertype','USR');
+    
+    navigate('/obrpreviewonly');
   }
   
   const onClickApprove = (e,obr)=>{
@@ -77,7 +78,8 @@ export default function OBRList() {
                 <td className='p-2 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
                 <td className='p-2'>{obr.obrstatus}</td>
                 <td className='p-2'><a href="#" onClick={(e) => onClickCancel(e,{id:obr.id})}>{obr.obrstatus==='For Approval' && 'Cancel'}</a></td>
-                <td className='p-2'><a href="#" onClick={(e) => onClickPreview(e,{id:obr.id})}>Print Preview</a></td>
+                <td className='p-2'><a href="#" onClick={(e) => onClickPreview(obr.id)}>Print Preview</a></td>
+                {/* <td className='p-2'><a href="#" onClick={(e) => onClickPreview(e,{id:obr.id})}>Print Preview</a></td> */}
                 
               </tr>
             ))}

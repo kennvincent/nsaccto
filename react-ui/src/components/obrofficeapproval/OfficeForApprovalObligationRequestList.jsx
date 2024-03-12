@@ -19,10 +19,9 @@ export default function OfficeForApprovalObligationRequestList() {
       setObrList(res.data.obrlist);
     });
   }
-  const onClickPreview = (e,obr)=>{
-    e.preventDefault();
-    window.localStorage.setItem('obr_id',obr['id']);
-    navigate('/obrprintpreview');
+  const onClickPreview = (obrid)=>{
+   
+    navigate('/obrpreviewonly',{state:{obrid:obrid,usertype:'APRV'}});
   }
   
   const onClickApprove = (e,obr)=>{
@@ -44,7 +43,7 @@ export default function OfficeForApprovalObligationRequestList() {
     })
   }
   return (
-    <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
+    <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1 h-full overflow-scroll" >
       <div>
         <h3 className="text-gray-700 font-medium">Obligation Request</h3>
       </div>
@@ -75,7 +74,7 @@ export default function OfficeForApprovalObligationRequestList() {
                 <td className='p-2 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
                 <td className='p-2'>{obr.obrstatus}</td>
                 <td className='p-2'><a href="#" onClick={(e) => onClickApprove(e,{id:obr.id})}>{obr.obrstatus==='For Approval' && 'Approve'}</a></td>
-                <td className='p-2'><a href="#" onClick={(e) => onClickPreview(e,{id:obr.id})}>Print Preview</a></td>
+                <td className='p-2'><a href="#" onClick={(e) => onClickPreview(obr.id)}>Print Preview</a></td>
                 
               </tr>
             ))}

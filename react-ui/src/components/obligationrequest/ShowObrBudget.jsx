@@ -92,6 +92,7 @@ export default function ShowObrBudget() {
     // axiosClient.get(`/obligationrequest/budgetview/selected/approve/${location.state.obrid}`).then(res=>{
     //     alert(res.data.message)
     // });
+    navigate('/obrlistbudget');
 
  }
 
@@ -117,7 +118,7 @@ export default function ShowObrBudget() {
         'remarks':remarks
     }
     
-    console.log(data);
+   
     axiosClient.put(`/obligationrequest/budgetview/selected/reject`,data).then(res=>{
         alert(res.data.message)
         navigate('/obrlistbudget');
