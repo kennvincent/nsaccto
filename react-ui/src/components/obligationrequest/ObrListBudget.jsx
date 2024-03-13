@@ -37,7 +37,7 @@ export default function ObrListBudget() {
     })
 
     const onChangeOffice = (officename)=>{
-      alert(officename);
+      
     }
     
   return (

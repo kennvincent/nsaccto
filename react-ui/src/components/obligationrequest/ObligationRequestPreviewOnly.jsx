@@ -8,7 +8,7 @@ import { ImPrinter } from "react-icons/im";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../axios-client';
 import { tr } from 'date-fns/locale';
-
+import {v4 as uuid} from 'uuid';
 
 const ObligationRequestPreviewOnly = () => {
     const location = useLocation();
@@ -71,32 +71,37 @@ const ObligationRequestPreviewOnly = () => {
              setParticulars(res.data.obr[0].particulars);
              setOfficeCode(res.data.obr[0].officecode);
              setDetails(res.data.obr);
-             console.log(res.data.obr);
+             
           
             
          })
          
        
          
-         var subtotal=0;
-         details.map((detail) =>{
-
-             subtotal = subtotal + parseFloat(detail.amount);
-             setTotal(subtotal);
-         })
-
-         
+       
+         computetotal();
  
      },[]);
 
      const displayAccountCodes = ()=> {
         details.map((detail,index) => {
             return(
-                <p key={index}>{detail.accountcode}</p>
+                <p key={uuid()}>{detail.accountcode}</p>
             )
         })
      }
      
+
+     const computetotal = ()=>{
+        var subtotal=0;
+        details.map((detail) =>{
+
+            subtotal = parseFloat(subtotal) + parseFloat(detail.amount);
+            setTotal(subtotal);
+
+        })
+        console.log(total);
+     }
   return (
     <div className='bg-white'>
 
@@ -170,7 +175,7 @@ const ObligationRequestPreviewOnly = () => {
                         {/* Account Codes here */}
                         {details.map((detail,index) => {
                             return(
-                                <p className='p-0 m-0 text-right' key={index}>{detail.accountcode}</p>
+                                <p className='p-0 m-0 text-right' key={uuid()}>{detail.accountcode}</p>
                             )
                         })}
                     </div>
@@ -178,7 +183,7 @@ const ObligationRequestPreviewOnly = () => {
                         
                         {details.map((detail,index)=>(
                             
-                            <p className='p-0 m-0 text-right' key={index}> {Number(detail.amount).toLocaleString()}</p>
+                            <p className='p-0 m-0 text-right' key={uuid()}> {Number(detail.amount).toLocaleString()}</p>
                         
                         ))}
                     </div>
@@ -190,7 +195,9 @@ const ObligationRequestPreviewOnly = () => {
                         
                     </div>
                     <div className='w-[15%] h-12 border py-0 px-2'>
+                        {/* <p className='text-right text-xl'> {Number(total).toLocaleString()}</p> */}
                         <p className='text-right text-xl'> {Number(total).toLocaleString()}</p>
+                        
                     </div>
                 </div>
                 <div className='flex w-[1024px] m-auto'>

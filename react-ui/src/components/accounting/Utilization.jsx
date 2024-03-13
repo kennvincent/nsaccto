@@ -62,7 +62,7 @@ export default function Utilization() {
   }
   const fethData = async()=>{
     try{
-      if(isMonthly){
+      if(filterAll && isMonthly){
         const response = await axiosClient.get(`/utilization/display?month=${month}&year=${year}`).then(res =>{
           setData(res.data.payments);
         });
