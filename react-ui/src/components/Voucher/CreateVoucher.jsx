@@ -149,10 +149,11 @@ export default function CreateVoucher() {
         return;
       }
 
-      if(deductions.length==0){
-        alert('Add deduction(s)');
-        return;
-      }
+      // if(deductions.length==0){
+      //   alert('Add deduction(s)');
+      //   return;
+      // }
+
       const voucherData = {
         'obrnumber' : obrnumber,
         'payee' :payee,
@@ -177,7 +178,7 @@ export default function CreateVoucher() {
           window.localStorage.setItem('voucher_id',voucher_id)
           const obr ={'obrid': obrid}
           axiosClient.put(`/voucher/obr/update`,obr).then(res=>{});
-          alert('Voucher successfully creaed');
+          alert('Voucher successfully created');
           navigate('/voucherprintpreview',{state:{voucherData:voucherData}});
           
         }

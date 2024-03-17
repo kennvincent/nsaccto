@@ -14,6 +14,7 @@ use App\Http\Controllers\BudgetImportController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SignatoriesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -84,6 +85,7 @@ Route::get('obligationrequest/accounting/selectedoffice/view/{id}',[ObligationRe
 Route::get('obligationrequest/accounting/selected/view/{id}',[ObligationRequestController::class,'accountingselectedviewobr']);
 Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);
 
+Route::get('signatories',[SignatoriesController::class,'getsignatories']);
 
 Route::post('register',[RegisterController::class,'register']);
 Route::post('login',[LoginController::class,'login']);

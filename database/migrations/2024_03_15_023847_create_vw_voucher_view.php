@@ -30,8 +30,8 @@ return new class extends Migration
                 t1.signatory2position,
                 t1.signatory3,
                 t1.signatory3position,
-                t2.description,
-                t2.amount
+                IFNULL(t2.description,'') AS description,
+                IFNULL(t2.amount,0) AS amount
                 FROM vouchers t1
                 LEFT JOIN voucherdeductions t2 ON t1.id = t2.voucher_id
                 LEFT JOIN vw_obrheaders t3 ON t1.obrnumber=t3.obrnumber

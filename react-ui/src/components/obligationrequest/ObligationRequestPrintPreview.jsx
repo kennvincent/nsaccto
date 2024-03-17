@@ -55,7 +55,9 @@ export default function ObligationRequestPrintPreview() {
        
         
        
-       
+        axiosClient.get(`signatories`).then(res =>{
+            setBudgetAuthorized(res.data.signatories[0].budgetofficer);
+        });
          
          const fetchData = async()=>{
  
@@ -80,7 +82,7 @@ export default function ObligationRequestPrintPreview() {
                      setResponsibilityCenter(res.data.office[0].officename);
                      setAuthorizedPersonnel(res.data.office[0].authorizedpersonnel);
                      setAuthorizedPosition(res.data.office[0].position);
-                     setBudgetAuthorized('ADELWISA L. ACEBUCHE, CPA');         
+                              
                      setBudgetPosition('Provincial Budget Officer');
                  });
              }

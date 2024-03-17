@@ -33,12 +33,15 @@ class VoucherController extends Controller
             $voucher_id = DB::getPdo()->lastInsertId();
             $deductions = $request->deductions;
 
-            foreach($deductions as $key => $deduct){
-                $voucherDeduction['description'] = $deduct['description'];
-                $voucherDeduction['amount'] = $deduct['amount'];
-                $voucherDeduction['voucher_id'] = $voucher_id;
-                voucherdeduction::create($voucherDeduction);
+            if($deductions){
+                foreach($deductions as $key => $deduct){
+                    $voucherDeduction['description'] = $deduct['description'];
+                    $voucherDeduction['amount'] = $deduct['amount'];
+                    $voucherDeduction['voucher_id'] = $voucher_id;
+                    voucherdeduction::create($voucherDeduction);
+                }
             }
+            
             
             
             
