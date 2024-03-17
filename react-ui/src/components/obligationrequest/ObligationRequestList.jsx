@@ -8,14 +8,14 @@ export default function OBRList() {
 
   const [obrlist,setObrList] = useState([]);
   const navigate = useNavigate();
-
+  const win = window.sessionStorage;
   useEffect(()=>{
     displayOBR();
   },[]);
 
 
   const displayOBR = ()=>{
-    const officename = window.localStorage.getItem('officename');
+    const officename = win.getItem('officename');
     axiosClient.get(`/obligationrequest/${officename}`).then(res =>{
       // console.log(res.data.obrlist);
       setObrList(res.data.obrlist);

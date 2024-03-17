@@ -18,11 +18,15 @@ export default function ObligationRequestPrintPreview() {
 
     const [obryear,setObrYear] = useState();
     const [officeid,setOfficeId] = useState();
-    // const [officeName,setOfficeName]=useState();
+    const [officeName,setOfficeName]=useState();
     const [officeDesc,setOfficeDesc] = useState();
     const [address,setAddress]= useState();
     const [officeCode,setOfficeCode] = useState(); 
     const [responsibilityCenter,setResponsibilityCenter] = useState();
+    const [authorizedpersonnel,setAuthorizedPersonnel] = useState();
+    const [authorizedposition,setAuthorizedPosition] = useState();
+    const [budgetauthorized,setBudgetAuthorized] = useState();
+    const [budgetPosition,setBudgetPosition] = useState();
     const [showSave,setShowSave]=useState(true);
     const [showBack,setShowBack]=useState(true);
     const [showPrint,setShowPrint]=useState(false);
@@ -50,25 +54,8 @@ export default function ObligationRequestPrintPreview() {
         
        
         
-        
-        
-         
-         // const obr_id = window.localStorage.getItem('obr_id');
-     
-         // axiosClient.get(`/obligationrequest/printpreview/${obr_id}`).then(res=>{
-         //     setPayee(res.data.obr[0].payee);
-         //     setOfficeDesc(res.data.obr[0].officedesc);
-         //     setAddress(res.data.obr[0].address);
-         //     setOfficeName(res.data.obr[0].officename);
-         //     setParticulars(res.data.obr[0].particulars);
-         //     setOfficeCode(res.data.obr[0].officecode);
-         //     setDetails(res.data.obr);
-         // })
- 
-         // axiosClient.get(`/obligationrequest/obrsum/${obr_id}`).then(res =>{
-         //     ///var temptotal = res.data[0];
-         //     setTotal(res.data[0].obrtotal)
-         // });
+       
+       
          
          const fetchData = async()=>{
  
@@ -84,16 +71,17 @@ export default function ObligationRequestPrintPreview() {
              try{
                  await axiosClient.get(`/login/${username}`).then(res =>{
                     
- 
+                    console.log(res.data.office[0].authorizedpersonnel);
                      setOfficeId(res.data.office[0].office_id);
                      setOfficeCode(res.data.office[0].officecode);
+                     setOfficeName(res.data.office[0].officename);
                      setOfficeDesc(res.data.office[0].officedesc);
                      setAddress(res.data.office[0].officeaddress)
                      setResponsibilityCenter(res.data.office[0].officename);
                      setAuthorizedPersonnel(res.data.office[0].authorizedpersonnel);
-                     setPersonnelPosition(res.data.office[0].position);
-                     
- 
+                     setAuthorizedPosition(res.data.office[0].position);
+                     setBudgetAuthorized('ADELWISA L. ACEBUCHE, CPA');         
+                     setBudgetPosition('Provincial Budget Officer');
                  });
              }
              catch(e){
@@ -119,9 +107,6 @@ export default function ObligationRequestPrintPreview() {
              subtotal = subtotal + parseFloat(item.name.amount);
              setTotal(subtotal);
          })
-
-         
- 
      },[]);
 
     const handleCreateOBR = ()=>{
@@ -134,10 +119,10 @@ export default function ObligationRequestPrintPreview() {
             'particulars':particulars,
             'address': address,
             'obryear': obryear,
-            'signatory1':'S1',
-            'position1' : 'P1',
-            'signatory2' : 'S2',
-            'position2' : 'P2',
+            'signatory1': authorizedpersonnel,
+            'position1' : authorizedposition,
+            'signatory2' : budgetauthorized,
+            'position2' : budgetPosition,
             'obrdetails': items
             
         };
@@ -317,13 +302,13 @@ export default function ObligationRequestPrintPreview() {
                         <p>Printed Name</p>
                     </div>
                     <div className='w-[40%] h-20 border px-2'>
-                        
+                        <p className='text-center mt-8'>{authorizedpersonnel}</p>
                     </div>
                     <div className='w-[10%] h-20 border px-2'>
                         <p>Printed Name</p>
                     </div>
                     <div className='w-[40%] h-20 border px-2'>
-                        
+                        <p className='text-center mt-8'>{budgetauthorized}</p>
                     </div>
                 </div>
 
@@ -336,17 +321,21 @@ export default function ObligationRequestPrintPreview() {
                         </div>
                         
                         <div className='w-[80%] h-[50%] border px-2'>
-
+                            <p className='text-center'>{authorizedposition}</p>
+                            <p className='text-center text-sm'>Head, Requisitioning Office/Authorized Representative</p>
                         </div>
+                        
                      </div>
 
-                     <div className='w-[50%] h-20 border'>
+                     <div className='w-[50%] h-20 border flex'>
                         <div className='w-[20%] h-20 border px-2'>
                             <p>Position</p>
-                        </div>
+                        </div>  
                         <div className='w-[80%] h-[50%] border px-2'>
-                            
+                            <p className='text-center'>{budgetPosition}</p>
+                            <p className='text-center text-sm'>Head, Budget Unit/Authorized Representative</p>
                         </div>
+                        
                      </div>
                    
                 </div>

@@ -9,7 +9,7 @@ const DisplayOfficeBudget = () => {
   const [officename,setOfficeName] = useState();
   const [budgets,setBudgets] = useState([]);
   const [currentPage,setCurrentPage] = useState(1);
-  const postsPerPage=15;
+  const postsPerPage=10;
   const win = window.sessionStorage;
   const location = useLocation();
 

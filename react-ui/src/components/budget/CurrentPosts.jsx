@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const CurrentPosts = ({posts}) => {
- 
+    const[usertype,setUserType] = useState();
+    const win = window.sessionStorage;
+    useEffect(()=>{
+        setUserType(win.getItem('usertype'));
+    });
   return (
     <div>
 
@@ -17,8 +21,8 @@ const CurrentPosts = ({posts}) => {
                     <th className='w-[15rem] py-2 text-right'>Obligated</th>
                     <th className='w-[15rem] py-2 text-right'>Utilized</th>
                     <th className='w-[15rem] py-2 text-right'>Balance</th>
-                    <th className='w-[15rem] py-2 text-right'>Funding</th>
-                    <th className='w-[15rem] py-2 text-right'>Sector</th>
+                    {usertype=='ACTG'?<th className='w-[15rem] py-2 text-right'>Funding</th>:''}
+                    {usertype=='ACTG'?<th className='w-[15rem] py-2 text-right'>Sector</th>:''}
                 </tr>
             </thead>
             <tbody>
@@ -28,15 +32,15 @@ const CurrentPosts = ({posts}) => {
                     <tr key={budget.id} className='border hover:bg-slate-100 p-0'>
                         <td className='py-1'>{budget.particulars}</td>
                         <td className='py-1'>{budget.accountcode}</td>
-                        <td className='py-1 text-right'>{Number(budget.proposedamount).toLocaleString()}</td>
-                        <td className='py-1 text-right'>0.00</td>
-                        <td className='py-1 text-right'>0.00</td>
-                        <td className='py-1 text-right'>{Number(budget.proposedamount).toLocaleString()}</td>
+                        <td className='py-1 text-right'>{budget.proposedamount>0?Number(budget.proposedamount).toLocaleString():''}</td>
+                        <td className='py-1 text-right'></td>
+                        <td className='py-1 text-right'></td>
+                        <td className='py-1 text-right'>{budget.proposedamount>0?Number(budget.proposedamount).toLocaleString():''}</td>
                         <td className='py-1 text-right'>{budget.totalobligated>0?Number(budget.totalobligated).toLocaleString():""}</td>
                         <td className='py-1 text-right'>{budget.utilized>0?Number(budget.utilized).toLocaleString():""}</td>
-                        <td className='py-1 text-right'>{Number(budget.proposedamount - budget.totalobligated).toLocaleString()}</td>
-                        <td className='py-1 text-right'>{budget.funding}</td>
-                        <td className='py-1 text-right'>{budget.sector}</td>
+                        <td className='py-1 text-right'>{Number(budget.proposedamount - budget.totalobligated)>0?Number(budget.proposedamount - budget.totalobligated).toLocaleString():''}</td>
+                        {usertype=='ACTG'?<td className='py-1 text-right'>{budget.funding}</td>:''}
+                        {usertype=='ACTG'?<td className='py-1 text-right'>{budget.sector}</td>:''}
                     </tr>
                 );
                

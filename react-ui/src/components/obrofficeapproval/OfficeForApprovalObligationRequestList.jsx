@@ -6,14 +6,14 @@ import axiosClient from '../../axios-client';
 export default function OfficeForApprovalObligationRequestList() {
   const [obrlist,setObrList] = useState([]);
   const navigate = useNavigate();
-
+  const win = window.sessionStorage;
   useEffect(()=>{
     displayOBR();
   },[]);
 
 
   const displayOBR = ()=>{
-    const officename = window.localStorage.getItem('officename');
+    const officename = win.getItem('officename');
     axiosClient.get(`/obligationrequest/${officename}`).then(res =>{
       // console.log(res.data.obrlist);
       setObrList(res.data.obrlist);
