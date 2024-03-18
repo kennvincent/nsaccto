@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('signatories', function (Blueprint $table) {
             $table->id();
             $table->string('governor');
-            $table->string('provtreasurer');
-            $table->string('provbudgetofficer');
-            $table->string('provaccountant');
+            $table->string('provincialaccountant');
+            $table->string('budgetofficer');
+            $table->string('provincialtreasurer');
             $table->timestamps();
         });
     }
