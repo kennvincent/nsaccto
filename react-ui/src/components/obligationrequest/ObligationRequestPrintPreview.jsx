@@ -8,6 +8,8 @@ import { ImPrinter } from "react-icons/im";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../axios-client';
 import { tr } from 'date-fns/locale';
+import pgnslogo from '../../images/pgns.png';
+import pbologo from '../../images/pbologo.png';
 
 export default function ObligationRequestPrintPreview() {
     const location = useLocation();
@@ -181,16 +183,24 @@ export default function ObligationRequestPrintPreview() {
         
 
        <div ref={componentRef} className='overflow-hidden  text-xl w-[1200px] m-auto'>
-     
-            <div className='text-center bg-white mt-16 text-lg'>
-                <p className='font-bold p-0 m-0'>Republic of the Philippines</p>
-                <p className='font-bold text-lg p-0 m-0'>PROVINCE OF NORTHERN SAMAR</p>
-                <p className='font-bold p-0 m-0'>Republic of the Philippines</p>
+            
+            <div className='w-[1024px] p-2 m-auto text-center mt-16 text-lg  flex bg-white h-[140px] border border-black'>
+                <div className='w-[300px] relative'><img src={pgnslogo} width="115px" height="115px" 
+                alt="pgnslogo" className='absolute right-0' /></div>
+                <div className='w-[600px] text-center'>
+                    <p className='font-bold p-0 m-0'>Republic of the Philippines</p>
+                    <p className='font-bold text-3xl p-0 m-0'>PROVINCE OF NORTHERN SAMAR</p>
+                    <p className='font-bold p-0 m-0'>Catarman, Northern Samar</p>
+                </div>
+                <div  className='w-[300px] relative'><img src={pbologo} width="125px" height="125px" 
+                alt="" className='absolute left-0 top-0'/></div>
+            </div>
+
+            <div className='w-[1024px] text-center p-0 bg-slate-300 m-auto border border-black'>
+                <h4>OBLIGATION REQUEST</h4>
             </div>
             <div className='h-[1500px]'>
-                <div className='text-center p-0'>
-                    <h4>OBLIGATION REQUEST</h4>
-                </div>
+                
                 <div className='flex items-center w-[1024px] m-auto'>
                     <div className='w-[15%] h-10 items-center border py-0 px-2'>
                         <p>Payee</p>
