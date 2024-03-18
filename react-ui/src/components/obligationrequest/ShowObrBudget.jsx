@@ -11,8 +11,8 @@ export default function ShowObrBudget() {
  const [obr,setObr] = useState([]);
  const [obrtotal,setObrTotal]=useState([]);
  const [obrnumber,setObrNumber] = useState();
- const [lastobrid,setLastObrId] = useState();
  const [showRemarks,setShowRemarks] =useState(false);
+ const [lastobrid,setLastObrId]=useState();
  const obrid = location.state.obrid;
 
  let payee="";
@@ -29,9 +29,12 @@ export default function ShowObrBudget() {
 
  useEffect(()=>{
     axiosClient.get(`/obligationrequest/getobrid`).then(res=>{
-        setLastObrId(parseInt(res.data.obrid[0].obrid) + 1)
-        const obrnum = generate_obr_number(lastobrid);
+        var id = parseInt(res.data.obrid[0].obrid) + 1
+        setLastObrId(id);
+        const obrnum = generate_obr_number(id);
         setObrNumber(obrnum);
+      }).catch(error=>{
+        console.log('Error fetching last obr id');
       });
  },[]);
 
@@ -40,10 +43,6 @@ export default function ShowObrBudget() {
     
 
     const fetchData = async()=>{
-       
-       
-         
-
         axiosClient.get(`/obligationrequest/budgetview/selected/${obrid}`).then(res=>{
             setObr(res.data.obr);
           });
@@ -65,14 +64,37 @@ export default function ShowObrBudget() {
  
  const generate_obr_number = ($lastobrid)=>{
     try{
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1 ;
+        var strMonth=currentMonth.toString();
+        if(strMonth.length==1){
+            strMonth  = "0" + strMonth;
+        }
+
         if($lastobrid.toString().length==1){
-            var strNum = "00000" + $lastobrid;
+            var strNum =  currentYear + "-" + strMonth +"-00000" + $lastobrid;
+            
+        } else if($lastobrid.toString().length==2){
+            var strNum =  currentYear + "-" + strMonth +"-0000" + $lastobrid;
+            
+        }else if($lastobrid.toString().length==3){
+            var strNum =  currentYear + "-" + strMonth +"-000" + $lastobrid;
+            
+        }else if($lastobrid.toString().length==4){
+            var strNum =  currentYear + "-" + strMonth +"-00" + $lastobrid;
+            
+        }else if($lastobrid.toString().length==5){
+            var strNum =  currentYear + "-" + strMonth +"-0" + $lastobrid;
+            
+        }else if($lastobrid.toString().length==6){
+            var strNum =  currentYear + "-" + strMonth +"-" + $lastobrid;
             
         }
+        
 
     }
     catch(e){
-
+        console.log(e.message);
     }
   
     return (strNum);
@@ -82,7 +104,8 @@ export default function ShowObrBudget() {
  const handleApproveObr = ()=>{
     const data = {
         'obrid':obrid,
-        'obrnumber' : obrnumber
+        'obrnumber' : obrnumber,
+        'lastid':lastobrid
     }
 
     axiosClient.put(`/obligationrequest/budgetview/selected/approve`,data).then(res=>{

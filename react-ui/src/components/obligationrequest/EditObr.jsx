@@ -16,22 +16,27 @@ const EditObr = () => {
     const [payee,setPayee] = useState('');
     const [isEditing,setIsEditing] = useState(false);
     const [obrid,setObrid] = useState();
-    
-
     const navigate = useNavigate();
     const win = window.sessionStorage;
 
     useEffect(()=>{
-        setObrid(location.state.obrid);
-        axiosClient.get(`/obligationrequest/edit/${location.state.obrid}`).then(res=>{
-        setDetails(res.data.obr);
-        console.log(details);
         
-      });
+       
+
+       
     },[]);
 
     useEffect(() => {
      
+      var id = win.getItem('obrid');
+      setObrid(id);
+    
+      axiosClient.get(`/obligationrequest/edit/${id}`).then(res=>{
+        setDetails(res.data.obr);
+        setPayee(res.data.obr[0].payee);
+        setParticulars(res.data.obr[0].particulars);
+      });
+      
       setOfficename(win.getItem('officename'));
       var office = win.getItem('officename')
 
@@ -55,6 +60,16 @@ const EditObr = () => {
 
      
     },[]);
+
+
+    const displayItems = ()=>{
+      details.map((item)=>{
+        return(
+          console.log(item)
+        );
+        
+      })
+    }
 
     const onClickAdd = () => {
       
@@ -107,7 +122,7 @@ const EditObr = () => {
     }
 
 
-    const selectedItems = items.map((item) => {
+    const selectedItems = details.map((item) => {
       return(
       
         <tr key={item.id}>
@@ -227,8 +242,8 @@ const EditObr = () => {
             <div  className='mt-10'>
               <table>
                 <tbody>
-                  {details.map((item)=> (<AccountItem key={item.id} item={item} 
-                  handleEditItem={handleEditItem} removeItem={removeItem}/>))}
+                  {/* {details.map((item)=> (<AccountItem key={item.id} item={item} 
+                  handleEditItem={handleEditItem} removeItem={removeItem}/>))} */}
                 </tbody>
               </table>
             </div>

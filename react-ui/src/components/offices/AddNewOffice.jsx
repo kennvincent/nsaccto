@@ -28,13 +28,13 @@ export default function AddNewOffice({visible,onClose}) {
       
         axiosClient.post(`/office`,newOffice).then(res =>{
             alert(res.data.message);
-            
+            setOffice('');
         })
         .catch(function(error){ 
           
             if(error.response){
                 if(error.response.status===422){
-                    setInputErrorList(error.response.data.errors);
+                    //setInputErrorList(error.response.data.errors);
                 } else if(error.response.status===419){
                   //setInputErrorList(error.response.data.errors);
                  

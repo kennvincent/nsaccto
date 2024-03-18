@@ -135,16 +135,16 @@ export default function ObligationRequestPrintPreview() {
                 const obr_id = res.data.obr_id;
 
                 if(obr_id>0){
-                    // setShowSave(false);
-                    // setShowPrint(true);
-                    window.localStorage.setItem('obrid',obrid);
-                    window.localStorage.setItem('usertype','USR');
-                    setDetails([]);
-                    setTotal(0);
-                    // navigate('/obrprintpreview');
                     alert('Obligation Request have been created');
+                    setShowSave(false);
+                    setShowPrint(true);
+                    // window.localStorage.setItem('obrid',obrid);
+                    // window.localStorage.setItem('usertype','USR');
+                    //setDetails([]);
+                    // setTotal(0);
+                    // navigate('/obrprintpreview');
                     
-                    navigate('/obrpreviewonly',{state:{obrid:obrid}});
+                    // navigate('/obrpreviewonly',{state:{obrid:obrid}});
                 }
                 
           

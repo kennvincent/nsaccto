@@ -199,7 +199,7 @@ export default function CreateVoucher() {
 
         <div className='flex text-xl p-0 h-10'>
           <div className='border-r border-t border-black w-[850px]'><p className='text-center mt-1'>DISBURSEMENT VOUCHER</p></div>
-          <div className='border-t border-black w-[274px]'><p>No.</p></div>
+          <div className='border-t border-black w-[274px]'><p>No. {obrnumber}</p></div>
         </div>
 
         <div className='border-t border-black flex h-14'>
@@ -220,8 +220,8 @@ export default function CreateVoucher() {
             <p className='p-0 mt-2 '><input type="text" onChange={handlePayeeInput} name="payee" id="payee" className='w-full' /></p>
           </div>
           <div className='flex p-1  w-[284px]'>
-            <p className='p-0 mt-2 '>Oblication Request No:</p>
-            <p className='p-0 px-2 mt-2 '>{obrnumber}</p>
+            <p className='p-0 mt-2 '>TIN/Employee No:</p>
+            <p className='p-0 px-2 mt-2 '></p>
             
           </div>
         </div>
@@ -413,24 +413,26 @@ export default function CreateVoucher() {
         </div>
 
 
-        <div className='flex w-full h-7 border-t border-black'>
-          <div className='flex w-[511px] h-7 border-r border-black'>
-            <div className='w-[110px] h-7 border-r border-black px-1'>
+        <div className='flex w-full h-14 border-t border-black'>
+          <div className='flex w-[511px] h-14 border-r border-black'>
+            <div className='w-[110px] h-14 border-r border-black px-1'>
               <p>Signature</p>
             </div>
-            <div className='w-[402px] h-7'>
+            <div className='w-[402px] h-14'>
 
             </div>
           </div>
 
-          <div className='flex w-[512px] h-7'>
-            <div className='w-[110px] h-7 border-r border-black px-1'>
+          <div className='flex w-[512px] h-14'>
+            <div className='w-[110px] h-14 border-r border-black px-1 relative'>
               <p>Check No</p>
+              <input type="text" name="" id=""   className='w-[100px] absolute h-7 bottom-1'/>
             </div>
-            <div className='flex w-[300px] h-7 border-r border-black px-1'>
-              <div className='w-[90px]'><p>Bank Name</p></div>
-              <div className='w-[210px] h-7'>
-                <input type="text" onChange={handleBankInput} name="bankname" id="bankname"  className='w-[210px] h-7' />
+
+            <div className='flex w-[300px] h-14 border-r border-black px-1'>
+              <div className='w-[110px]'><p>Bank Name</p></div>
+              <div className='w-[190px] h-14 relative'>
+                <input type="text" onChange={handleBankInput} name="bankname" id="bankname"  className='w-[190px] absolute right-1 bottom-1 h-7 mt-2' />
               </div>
 
             </div>

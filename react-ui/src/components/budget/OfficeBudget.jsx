@@ -46,10 +46,9 @@ import Pagination from './Pagination';
   useEffect(()=>{
  
     var ofc = win.getItem('officename');
-      setOfficeName(ofc);
+      setOfficeName(win.getItem('officename'));
       axiosClient.get(`/displayofficebudget/${ofc}`,).then(res=>{
         setBudgets(res.data.budgets);
-  
       });
      
   

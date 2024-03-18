@@ -9,31 +9,13 @@ import cors from "cors";
 export default function handleLogin() {
   const [useraccount,setUserAccount] = useState([]);
   const [officename,setOfficeName] = useState();
-  const [userType,setUserType] = useState();
   const navigate = useNavigate();
   const location = useLocation();
   const win = window.sessionStorage;
  
   const logged = window.localStorage.getItem('isLoggedIn');
-  const [offices,setOffices] = useState([]);
-  // const [officeid,setOfficeid] = useState();
-  
 
-  // useEffect(()=>{
-  //     axiosClient.get(`/offices`).then(res=>{
-  //       setOffices(res.data.offices);
-  //     })
-  // },[]);
-  
-//  const officesList = offices.map((office)=>{
-//   return(
-//     <option key={office.id} value={office.id}>{office.officename}</option>
-//   );
-//  });
-
-//  const officeOnChange = (e)=>{
-//   setOfficeid(e);
-//  }
+ 
 
   const handleInput = (e)=>{
     e.persist();
@@ -55,20 +37,15 @@ export default function handleLogin() {
           
             if(res.data.login=='success'){
              
-              // window.localStorage.setItem('user',userlogin.username)
-              // window.localStorage.setItem('isLoggedIn',true)
+           
               
 
               axiosClient.get(`/login/${userlogin.username}`).then(res=>{
-                window.localStorage.setItem('usertype',res.data.office[0].usertype);
-                
-
+                win.setItem('usertype',res.data.office[0].usertype);
                 win.setItem('officename',res.data.office[0].officename);
                 win.setItem('username',userlogin.username);
-                //setOfficeName(res.data.office[0].officename)
-                // var officename=res.data.office[0].officename;
+                console.log(res.data.office);
                 var usertype = res.data.office[0].usertype;
-                win.setItem('usertype',usertype);
 
                 if(usertype=="ACTG"){
                   navigate("/acctobrview");

@@ -82,6 +82,7 @@ class ObligationRequestController extends Controller
                         'position1',
                         'signatory2',
                         'position2',
+                        'totalamount',
                         'obrstatus')
                 ->where('id','=',[$id])
                 ->get();

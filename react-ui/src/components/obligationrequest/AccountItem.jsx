@@ -29,8 +29,8 @@ const AccountItem = ({item,handleEditItem,removeItem}) => {
   return (
     <>
         <tr >   
-            <td className='p-1 w-[400px]'>{accountcode}</td>
-            <td className='p-1 w-[200px] text-right'>{isEditing? <input type="text" 
+            <td className='p-1 w-[100px]'>{accountcode}</td>
+            <td className='p-1 w-[100px] text-right'>{isEditing? <input type="text" 
                     value={amount}
                     onChange={(e)=>setAmount(e.target.value)}/>
                     :Number(amount).toLocaleString()}</td>

@@ -21,7 +21,7 @@ const ObligationRequestPreviewOnly = () => {
     const [officename,setOfficeName]=useState();
     const [officeDesc,setOfficeDesc] = useState();
     const [address,setAddress]= useState();
-    const [officeCode,setOfficeCode] = useState(); 
+    const [officeCode,setOfficeCode] = useState();
     const [responsibilityCenter,setResponsibilityCenter] = useState();
     const [showPrint,setShowPrint]=useState(false);
     const [showClose,setShowClose]=useState(false);
@@ -35,14 +35,14 @@ const ObligationRequestPreviewOnly = () => {
 
     const [total,setTotal] = useState(0);
     const [userType,setUserType]=useState();
-    
+
     const componentRef = useRef();
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
 
-   
+
 
     const handleClose  = ()=>{
         if(userType=="USR"){
@@ -55,7 +55,7 @@ const ObligationRequestPreviewOnly = () => {
     }
 
     useEffect(()=>{
-         
+
         var obrid = win.getItem('obrid');
         setUserType(win.getItem('usertype'));
 
@@ -71,10 +71,11 @@ const ObligationRequestPreviewOnly = () => {
              setPosition1(res.data.obr[0].position1);
              setSignatory2(res.data.obr[0].signatory2);
              setPosition2(res.data.obr[0].position2);
-             console.log(res.data.obr);
+             setTotal(res.data.obr[0].totalamount)
+
          })
-         computetotal();
- 
+        //  computetotal();
+
      },[]);
 
      const displayAccountCodes = ()=> {
@@ -84,32 +85,31 @@ const ObligationRequestPreviewOnly = () => {
             )
         })
      }
-     
 
-     const computetotal = ()=>{
-        var subtotal=0;
-        details.map((detail) =>{
 
-            subtotal = parseFloat(subtotal) + parseFloat(detail.amount);
-            setTotal(subtotal);
+    //  const computetotal = ()=>{
+    //     var subtotal=0;
+    //     details.map((detail) =>{
 
-        })
-        console.log(total);
-     }
+    //         subtotal = parseFloat(subtotal) + parseFloat(detail.amount);
+    //         setTotal(subtotal);
+
+    //     })
+    //  }
   return (
     <div className='bg-white'>
 
        <div ref={componentRef} className='overflow-hidden  text-xl w-[1200px] m-auto'>
-     
-            <div className='w-[1024px] p-2 m-auto text-center mt-16 text-lg  flex bg-white h-[140px] border border-black'>
-                <div className='w-[300px] relative'><img src={pgnslogo} width="115px" height="115px" 
+
+            <div className='w-[1024px] p-2 m-auto  text-center mt-14 text-lg  flex bg-white h-[140px] border border-black'>
+                <div className='w-[300px] relative'><img src={pgnslogo} width="115px" height="115px"
                 alt="pgnslogo" className='absolute right-0' /></div>
                 <div className='w-[600px] text-center'>
                     <p className='font-bold p-0 m-0'>Republic of the Philippines</p>
                     <p className='font-bold text-3xl p-0 m-0'>PROVINCE OF NORTHERN SAMAR</p>
                     <p className='font-bold p-0 m-0'>Catarman, Northern Samar</p>
                 </div>
-                <div  className='w-[300px] relative'><img src={pbologo} width="125px" height="125px" 
+                <div  className='w-[300px] relative'><img src={pbologo} width="125px" height="125px"
                 alt="" className='absolute left-0 top-0'/></div>
             </div>
 
@@ -117,7 +117,7 @@ const ObligationRequestPreviewOnly = () => {
                 <h4>OBLIGATION REQUEST</h4>
             </div>
             <div className='h-[1300px]'>
-                
+
                 <div className='flex items-center w-[1024px] m-auto'>
                     <div className='w-[15%] h-10 items-center border py-0 px-2'>
                         <p>Payee</p>
@@ -182,24 +182,24 @@ const ObligationRequestPreviewOnly = () => {
                         })}
                     </div>
                     <div className='w-[15%] h-96 border py-0 px-2'>
-                        
+
                         {details.map((detail,index)=>(
-                            
+
                             <p className='p-0 m-0 text-right' key={uuid()}> {Number(detail.amount).toLocaleString()}</p>
-                        
+
                         ))}
                     </div>
                 </div>
                 <div className='flex border w-[1024px] m-auto'>
                     <div className='w-[50%] h-12  py-0 px-2'></div>
-                    
+
                     <div className='w-[35%] h-12  py-1 px-2'>
-                        
+
                     </div>
                     <div className='w-[15%] h-12 border py-0 px-2'>
                         {/* <p className='text-right text-xl'> {Number(total).toLocaleString()}</p> */}
                         <p className='text-right text-xl'> {Number(total).toLocaleString()}</p>
-                        
+
                     </div>
                 </div>
                 <div className='flex w-[1024px] m-auto'>
@@ -218,13 +218,13 @@ const ObligationRequestPreviewOnly = () => {
                         <p>Signature</p>
                     </div>
                     <div className='w-[40%] h-10 border px-2'>
-                        
+
                     </div>
                     <div className='w-[10%] h-10 border px-2'>
                         <p>Signature</p>
                     </div>
                     <div className='w-[40%] h-10 border px-2'>
-                        
+
                     </div>
                 </div>
 
@@ -245,12 +245,12 @@ const ObligationRequestPreviewOnly = () => {
 
 
                 <div className='flex w-[1024px] m-auto'>
-                     
+
                      <div className='w-[50%] h-20 flex'>
                         <div className='w-[20%] h-20 border px-2'>
                             <p>Position</p>
                         </div>
-                        
+
                         <div className='w-[80%] h-[50%] border px-2 text-center'>
                             <p>{position1}</p>
                         </div>
@@ -264,7 +264,7 @@ const ObligationRequestPreviewOnly = () => {
                             <p>{position2}</p>
                         </div>
                      </div>
-                   
+
                 </div>
 
                 <div className='flex w-[1024px] m-auto'>
@@ -272,13 +272,13 @@ const ObligationRequestPreviewOnly = () => {
                         <p>Date</p>
                     </div>
                     <div className='w-[40%] h-10 border px-2'>
-                        
+
                     </div>
                     <div className='w-[10%] h-10 border px-2'>
                         <p>Date</p>
                     </div>
                     <div className='w-[40%] h-10 border px-2'>
-                        
+
                     </div>
                 </div>
 
@@ -295,7 +295,7 @@ const ObligationRequestPreviewOnly = () => {
 
         {userType=="USR"?<ImPrinter  onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />:""}
         <IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />
-         
+
     </div>
   )
 }

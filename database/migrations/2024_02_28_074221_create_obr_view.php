@@ -29,6 +29,7 @@ return new class extends Migration
             t1.address,
             t3.accountcode as accountcode1,
             t3.accountcode,
+            t4.accountdesc,
             t3.amount as amount1,
             t3.amount,
             t1.obryear,
@@ -54,6 +55,7 @@ return new class extends Migration
             FROM obrheaders t1
             LEFT JOIN offices t2 ON t1.officeid=t2.id
             LEFT JOIN obrdetails t3 on t1.id = t3.obrid
+            LEFT JOiN accounts t4 on t3.accountcode = t4.accountcode 
  
         ");
     }

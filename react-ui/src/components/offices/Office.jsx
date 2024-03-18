@@ -53,11 +53,11 @@ export default function Office() {
  
   var officeList = offices.map((ofc) => {
     return(
-      <tr key={ofc.id} className='border border-indigo-600'>
-        <td>{ofc.officecode}</td>
-        <td>{ofc.officename}</td>
-        <td>{ofc.officedesc}</td>
-        <td className='px-0'><button onClick={() => handleShowEditOffice(ofc.id,ofc.officecode,ofc.officename,ofc.officedesc)} 
+      <tr key={ofc.id} className='border border-indigo-600 p-0 hover:bg-slate-300'>
+        <td className='p-0 px-2'>{ofc.officecode}</td>
+        <td className='p-0'>{ofc.officename}</td>
+        <td className='p-0'>{ofc.officedesc}</td>
+        <td className='p-0'><button onClick={() => handleShowEditOffice(ofc.id,ofc.officecode,ofc.officename,ofc.officedesc)} 
             className='btn btn-primary btn-sm w-16 p-0'>Edit</button></td>
         <td className='w-fixed p-0'><button onClick={()=>handleShowBudget(ofc.officename,ofc.officedesc)}
             className='btn btn-primary btn-sm w-16 p-0' >Budget</button></td>
@@ -77,7 +77,7 @@ export default function Office() {
             <button className='btn btn-primary btn-sm' onClick={handleAddNewOffice}>Add New Office</button>
           </span>
         </div>
-        <div className="card-body mt-0 p-0 overflow-scroll h-[50rem]">
+        <div className="card-body mt-0 p-0 overflow-scroll h-[40rem]">
           <table className="w-full text-gray-700 border-collapse border  border-slate-400">
             <thead className='sticky -top-1'>
               <tr>
