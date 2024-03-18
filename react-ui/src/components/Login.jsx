@@ -16,16 +16,26 @@ export default function handleLogin() {
 
  
   const logged = window.localStorage.getItem('isLoggedIn');
-
+  const [offices,setOffices] = useState([]);
+  const [officeid,setOfficeid] = useState();
   
 
-  // useEffect(()=>{
-  //   if(logged){
-  //     navigate("/dashboard");
-  //   }
-  // });
+  useEffect(()=>{
+      axiosClient.get(`/offices`).then(res=>{
+        setOffices(res.data.offices);
+      })
+  },[]);
   
- 
+ const officesList = offices.map((office)=>{
+  return(
+    <option key={office.id} value={office.id}>{office.officename}</option>
+  );
+ });
+
+ const officeOnChange = (e)=>{
+  setOfficeid(e);
+  console.log(officeid);
+ }
 
   const handleInput = (e)=>{
     e.persist();
@@ -35,13 +45,14 @@ export default function handleLogin() {
     const userlogin = {
       username : useraccount.username,
       password : useraccount.password,
+      officeid:officeid
     }
 
    
 
 
  const handleLogin =  async()=>{
-  
+ 
   try{
     
        
@@ -49,8 +60,8 @@ export default function handleLogin() {
           
             if(res.data.login=='success'){
              
-              window.localStorage.setItem('user',userlogin.username)
-              window.localStorage.setItem('isLoggedIn',true)
+              // window.localStorage.setItem('user',userlogin.username)
+              // window.localStorage.setItem('isLoggedIn',true)
               
 
               axiosClient.get(`/login/${userlogin.username}`).then(res=>{
@@ -150,7 +161,9 @@ export default function handleLogin() {
                   />
                 </div>
               </div>
-  
+              
+             
+
               <div>
                 <button
                   onClick={handleLogin}

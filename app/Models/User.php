@@ -26,7 +26,6 @@ class User extends Authenticatable
         'usertype',
         'email',
         'office_id'
-       
     ];
 
     /**

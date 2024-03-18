@@ -9,7 +9,6 @@ use DB;
 
 class LoginController extends Controller
 {
-    
     public function login(Request $request){
         
         $credentials = $request->validate([
@@ -23,6 +22,11 @@ class LoginController extends Controller
         }else{
             return response()->json(['login'=>'Username or Password Invalid!!!']);
         }
+        
+    }
+
+    public function login2(Request $request){
+
     }
 
     public function currentuser($username){

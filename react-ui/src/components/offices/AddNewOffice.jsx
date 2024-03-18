@@ -13,6 +13,7 @@ export default function AddNewOffice({visible,onClose}) {
   
 
     const addOffice=(e)=>{
+   
         e.preventDefault();
        
         const newOffice = {
@@ -46,8 +47,7 @@ if(!visible) return null
   return (
     <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center ">
     <form action="" method='post' onSubmit={addOffice}>
-        @csrf
-        @method('post')
+       
         <div className="bg-white p-4 rounded w-[60rem] ">
         <h1 className="font-semibold text-center text-xl text-gray-700">
           Add New Office
