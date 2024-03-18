@@ -9,10 +9,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../axios-client';
 import { tr } from 'date-fns/locale';
 import {v4 as uuid} from 'uuid';
+import pgnslogo from '../../images/pgns.png'
+import pbologo from '../../images/pbologo.png';
 
 const ObligationRequestPreviewOnly = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const win = window.sessionStorage;
 
     const [payee,setPayee] = useState();
     const [officename,setOfficeName]=useState();
@@ -25,15 +28,13 @@ const ObligationRequestPreviewOnly = () => {
     const [particulars,setParticulars]= useState();
     const [items,setItems]=useState([]);
     const [details,setDetails] = useState([]);
+    const [signatory1,setSignatory1] = useState();
+    const [position1,setPosition1] = useState();
+    const [signatory2,setSignatory2] = useState();
+    const [position2,setPosition2] = useState();
 
     const [total,setTotal] = useState(0);
     const [userType,setUserType]=useState();
-
-    
-
-  
-
-   
     
     const componentRef = useRef();
 
@@ -51,18 +52,13 @@ const ObligationRequestPreviewOnly = () => {
         }else if(userType=="BDGT"){
             navigate('/obrlistbudget');
         }
-
-        
     }
 
     useEffect(()=>{
-        
          
-         
-        var obrid = window.localStorage.getItem('obrid');
-        setUserType(window.localStorage.getItem('usertype'));
+        var obrid = win.getItem('obrid');
+        setUserType(win.getItem('usertype'));
 
-   
          axiosClient.get(`/obligationrequest/printpreview/${obrid}`).then(res=>{
              setPayee(res.data.obr[0].payee);
              setOfficeDesc(res.data.obr[0].officedesc);
@@ -71,14 +67,12 @@ const ObligationRequestPreviewOnly = () => {
              setParticulars(res.data.obr[0].particulars);
              setOfficeCode(res.data.obr[0].officecode);
              setDetails(res.data.obr);
-             
-          
-            
+             setSignatory1(res.data.obr[0].signatory1);
+             setPosition1(res.data.obr[0].position1);
+             setSignatory2(res.data.obr[0].signatory2);
+             setPosition2(res.data.obr[0].position2);
+             console.log(res.data.obr);
          })
-         
-       
-         
-       
          computetotal();
  
      },[]);
@@ -107,15 +101,23 @@ const ObligationRequestPreviewOnly = () => {
 
        <div ref={componentRef} className='overflow-hidden  text-xl w-[1200px] m-auto'>
      
-            <div className='text-center bg-white mt-16 text-lg'>
-                <p className='font-bold p-0 m-0'>Republic of the Philippines</p>
-                <p className='font-bold text-lg p-0 m-0'>PROVINCE OF NORTHERN SAMAR</p>
-                <p className='font-bold p-0 m-0'>Republic of the Philippines</p>
-            </div>
-            <div className='h-[1500px]'>
-                <div className='text-center p-0'>
-                    <h4>OBLIGATION REQUEST</h4>
+            <div className='w-[1024px] p-2 m-auto text-center mt-16 text-lg  flex bg-white h-[140px] border border-black'>
+                <div className='w-[300px] relative'><img src={pgnslogo} width="115px" height="115px" 
+                alt="pgnslogo" className='absolute right-0' /></div>
+                <div className='w-[600px] text-center'>
+                    <p className='font-bold p-0 m-0'>Republic of the Philippines</p>
+                    <p className='font-bold text-3xl p-0 m-0'>PROVINCE OF NORTHERN SAMAR</p>
+                    <p className='font-bold p-0 m-0'>Catarman, Northern Samar</p>
                 </div>
+                <div  className='w-[300px] relative'><img src={pbologo} width="125px" height="125px" 
+                alt="" className='absolute left-0 top-0'/></div>
+            </div>
+
+            <div className='w-[1024px] text-center p-0 bg-slate-300 m-auto border border-black'>
+                <h4>OBLIGATION REQUEST</h4>
+            </div>
+            <div className='h-[1300px]'>
+                
                 <div className='flex items-center w-[1024px] m-auto'>
                     <div className='w-[15%] h-10 items-center border py-0 px-2'>
                         <p>Payee</p>
@@ -230,14 +232,14 @@ const ObligationRequestPreviewOnly = () => {
                     <div className='w-[10%] h-20 border px-2'>
                         <p>Printed Name</p>
                     </div>
-                    <div className='w-[40%] h-20 border px-2'>
-                        
+                    <div className='w-[40%] h-20 border px-2 text-center'>
+                           <p className='mt-8'> {signatory1}</p>
                     </div>
                     <div className='w-[10%] h-20 border px-2'>
                         <p>Printed Name</p>
                     </div>
-                    <div className='w-[40%] h-20 border px-2'>
-                        
+                    <div className='w-[40%] h-20 border px-2 text-center'>
+                        <p className='mt-8'>{signatory2}</p>
                     </div>
                 </div>
 
@@ -249,17 +251,17 @@ const ObligationRequestPreviewOnly = () => {
                             <p>Position</p>
                         </div>
                         
-                        <div className='w-[80%] h-[50%] border px-2'>
-
+                        <div className='w-[80%] h-[50%] border px-2 text-center'>
+                            <p>{position1}</p>
                         </div>
                      </div>
 
-                     <div className='w-[50%] h-20 border'>
+                     <div className='w-[50%] h-20 border flex'>
                         <div className='w-[20%] h-20 border px-2'>
                             <p>Position</p>
                         </div>
-                        <div className='w-[80%] h-[50%] border px-2'>
-                            
+                        <div className='w-[80%] h-[50%] border px-2 text-center'>
+                            <p>{position2}</p>
                         </div>
                      </div>
                    

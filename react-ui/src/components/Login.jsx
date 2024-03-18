@@ -13,29 +13,27 @@ export default function handleLogin() {
   const navigate = useNavigate();
   const location = useLocation();
   const win = window.sessionStorage;
-
  
   const logged = window.localStorage.getItem('isLoggedIn');
   const [offices,setOffices] = useState([]);
-  const [officeid,setOfficeid] = useState();
+  // const [officeid,setOfficeid] = useState();
   
 
-  useEffect(()=>{
-      axiosClient.get(`/offices`).then(res=>{
-        setOffices(res.data.offices);
-      })
-  },[]);
+  // useEffect(()=>{
+  //     axiosClient.get(`/offices`).then(res=>{
+  //       setOffices(res.data.offices);
+  //     })
+  // },[]);
   
- const officesList = offices.map((office)=>{
-  return(
-    <option key={office.id} value={office.id}>{office.officename}</option>
-  );
- });
+//  const officesList = offices.map((office)=>{
+//   return(
+//     <option key={office.id} value={office.id}>{office.officename}</option>
+//   );
+//  });
 
- const officeOnChange = (e)=>{
-  setOfficeid(e);
-  console.log(officeid);
- }
+//  const officeOnChange = (e)=>{
+//   setOfficeid(e);
+//  }
 
   const handleInput = (e)=>{
     e.persist();
@@ -45,10 +43,7 @@ export default function handleLogin() {
     const userlogin = {
       username : useraccount.username,
       password : useraccount.password,
-      officeid:officeid
     }
-
-   
 
 
  const handleLogin =  async()=>{
@@ -91,8 +86,6 @@ export default function handleLogin() {
             }
             
           });
-        
-        
 
       }catch(e){
         //console.log(e);
@@ -161,8 +154,6 @@ export default function handleLogin() {
                   />
                 </div>
               </div>
-              
-             
 
               <div>
                 <button

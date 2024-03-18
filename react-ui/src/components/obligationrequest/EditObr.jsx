@@ -4,8 +4,7 @@ import axiosClient from '../../axios-client';
 import {v4 as uuid} from 'uuid';
 import AccountItem from './AccountItem';
 
-
-const CreateObr = () => {
+const EditObr = () => {
     const location = useLocation();
     const [officename,setOfficename] = useState();
     const [accounts,setAccounts] = useState([]);
@@ -16,24 +15,39 @@ const CreateObr = () => {
     const [particulars,setParticulars] = useState('');
     const [payee,setPayee] = useState('');
     const [isEditing,setIsEditing] = useState(false);
+    const [obrid,setObrid] = useState();
+    
 
     const navigate = useNavigate();
     const win = window.sessionStorage;
+
+    useEffect(()=>{
+        setObrid(location.state.obrid);
+        axiosClient.get(`/obligationrequest/edit/${location.state.obrid}`).then(res=>{
+        setDetails(res.data.obr);
+        console.log(details);
+        
+      });
+    },[]);
+
     useEffect(() => {
+     
       setOfficename(win.getItem('officename'));
       var office = win.getItem('officename')
+
       axiosClient.get(`/getaccounts/${office}`).then(res =>{
         setAccounts(res.data.accounts);
       });
+      
       
       try{
 
        
         // const backItems = location.state.items;
         // const backParticulars = location.state.items;
-        setItems(location.state.items);
-        setParticulars(location.state.particulars);
-        setPayee(location.state.payee)
+        // setItems(location.state.items);
+        // setParticulars(location.state.particulars);
+        // setPayee(location.state.payee)
       }catch(e){
 
       }
@@ -43,6 +57,7 @@ const CreateObr = () => {
     },[]);
 
     const onClickAdd = () => {
+      
       
      
       if(accountcode.trim().length == 0){
@@ -94,6 +109,7 @@ const CreateObr = () => {
 
     const selectedItems = items.map((item) => {
       return(
+      
         <tr key={item.id}>
           <td>{item.accountcode}</td>
           <td>{isEditing?<input type="text" name="" id="" />: item.amount}</td>
@@ -130,10 +146,6 @@ const CreateObr = () => {
         return;
       }
 
-
-   
-
-  
     
       if(items.length>0){
         navigate('/obrprintpreview',{state:{items,payee,particulars}});
@@ -143,34 +155,43 @@ const CreateObr = () => {
       
     }
     const onClickClose = () => {
-      navigate("/officebudget");
+      navigate("/obrlist");
     }
 
     const handleEditItem = (id,amount) => {
-      const updateItems = items.map((item) => {
-        if(item.id == id){
-          return {...item,amount:amount};
-        }
+        try{
+            const updateItems = items.map((item) => {
+                if(item.id == id){
+                  return {...item,amount:amount};
+                }
+        
+                return item;
+              })
+        }catch(e){
 
-        return item;
-      })
+        }
+      
     }
 
     
 
     const accountsList = accounts.map((account) =>{
-      return(
-          <option value={account.accountcode + ' ' + account.particulars} key={account.id}>{account.accountcode} - {account.particulars}</option>
-      );
-  })
+        try{
+            return(
+                <option value={account.accountcode + ' ' + account.particulars} key={account.id}>{account.accountcode} - {account.particulars}</option>
+            );
+        }catch(e){
 
+        }
+      
+  })
   return (
     <div className='w-[1024px] h-[800px] bg-white m-auto p-2 rounded-lg  overflow-y-auto'>
         
         <div className='card'>
           
           <div className='card-header'>
-            <h5>Create Oblication Request</h5>
+            <h5>Edit Oblication Request</h5>
           </div>
           <div className='card-body'>
             <div>
@@ -206,7 +227,7 @@ const CreateObr = () => {
             <div  className='mt-10'>
               <table>
                 <tbody>
-                  {items.map((item)=> (<AccountItem key={item.id} item={item} 
+                  {details.map((item)=> (<AccountItem key={item.id} item={item} 
                   handleEditItem={handleEditItem} removeItem={removeItem}/>))}
                 </tbody>
               </table>
@@ -217,4 +238,4 @@ const CreateObr = () => {
   )
 }
 
-export default CreateObr
+export default EditObr

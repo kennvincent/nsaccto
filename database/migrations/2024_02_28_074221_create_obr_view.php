@@ -8,7 +8,9 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * 2024_02_28_074221
      */
+    
     public function up(): void
     {
         \DB::statement("
@@ -30,6 +32,10 @@ return new class extends Migration
             t3.amount as amount1,
             t3.amount,
             t1.obryear,
+            t1.signatory1,
+            t1.position1,
+            t1.signatory2,
+            t1.position2,
             (SELECT SUM(t4.amount) FROM obrdetails t4 WHERE t1.id=t4.obrid) as totalamount,
             IFNULL((SELECT SUM(t5.amountpaid) FROM vw_payments t5 WHERE t1.id=t5.obrid AND t3.id=t5.obr_detail_id ),0) as paid,
             t3.amount - IFNULL((SELECT SUM(t6.amountpaid) FROM vw_payments t6 WHERE t3.id=t6.obr_detail_id),0) as balance1,

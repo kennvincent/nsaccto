@@ -55,6 +55,10 @@ class ObligationRequestController extends Controller
                             'balance1',
                             'balance',
                             'totalbalance',
+                            'signatory1',
+                            'position1',
+                            'signatory2',
+                            'position2',
                             'obrstatus',
                             'withvoucher')
                     ->where('id','=',[$id])
@@ -64,7 +68,6 @@ class ObligationRequestController extends Controller
 
     public function printpreview($id){
 
-      
         $obr = DB::table('vw_obr')
                 ->select('id',
                         'payee',
@@ -75,6 +78,31 @@ class ObligationRequestController extends Controller
                         'address',
                         'accountcode',
                         'amount',
+                        'signatory1',
+                        'position1',
+                        'signatory2',
+                        'position2',
+                        'obrstatus')
+                ->where('id','=',[$id])
+                ->get();
+        return response()->json(['obr'=>$obr]);
+    }
+
+    public function editpreview($id){
+        $obr = DB::table('vw_obr')
+                ->select('id',
+                        'payee',
+                        'particulars',
+                        'officecode',
+                        'officename',
+                        'officedesc',
+                        'address',
+                        'accountcode',
+                        'amount',
+                        'signatory1',
+                        'position1',
+                        'signatory2',
+                        'position2',
                         'obrstatus')
                 ->where('id','=',[$id])
                 ->get();

@@ -36,6 +36,7 @@ import CreateObr from "./components/obligationrequest/CreateObr";
 import OBRRejectedList from "./components/obligationrequest/OBRRejectedList";
 import DisplayOfficeBudget from "./components/accounting/DisplayOfficeBudget";
 import ObligationRequestPreviewOnly from "./components/obligationrequest/ObligationRequestPreviewOnly";
+import EditObr from "./components/obligationrequest/EditObr";
 
 const router = createBrowserRouter([
     {
@@ -90,7 +91,12 @@ const router = createBrowserRouter([
             // element:<CreateObligationRequest />
             element:<CreateObr />
            }
-           
+           ,
+           {
+            path:'/obredit',
+            // element:<CreateObligationRequest />
+            element:<EditObr />
+           }
            ,
            {
             path:'/obrlist',

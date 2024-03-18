@@ -13,7 +13,7 @@ import pbologo from '../../images/pbologo.png';
 
 export default function ObligationRequestPrintPreview() {
     const location = useLocation();
-
+    const navigate = useNavigate();
     const win = window.sessionStorage;
 
     var officename = win.getItem('officename');
@@ -54,9 +54,6 @@ export default function ObligationRequestPrintPreview() {
 
     useEffect(()=>{
         
-       
-        
-       
         axiosClient.get(`signatories`).then(res =>{
             setBudgetAuthorized(res.data.signatories[0].budgetofficer);
         });
@@ -138,13 +135,16 @@ export default function ObligationRequestPrintPreview() {
                 const obr_id = res.data.obr_id;
 
                 if(obr_id>0){
-                    setShowSave(false);
-                    setShowPrint(true);
-                    window.localStorage.setItem('obr_id',obr_id)
+                    // setShowSave(false);
+                    // setShowPrint(true);
+                    window.localStorage.setItem('obrid',obrid);
+                    window.localStorage.setItem('usertype','USR');
                     setDetails([]);
                     setTotal(0);
                     // navigate('/obrprintpreview');
                     alert('Obligation Request have been created');
+                    
+                    navigate('/obrpreviewonly',{state:{obrid:obrid}});
                 }
                 
           
@@ -161,7 +161,8 @@ export default function ObligationRequestPrintPreview() {
     }
 
 
-    const navigate = useNavigate();
+   
+
     const handleBack = ()=>{
         navigate('/obrcreate',{state:{items,payee,particulars}});
     }
