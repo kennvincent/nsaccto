@@ -23,6 +23,7 @@ return new class extends Migration
                 t1.explanation,
                 t1.address,
                 t1.obramount,
+                IFNULL(t1.checknumber,'') AS checknumber,
                 t1.bank,
                 t1.signatory1,
                 t1.signatory1position,
