@@ -15,6 +15,7 @@ export default function VoucherPrintPreview() {
     const [payee,setPayee] = useState();
     const [explanation,setExplanation] = useState();
     const [address,setAddress] = useState();
+    const [checknumber,setCheckNumber] = useState();
     const [bank,setBank] = useState();
     const [officeName,setOfficeName] = useState();
     const [signatory1,setSignatory1] = useState();
@@ -43,8 +44,10 @@ export default function VoucherPrintPreview() {
         
         axiosClient.get(`voucher/${voucher_id}`).then(res=>{
           setVoucher(res.data.voucher);
+          setObrNumber(res.data.voucher[0].obrnumber);
           setPayee(res.data.voucher[0].payee);
           setAddress(res.data.voucher[0].address);
+          setCheckNumber(res.data.voucher[0].checknumber);
           setBank(res.data.voucher[0].bank);
           setExplanation(res.data.voucher[0].explanation);
           setTotalAmount(res.data.voucher[0].obramount)
@@ -98,7 +101,7 @@ export default function VoucherPrintPreview() {
 
         <div className='flex text-xl p-0 h-10'>
           <div className='border-r border-t border-black w-[850px]'><p className='text-center mt-1'>DISBURSEMENT VOUCHER</p></div>
-          <div className='border-t border-black w-[274px]'><p>No.</p></div>
+          <div className='border-t border-black w-[274px]'><p>No. {obrnumber}</p></div>
         </div>
 
         <div className='border-t border-black flex h-14'>
@@ -119,7 +122,7 @@ export default function VoucherPrintPreview() {
             <p className='p-0 mt-2 '>{payee}</p>
           </div>
           <div className='p-1  w-[284px]'>
-            <p className='p-0 mt-2 '>Oblication Request No</p>
+            <p className='p-0 mt-2 '>TIM/Employee ID</p>
           </div>
         </div>
 
@@ -308,28 +311,28 @@ export default function VoucherPrintPreview() {
         </div>
 
 
-        <div className='flex w-full h-7 border-t border-black'>
-          <div className='flex w-[511px] h-7 border-r border-black'>
-            <div className='w-[110px] h-7 border-r border-black px-1'>
+        <div className='flex w-full h-12 border-t border-black'>
+          <div className='flex w-[511px] h-12 border-r border-black'>
+            <div className='w-[110px] h-12 border-r border-black px-1'>
               <p>Signature</p>
             </div>
-            <div className='w-[402px] h-7'>
+            <div className='w-[402px] h-12'>
 
             </div>
           </div>
 
-          <div className='flex w-[512px] h-7'>
-            <div className='w-[110px] h-7 border-r border-black px-1'>
-              <p>Check No</p>
+          <div className='flex w-[512px] h-12'>
+            <div className='w-[110px] h-12 border-r border-black px-1'>
+              <p>Check No {checknumber}</p>
             </div>
-            <div className='flex w-[300px] h-7 border-r border-black px-1'>
-              <div className='w-[90px]'><p>Bank Name:</p></div>
-              <div className='w-[210px] h-7'>
-                <p>{bank}</p>
+            <div className='flex w-[300px] h-12 border-r border-black px-1'>
+              <div className='w-[110px]'><p>Bank Name:</p></div>
+              <div className='w-[90px] h-12 relative'>
+                <p className='absolute bottom-1'>{bank}</p>
               </div>
 
             </div>
-            <div className='w-[93px] h-7'><p>Date</p></div>
+            <div className='w-[93px] h-12'><p>Date</p></div>
           </div>
         </div>
 

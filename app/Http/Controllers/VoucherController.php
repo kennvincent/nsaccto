@@ -72,6 +72,7 @@ class VoucherController extends Controller
                             'obramount',
                             'description',
                             'amount',
+                            'checknumber',
                             'bank',
                             'signatory1',
                             'signatory1position',
