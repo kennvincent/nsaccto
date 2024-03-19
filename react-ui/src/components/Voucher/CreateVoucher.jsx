@@ -12,6 +12,7 @@ export default function CreateVoucher() {
     const [payee,setPayee] = useState('');
     const [explanation,setExplanation] = useState('');
     const [address,setAddress] = useState('');
+    const [checknumber,setCheckNumber] = useState('');
     const [bank,setBank] = useState('');
     const [officeName,setOfficeName] = useState();
     const [signatory1,setSignatory1] = useState();
@@ -93,20 +94,22 @@ export default function CreateVoucher() {
    }
 
    const handleExplanationInput = (e)=>{
-    e.preventDefault();
     setExplanation(e.target.value)
    }
 
    const handleAddressInput = (e)=>{
-    e.preventDefault();
     setAddress(e.target.value);
    }
 
    const handleBankInput = (e)=>{
-    e.preventDefault();
     setBank(e.target.value);
    }
   
+   const handleCheckNumber = (e)=>{
+    setCheckNumber(e.target.value);
+   }
+  
+   
       
     var totalDeductionsAmmount=0;
     var grandTotal=0;
@@ -160,6 +163,7 @@ export default function CreateVoucher() {
         'explanation':explanation,
         'address' : address,
         'obramount':balance,
+        'checknumber':checknumber,
         'bank' : bank,
         'deductions' : deductions,
         'signatory1' :signatory1,
@@ -426,7 +430,7 @@ export default function CreateVoucher() {
           <div className='flex w-[512px] h-14'>
             <div className='w-[110px] h-14 border-r border-black px-1 relative'>
               <p>Check No</p>
-              <input type="text" name="" id=""   className='w-[100px] absolute h-7 bottom-1'/>
+              <input type="text" onChange={handleCheckNumber}  className='w-[100px] absolute h-7 bottom-1'/>
             </div>
 
             <div className='flex w-[300px] h-14 border-r border-black px-1'>

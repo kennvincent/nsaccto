@@ -11,7 +11,6 @@ class VoucherController extends Controller
 {
     public function savevoucher(Request $request){
        
-       
         try{
             DB::beginTransaction();
             $voucher = new Voucher;
@@ -20,6 +19,7 @@ class VoucherController extends Controller
             $voucher->explanation = $request->explanation;
             $voucher->address = $request->address;
             $voucher->obramount = $request->obramount;
+            $voucher->checknumber = $request->checknumber;
             $voucher->bank = $request->bank;
             $voucher->signatory1 = $request->signatory1;
             $voucher->signatory1position = $request->signatory1position;
@@ -41,9 +41,6 @@ class VoucherController extends Controller
                     voucherdeduction::create($voucherDeduction);
                 }
             }
-            
-            
-            
             
             DB::commit();
             return response()->json(['voucher'=>$voucher_id]);
