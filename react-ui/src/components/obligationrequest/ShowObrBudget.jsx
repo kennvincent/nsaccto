@@ -12,6 +12,7 @@ export default function ShowObrBudget() {
  const [obrtotal,setObrTotal]=useState([]);
  const [obrnumber,setObrNumber] = useState();
  const [showRemarks,setShowRemarks] =useState(false);
+ const [showApproveReject,setShowApproveReject] = useState(true);
  const [lastobrid,setLastObrId]=useState();
  const obrid = location.state.obrid;
 
@@ -111,12 +112,13 @@ export default function ShowObrBudget() {
 
     axiosClient.put(`/obligationrequest/budgetview/selected/approve`,data).then(res=>{
         alert(res.data.message)
+        setShowApproveReject(false);
     });
 
     // axiosClient.get(`/obligationrequest/budgetview/selected/approve/${location.state.obrid}`).then(res=>{
     //     alert(res.data.message)
     // });
-    navigate('/obrlistbudget');
+   
 
  }
 
@@ -153,6 +155,10 @@ export default function ShowObrBudget() {
  }
  const handleObrNumberInput = (e)=>{
     setObrNumber(e.target.value);
+ }
+
+ const handleclose =()=>{
+    navigate('/obrlistbudget');
  }
   return (
     <div>
@@ -248,8 +254,10 @@ export default function ShowObrBudget() {
             </div>
             <div className='flex'>
                 <div className='w-[100rem] border p-1 text-right'>
-                        <button className='btn btn-primary btn-sm w-40' onClick={handleApproveObr}>Approve</button>
-                        <button className='btn btn-primary btn-sm w-40 ml-2' onClick={handleShowReject}>Reject</button>
+                    {showApproveReject?<button className='btn btn-primary btn-sm w-40' onClick={handleApproveObr}>Approve</button>:''}    
+                    {showApproveReject?<button className='btn btn-primary btn-sm w-40 ml-2' onClick={handleShowReject}>Reject</button>:''}
+                        
+                        <button className='btn btn-primary btn-sm w-40 ml-2' onClick={handleclose}>Close</button>
                 </div>
             </div>
 
