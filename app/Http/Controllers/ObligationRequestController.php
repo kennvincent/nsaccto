@@ -8,6 +8,7 @@ use App\Models\Obrdetail;
 use App\Models\Currentbudgetyear;
 use App\Models\Paymentheader;
 use App\Models\Paymentdetail;
+use App\Models\Idcounter;
 use Illuminate\Support\Facades\DB;
 
 class ObligationRequestController extends Controller
@@ -203,20 +204,7 @@ class ObligationRequestController extends Controller
 
 
 
-    // public function approve($obrid){
-    //     $affected = DB::table('obrheaders')
-    //           ->where('id', $obrid)
-    //           ->update(['obrstatus' => 3]);
-    //     return response()->json(['message'=>"Obligation Request have been approved"]);
-    // }
-    
-    public function approve(Request $request){
-        DB::table('obrheaders')
-                ->where('id',$request->obrid)
-                ->update(array('obrnumber' => $request->obrnumber,'obrstatus' => 3));
-
-        return response()->json(['message'=>'Obligation Request have been approved']);
-    }
+   
 
     public function updateobrnumber(Request $request){
         
@@ -318,6 +306,37 @@ class ObligationRequestController extends Controller
                 return redirect()->back();
             }
 
+    }
+
+     // public function approve($obrid){
+    //     $affected = DB::table('obrheaders')
+    //           ->where('id', $obrid)
+    //           ->update(['obrstatus' => 3]);
+    //     return response()->json(['message'=>"Obligation Request have been approved"]);
+    // }
+    
+    public function approve(Request $request){
+        
+        DB::beginTransaction();
+        try{
+            DB::table('obrheaders')
+            ->where('id',$request->obrid)
+            ->update(array('obrnumber' => $request->obrnumber,'obrstatus' => 3));
+
+            DB::table('idcounters')
+               ->update(array('obrid' => $request->lastobrid));
+
+            DB::commit();
+
+            return response()->json(['message'=>'Obligation Request have been approved']);
+        }catch(\Exceiption $e){
+             // Rollback the transaction if any update fails
+            DB::rollback();
+
+            return response()->json(['message' => 'Failed to update tables'], 500);
+        }
+
+       
     }
 
 

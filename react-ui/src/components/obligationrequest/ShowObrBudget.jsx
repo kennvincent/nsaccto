@@ -105,8 +105,9 @@ export default function ShowObrBudget() {
     const data = {
         'obrid':obrid,
         'obrnumber' : obrnumber,
-        'lastid':lastobrid
+        'lastobrid':lastobrid
     }
+
 
     axiosClient.put(`/obligationrequest/budgetview/selected/approve`,data).then(res=>{
         alert(res.data.message)
