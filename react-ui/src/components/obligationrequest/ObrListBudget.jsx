@@ -10,7 +10,7 @@ export default function ObrListBudget() {
     
     useEffect(()=>{
 
-      axiosClient.get(`obligationrequest/budget/forapprovalobr/view`).then(res =>{
+      axiosClient.get(`/obligationrequest/budget/forapprovalobr/view`).then(res =>{
         setObrList(res.data.obrlist);
       });
 
@@ -37,7 +37,18 @@ export default function ObrListBudget() {
     })
 
     const onChangeOffice = (officename)=>{
+      if(officename.trim().length==0){
+        axiosClient.get(`/obligationrequest/budget/forapprovalobr/view`).then(res =>{
+          setObrList(res.data.obrlist);
+        });
+      }else{
+        axiosClient.get(`/obligationrequest/budget/forapprovalobr/office/${officename}`).then(res =>{
+          setObrList(res.data.obrlist);
+        });
+      }
+
       
+
     }
     
   return (

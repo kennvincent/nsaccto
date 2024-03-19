@@ -36,8 +36,6 @@ export default function handleLogin() {
          axiosClient.post(`/login`,userlogin).then(res=>{
           
             if(res.data.login=='success'){
-             
-           
               
 
               axiosClient.get(`/login/${userlogin.username}`).then(res=>{

@@ -23,6 +23,16 @@ class ObligationRequestController extends Controller
         return response()->json(['obrlist'=>$obrlist]);
     }
 
+    public function viewlistbyoffice($office){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                             'officedesc','address','totalamount','obrstatus')
+                    ->where('officename','=',$office)
+                    ->orderBy('id','DESC')
+                    ->get();
+        return response()->json(['obrlist'=>$obrlist]);
+    }
+
     
     
     public function viewobr($id){

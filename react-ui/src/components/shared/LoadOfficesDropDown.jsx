@@ -15,6 +15,7 @@ export default function LoadOfficesDropDown({onChangeOffice}) {
 
       const loadOffices = offices.map((office)=>{
         return(
+          
           <option value={office.officename} key={office.id}>{office.officename}</option>
         );
       });
@@ -23,7 +24,7 @@ export default function LoadOfficesDropDown({onChangeOffice}) {
   return (
     <div>
         <select className='p-1 w-[20rem]' onChange={(e)=>onChangeOffice(e.target.value)}>
-            <option value="" ></option>
+            <option value="" >All</option>
             {loadOffices}
         </select>
     </div>

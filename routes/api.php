@@ -60,9 +60,11 @@ Route::post('obligationrequest',[ObligationRequestController::class,'insert']);
 
 Route::get('obligationrequest/getobrid',[ObligationRequestController::class,'getobrid']);
 Route::get('obligationrequest',[ObligationRequestController::class,'viewlist']);
+
 Route::get('obligationrequest/edit/{id}',[ObligationRequestController::class,'editpreview']);
 Route::get('obligationrequest/{officename}',[ObligationRequestController::class,'viewofficeobrlist']);
 Route::get('obligationrequest/budget/forapprovalobr/view',[ObligationRequestController::class,'foraprrovalobr']);
+Route::get('obligationrequest/budget/forapprovalobr/office/{office}',[ObligationRequestController::class,'viewlistbyoffice']);
 Route::get('obligationrequest/budget/approvedobr/view',[ObligationRequestController::class,'approvedobr']);
 Route::get('obligationrequest/budgetview/selected/{id}',[ObligationRequestController::class,'viewobr']);
 Route::get('obligationrequest/budgetview/selected/sum/{id}',[ObligationRequestController::class,'sum']);
