@@ -35,7 +35,7 @@ class BudgetController extends Controller
     
     public function accountsperoffice($officename){
         $accounts = DB::table('budgets')
-        ->select('id','particulars','accountcode')
+        ->select('id','particulars','accountcode','funding','officecode')
         ->where('office',$officename)
         ->get();
         return response()->json(['accounts'=>$accounts]);

@@ -18,7 +18,8 @@ class Budget extends Model
         'accountclassification',
         'funding',
         'sector',
-        'budgetstatus'
+        'budgetstatus',
+        'officecode'
     ];
 
 }

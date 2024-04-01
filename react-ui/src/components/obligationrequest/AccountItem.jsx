@@ -7,7 +7,7 @@ const AccountItem = ({item,handleEditItem,removeItem}) => {
     
     const onEdit = ()=> {
         if(amount.trim().length == 0){
-            alert("Enter amount");
+            alert("Enter amounts");
             return;
         }
 
@@ -16,6 +16,9 @@ const AccountItem = ({item,handleEditItem,removeItem}) => {
             return;
         }
 
+   
+       let strAmount = amount.replace(/,/g, '');
+       setAmount(strAmount);
         handleEditItem(item.id,amount);
         setIsEditing(false);
     }

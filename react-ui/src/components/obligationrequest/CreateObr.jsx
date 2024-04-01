@@ -55,16 +55,22 @@ const CreateObr = () => {
         return;
       }
 
+      
+
       if(!parseFloat(amount)){
         setAmount('');
         alert("Invalid amount");
         return;
       }
 
+      let strAmount = amount.replace(/,/g, '');
+
       const newItem = {
-        accountcode:accountcode.split(' ')[0],
-        amount:amount
+        accountcode:accountcode.split(' ')[2],
+        amount:strAmount
       }
+
+    
 
       setItems([...items,{id:uuid(),name:newItem}]);
  
@@ -148,6 +154,8 @@ const CreateObr = () => {
 
     const handleEditItem = (id,amount) => {
       const updateItems = items.map((item) => {
+ 
+        
         if(item.id == id){
           return {...item,amount:amount};
         }
@@ -156,19 +164,16 @@ const CreateObr = () => {
       })
     }
 
-    
-
     const accountsList = accounts.map((account) =>{
       return(
-          <option value={account.accountcode + ' ' + account.particulars} key={account.id}>{account.accountcode} - {account.particulars}</option>
+          <option value={account.officecode + ' ' + account.funding + ' ' + account.accountcode + ' ' + account.particulars} 
+          key={account.id}>{account.officecode} - {account.funding} - {account.accountcode} - {account.particulars} </option>
       );
   })
 
   return (
-    <div className='w-[1024px] h-[800px] bg-white m-auto p-2 rounded-lg  overflow-y-auto'>
-        
+    <div className='w-full lg:w-[768px] xl:w-[1024px] h-[800px]  m-auto p-2 rounded-lg  overflow-y-auto'>
         <div className='card'>
-          
           <div className='card-header'>
             <h5>Create Oblication Request</h5>
           </div>
@@ -196,16 +201,17 @@ const CreateObr = () => {
               <input type="text" id='amount' autoComplete='off' value={amount} onChange={(e) => onChangeAmount(e.target.value)} className='w-full'/>
             </div>
             
-            <div className='relative'>
-              <button onClick={onClickAdd} className='btn btn-primary mt-2 w-[150px]'>Add</button>
-              <button onClick={onClickNext} className='btn btn-primary mt-2 ml-2 w-[150px]'>Next</button>
-              <button onClick={onClickClose} className='btn btn-primary mt-2 ml-2 w-[150px] right-0 absolute'>Close</button>
+            <div className='relative '>  
+              <button  onClick={onClickAdd} className='btn btn-primary mt-2 w-full  md:w-[150px] mr-2'>Add</button>
+              <button onClick={onClickNext} className='btn btn-primary mt-2 w-full  md:w-[150px] mr-2'>Next</button>
+              <button onClick={onClickClose} className='btn btn-primary mt-2 w-full md:w-[150px] absolute right-0'>Close</button>
             </div>
             
-
             <div  className='mt-10'>
               <table>
+                
                 <tbody>
+      
                   {items.map((item)=> (<AccountItem key={item.id} item={item} 
                   handleEditItem={handleEditItem} removeItem={removeItem}/>))}
                 </tbody>
