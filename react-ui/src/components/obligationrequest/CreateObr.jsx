@@ -28,7 +28,6 @@ const CreateObr = () => {
       
       try{
 
-       
         // const backItems = location.state.items;
         // const backParticulars = location.state.items;
         setItems(location.state.items);
@@ -66,11 +65,13 @@ const CreateObr = () => {
       let strAmount = amount.replace(/,/g, '');
 
       const newItem = {
+        officecode:accountcode.split(' ')[0],
+        classification:accountcode.split(' ')[1],
         accountcode:accountcode.split(' ')[2],
         amount:strAmount
       }
 
-    
+      
 
       setItems([...items,{id:uuid(),name:newItem}]);
  
@@ -136,11 +137,6 @@ const CreateObr = () => {
         return;
       }
 
-
-   
-
-  
-    
       if(items.length>0){
         navigate('/obrprintpreview',{state:{items,payee,particulars}});
       } else {
@@ -209,7 +205,7 @@ const CreateObr = () => {
             
             <div  className='mt-10'>
               <table>
-                
+
                 <tbody>
       
                   {items.map((item)=> (<AccountItem key={item.id} item={item} 

@@ -9,6 +9,8 @@ class Obrdetail extends Model
 {
     use HasFactory;
     protected $fillable=[
+        'officecode',
+        'accountclassification',
         'accountcode',
         'amount',
         'obrid'
