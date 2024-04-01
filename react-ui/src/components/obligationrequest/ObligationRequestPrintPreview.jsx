@@ -127,8 +127,8 @@ export default function ObligationRequestPrintPreview() {
             'obrdetails': items
             
         };
-
-    
+      
+     
        
         axiosClient.post(`/obligationrequest`,obr).then(res=>{
             
@@ -180,10 +180,9 @@ export default function ObligationRequestPrintPreview() {
    
   return (
     
-    <div >
+    <div className='mt-8  mb-8'>
         
-
-       <div ref={componentRef} className='overflow-hidden  text-xl w-[1200px] m-auto'>
+       <div ref={componentRef} className='overflow-hidden  text-xl w-[1200px] m-auto mb-8'>
             
             <div className='w-[1024px] p-2 m-auto text-center mt-16 text-lg  flex bg-white h-[140px] border border-black'>
                 <div className='w-[300px] relative'><img src={pgnslogo} width="115px" height="115px" 
@@ -200,7 +199,7 @@ export default function ObligationRequestPrintPreview() {
             <div className='w-[1024px] text-center p-0 bg-slate-300 m-auto border border-black'>
                 <h4>OBLIGATION REQUEST</h4>
             </div>
-            <div className='h-[1500px]'>
+            <div className='h-auto '>
                 
                 <div className='flex items-center w-[1024px] m-auto'>
                     <div className='w-[15%] h-10 items-center border py-0 px-2'>
@@ -376,11 +375,20 @@ export default function ObligationRequestPrintPreview() {
                         <p className='text-right'>Effectivity Date: July 17, 2023</p>
                     </div>
                 </div>
+
+               
+            </div>
+
+            <div className='flex w-[1024px] m-auto  pb-4'>
+                {/* {showSave?<IoIosSave  onClick={handleCreateOBR} className='absolute right-[22rem] top-20 text-3xl' />:<ImPrinter  onClick={handlePrint} className=' right-[22rem]  text-3xl' />}
+                {showSave?<TiArrowBack  onClick={handleBack}className='absolute right-[19rem] top-20 text-3xl'  />:<IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />} */}
+                
+                    {showSave?<button  onClick={handleCreateOBR} className='btn btn-primary btn-sm mr-2' >Create</button>:<button  onClick={handlePrint} className='btn btn-primary btn-sm mr-2' >Print</button>}
+                    {showSave?<button  onClick={handleBack}className='btn btn-warning btn-sm mr-2'>Back</button>:<button  onClick={handleClose}className='btn btn-primary btn-warning'>Close</button>}
             </div>
         </div>
-
-        {showSave?<IoIosSave  onClick={handleCreateOBR} className='absolute right-[22rem] top-20 text-3xl' />:<ImPrinter  onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />}
-        {showSave?<TiArrowBack  onClick={handleBack}className='absolute right-[19rem] top-20 text-3xl'  />:<IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />}
+       
+        
          
     </div>
   )

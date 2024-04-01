@@ -4,6 +4,7 @@ const AccountItem = ({item,handleEditItem,removeItem}) => {
     const [isEditing,setIsEditing] = useState(false);
     const [officecode,setOfficecode] = useState(item.name.officecode);
     const [classification,setClassification] = useState(item.name.classification);
+    const [accountdesc,setAccountDesc] = useState(item.name.accountdesc);
     const [accountcode,setAccountCode] = useState(item.name.accountcode);
     const [amount,setAmount] = useState(item.name.amount);
     
@@ -36,6 +37,7 @@ const AccountItem = ({item,handleEditItem,removeItem}) => {
         <tr >   
             <td className='p-1 w-[140px]'>{officecode}</td>
             <td className='p-1 w-[140px]'>{classification}</td>
+            <td className='p-1 w-[240px]'>{accountdesc}</td>
             <td className='p-1 w-[140px]'>{accountcode}</td>
             <td className='p-1 w-[100px] text-right'>{isEditing? <input type="text" 
                     value={amount}

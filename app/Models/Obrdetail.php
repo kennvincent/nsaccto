@@ -11,6 +11,7 @@ class Obrdetail extends Model
     protected $fillable=[
         'officecode',
         'accountclassification',
+        'particulars',
         'accountcode',
         'amount',
         'obrid'

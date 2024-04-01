@@ -65,9 +65,10 @@ const CreateObr = () => {
       let strAmount = amount.replace(/,/g, '');
 
       const newItem = {
-        officecode:accountcode.split(' ')[0],
-        classification:accountcode.split(' ')[1],
-        accountcode:accountcode.split(' ')[2],
+        officecode:accountcode.split('|')[0],
+        classification:accountcode.split('|')[1],
+        accountdesc:accountcode.split('|')[3],
+        accountcode:accountcode.split('|')[2],
         amount:strAmount
       }
 
@@ -162,8 +163,8 @@ const CreateObr = () => {
 
     const accountsList = accounts.map((account) =>{
       return(
-          <option value={account.officecode + ' ' + account.funding + ' ' + account.accountcode + ' ' + account.particulars} 
-          key={account.id}>{account.officecode} - {account.funding} - {account.accountcode} - {account.particulars} </option>
+          <option value={account.officecode + ' | ' + account.funding + ' | ' + account.accountcode + ' | ' + account.particulars} 
+          key={account.id}>{account.officecode} | {account.funding} | {account.accountcode} | {account.particulars} </option>
       );
   })
 
