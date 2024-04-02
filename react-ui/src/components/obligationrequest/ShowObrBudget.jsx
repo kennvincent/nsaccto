@@ -162,7 +162,7 @@ export default function ShowObrBudget() {
  }
   return (
     <div>
-        <div className='card-body h-[800px] overflow-scroll bg-white p-2'>
+        <div className='lg:w-[1024px] m-auto card-body h-[1800px] overflow-scroll bg-white p-2'>
             <div className='text-center p-0'>
                 <h4>OBLIGATION REQUESTS</h4>
             </div>
@@ -201,19 +201,19 @@ export default function ShowObrBudget() {
             </div>
 
             <div className='flex'>
-                <div className='w-[15rem] h-8 items-center border py-0 px-2'>
+                <div className='w-[15rem] h-12 items-center border py-0 px-2'>
                     <p>Responsibility Center</p>
                 </div>
-                <div className='w-[50rem] h-8 border py-0 px-2'>
+                <div className='w-[40rem] h-12 border py-0 px-2'>
                     <p>Particulars</p>
                 </div>
-                <div className='w-[10rem] h-8 border py-0 px-2'>
+                <div className='w-[10rem] h-12 border py-0 px-2'>
                     <p>F.P.P</p>
                 </div>
-                <div className='w-[10rem] h-8 border py-0 px-2'>
+                <div className='w-[15rem] h-12 border py-0 px-2'>
                     <p>Account Code</p>
                 </div>
-                <div className='w-[15rem] h-8 border py-0 px-2'>
+                <div className='w-[15rem] h-12 border py-0 px-2'>
                     <p>Amount</p>
                 </div>
             </div>
@@ -223,7 +223,7 @@ export default function ShowObrBudget() {
                     {obr.map((obr)=>{officename = obr.officename})}
                     <p>{officename}</p>
                 </div>
-                <div className='w-[50rem] h-96  p-2'>
+                <div className='w-[40rem] h-96  p-2'>
                     {obr.map((obr)=>{particulars = obr.particulars})}
                     <p>{particulars}</p>
                 </div>

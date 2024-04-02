@@ -11,6 +11,8 @@ import BudgetSidebar from './BudgetSidebar'
 import {signal} from "@preact/signals-react"
 import OfficeHeadSidebar from './OfficeHeadSidebar'
 
+import '../../App.css'; 
+
 export default function MainLayout() {
   const win = window.sessionStorage;
   const username = win.getItem('username');
@@ -46,7 +48,7 @@ export default function MainLayout() {
       {usertype ==="BDGT" && <BudgetSidebar/>}
       {usertype ==="APRV" && <OfficeHeadSidebar/>}
 
-      <div className='flex-1'>
+      <div className='flex-1 bg'>
         <Header/>
         <div className='p-4'><Outlet></Outlet></div>
       </div>

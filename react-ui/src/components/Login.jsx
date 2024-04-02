@@ -44,16 +44,18 @@ export default function handleLogin() {
                 win.setItem('username',userlogin.username);
                 console.log(res.data.office);
                 var usertype = res.data.office[0].usertype;
+                navigate('/dashboard');
 
-                if(usertype=="ACTG"){
-                  navigate("/acctobrview");
-                } else if(usertype=="BDGT"){
-                  navigate("/obrlistbudget");
-                } else if(usertype==="USR"){
-                  navigate("/officebudget",{state:{officename:win.getItem('officename')}});
-                } else if(usertype=="APRV"){
-                  navigate("/obrofficeforapproval");
-                }
+                // if(usertype=="ACTG"){
+                //   navigate("/acctobrview");
+                // } else if(usertype=="BDGT"){
+                //   navigate("/obrlistbudget");
+                // } else if(usertype==="USR"){
+                //   navigate("/officebudget",{state:{officename:win.getItem('officename')}});
+                 
+                // } else if(usertype=="APRV"){
+                //   navigate("/obrofficeforapproval");
+                // }
               });
 
             }else{
