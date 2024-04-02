@@ -259,7 +259,7 @@ export default function ObligationRequestPrintPreview() {
                     <div className='w-[15%] h-96 border py-0 px-2'>
                         {items.map((item,index)=>{
                             return(
-                                <p className='p-0 m-0' key={index}>{item.name.accountcode.split(' ')[0]}</p>
+                                <p className='p-0 m-0' key={index}>{item.name.accountcode.split('|')[0]}</p>
                             );
                         })}
                         
@@ -379,6 +379,10 @@ export default function ObligationRequestPrintPreview() {
                
             </div>
 
+           
+        </div>
+       
+        
             <div className='flex w-[1024px] m-auto  pb-4'>
                 {/* {showSave?<IoIosSave  onClick={handleCreateOBR} className='absolute right-[22rem] top-20 text-3xl' />:<ImPrinter  onClick={handlePrint} className=' right-[22rem]  text-3xl' />}
                 {showSave?<TiArrowBack  onClick={handleBack}className='absolute right-[19rem] top-20 text-3xl'  />:<IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />} */}
@@ -386,10 +390,6 @@ export default function ObligationRequestPrintPreview() {
                     {showSave?<button  onClick={handleCreateOBR} className='btn btn-primary btn-sm mr-2' >Create</button>:<button  onClick={handlePrint} className='btn btn-primary btn-sm mr-2' >Print</button>}
                     {showSave?<button  onClick={handleBack}className='btn btn-warning btn-sm mr-2'>Back</button>:<button  onClick={handleClose}className='btn btn-primary btn-warning'>Close</button>}
             </div>
-        </div>
-       
-        
-         
     </div>
   )
 }
