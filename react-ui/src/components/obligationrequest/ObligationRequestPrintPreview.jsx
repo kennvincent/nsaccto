@@ -23,7 +23,7 @@ export default function ObligationRequestPrintPreview() {
     const [officeName,setOfficeName]=useState();
     const [officeDesc,setOfficeDesc] = useState();
     const [address,setAddress]= useState();
-    const [officeCode,setOfficeCode] = useState(); 
+    const [officecode,setOfficeCode] = useState(); 
     const [responsibilityCenter,setResponsibilityCenter] = useState();
     const [authorizedpersonnel,setAuthorizedPersonnel] = useState();
     const [authorizedposition,setAuthorizedPosition] = useState();
@@ -40,6 +40,8 @@ export default function ObligationRequestPrintPreview() {
 
     const items = location.state.items;
 
+    
+
     const particulars = location.state.particulars;
     const payee = location.state.payee;
 
@@ -54,6 +56,8 @@ export default function ObligationRequestPrintPreview() {
 
     useEffect(()=>{
         
+        setOfficeCode(location.state.officecode);
+
         axiosClient.get(`signatories`).then(res =>{
             setBudgetAuthorized(res.data.signatories[0].budgetofficer);
         });
@@ -74,7 +78,7 @@ export default function ObligationRequestPrintPreview() {
                     
                     console.log(res.data.office[0].authorizedpersonnel);
                      setOfficeId(res.data.office[0].office_id);
-                     setOfficeCode(res.data.office[0].officecode);
+                    //  setOfficeCode(res.data.office[0].officecode);
                      setOfficeName(res.data.office[0].officename);
                      setOfficeDesc(res.data.office[0].officedesc);
                      setAddress(res.data.office[0].officeaddress)
@@ -117,6 +121,7 @@ export default function ObligationRequestPrintPreview() {
         const obr = {
             'payee' : payee,
             'officeid' : officeid,
+            'officecode' : officecode,
             'particulars':particulars,
             'address': address,
             'obryear': obryear,
@@ -254,7 +259,7 @@ export default function ObligationRequestPrintPreview() {
                         <p>{particulars}</p>
                     </div>
                     <div className='w-[10%] h-96 border py-0 px-2'>
-                        <p>{officeCode}</p>
+                        <p>{officecode}</p>
                     </div>
                     <div className='w-[15%] h-96 border py-0 px-2'>
                         {items.map((item,index)=>{

@@ -8,6 +8,7 @@ import AccountItem from './AccountItem';
 const CreateObr = () => {
     const location = useLocation();
     const [officename,setOfficename] = useState();
+    const [officecode,setOfficecode] = useState();
     const [accounts,setAccounts] = useState([]);
     const [items,setItems] = useState([]);
     const [details,setDetails] = useState([]);
@@ -63,7 +64,9 @@ const CreateObr = () => {
       }
 
       let strAmount = amount.replace(/,/g, '');
-
+      
+      setOfficecode(accountcode.split('|')[0]);
+      
       const newItem = {
         officecode:accountcode.split('|')[0],
         classification:accountcode.split('|')[1],
@@ -139,7 +142,7 @@ const CreateObr = () => {
       }
 
       if(items.length>0){
-        navigate('/obrprintpreview',{state:{items,payee,particulars}});
+        navigate('/obrprintpreview',{state:{items,officecode,payee,particulars}});
       } else {
         alert('Account details cannot be empty!')
       }

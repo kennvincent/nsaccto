@@ -12,6 +12,7 @@ class Obrheader extends Model
         'obrnumber',
         'payee',
         'officeid',
+        'officecode',
         'particulars',
         'obryear',
         'signatory1',

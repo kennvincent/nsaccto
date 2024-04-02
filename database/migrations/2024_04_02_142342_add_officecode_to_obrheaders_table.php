@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('obrdetails', function (Blueprint $table) {
-            $table->string('officecode')->nullable()->after('id');
+        Schema::table('obrheaders', function (Blueprint $table) {
+            $table->string('officecode')->after('officeid');
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('obrdetails', function (Blueprint $table) {
+        Schema::table('obrheaders', function (Blueprint $table) {
             $table->dropColumn('officecode');
         });
     }

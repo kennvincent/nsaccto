@@ -281,6 +281,7 @@ class ObligationRequestController extends Controller
                 $obr->payee = $request->payee;
                 $obr->address = $request->address;
                 $obr->officeid = $request->officeid;
+                $obr->officecode = $request->officecode;
                 $obr->particulars = $request->particulars;
                 $obr->obryear = $request->obryear;
                 $obr->signatory1 = $request->signatory1;
@@ -299,7 +300,6 @@ class ObligationRequestController extends Controller
                 //This is the last update
                 $obrid = DB::getPdo()->lastInsertId();
                 foreach($details as $key => $detail){
-                    $obrDetail['officecode'] = $detail['name']['officecode'];
                     $obrDetail['accountclassification'] = $detail['name']['classification'];
                     $obrDetail['particulars'] = $detail['name']['accountdesc'];
                     $obrDetail['accountcode'] = $detail['name']['accountcode'];

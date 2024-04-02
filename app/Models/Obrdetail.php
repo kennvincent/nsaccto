@@ -9,7 +9,6 @@ class Obrdetail extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'officecode',
         'accountclassification',
         'particulars',
         'accountcode',
