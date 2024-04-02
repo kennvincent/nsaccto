@@ -28,6 +28,8 @@ return new class extends Migration
             t2.officedesc,
             t1.address,
             t3.accountcode as accountcode1,
+            t3.officecode as officode2,
+            t3.accountclassification,
             t3.accountcode,
             t4.accountdesc,
             t3.amount as amount1,
