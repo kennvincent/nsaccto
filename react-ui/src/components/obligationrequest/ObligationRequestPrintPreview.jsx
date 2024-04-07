@@ -132,9 +132,8 @@ export default function ObligationRequestPrintPreview() {
             'obrdetails': items
             
         };
-      
-     
-       
+        
+        
         axiosClient.post(`/obligationrequest`,obr).then(res=>{
             
                 const obr_id = res.data.obr_id;

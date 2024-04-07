@@ -12,7 +12,7 @@ const CreateObr = () => {
     const [accounts,setAccounts] = useState([]);
     const [items,setItems] = useState([]);
     const [details,setDetails] = useState([]);
-    const [accountcode,setAccountCode] = useState('');
+    const [accountItem,setAccountItem] = useState('');
     const [amount,setAmount] = useState('');
     const [particulars,setParticulars] = useState('');
     const [payee,setPayee] = useState('');
@@ -45,7 +45,7 @@ const CreateObr = () => {
     const onClickAdd = () => {
       
      
-      if(accountcode.trim().length == 0){
+      if(accountItem.trim().length == 0){
         alert("Select account");
         return;
       }
@@ -65,23 +65,26 @@ const CreateObr = () => {
 
       let strAmount = amount.replace(/,/g, '');
       
-      setOfficecode(accountcode.split('|')[0]);
+      setOfficecode(accountItem.split('|')[0]);
       
       const newItem = {
-        officecode:accountcode.split('|')[0],
-        classification:accountcode.split('|')[1],
-        accountdesc:accountcode.split('|')[3],
-        accountcode:accountcode.split('|')[2],
+        officecode:accountItem.split('|')[0].trim(),
+        accountclassification:accountItem.split('|')[1].trim(),
+        funding:accountItem.split('|')[2].trim(),
+        accountcode:accountItem.split('|')[3].trim(),
+        accountdesc:accountItem.split('|')[4].trim(),
         amount:strAmount
       }
 
+      // console.log(newItem);
+      // return;
       
-
+     
       setItems([...items,{id:uuid(),name:newItem}]);
  
       setAmount('');
       setAccountCode('');
-    
+     
     }
 
     function accountExists(accountcode) {
@@ -103,24 +106,24 @@ const CreateObr = () => {
     }
 
 
-    const selectedItems = items.map((item) => {
-      return(
-        <tr key={item.id}>
-          <td>{item.accountcode}</td>
-          <td>{isEditing?<input type="text" name="" id="" />: item.amount}</td>
+    // const selectedItems = items.map((item) => {
+    //   return(
+    //     <tr key={item.id}>
+    //       <td>{item.accountcode}</td>
+    //       <td>{isEditing?<input type="text" name="" id="" />: item.amount}</td>
           
-          <td><div>
-            <button onClick={(e)=> setIsEditing(true)}>{isEditing?'Save':'Edit'}</button>
-            <button onClick={(e) => removeItem (index)}>Remove</button>
-          </div></td>
-          <td></td>
-        </tr>
-      )
-    });
+    //       <td><div>
+    //         <button onClick={(e)=> setIsEditing(true)}>{isEditing?'Save':'Edit'}</button>
+    //         <button onClick={(e) => removeItem (index)}>Remove</button>
+    //       </div></td>
+    //       <td></td>
+    //     </tr>
+    //   )
+    // });
 
     const onChangeAccount = (e) =>{
       
-      setAccountCode(e);
+      setAccountItem(e);
     }
 
     const onChangeAmount = (e) => {
@@ -166,7 +169,7 @@ const CreateObr = () => {
 
     const accountsList = accounts.map((account) =>{
       return(
-          <option value={account.officecode + ' | ' + account.funding + ' | ' + account.accountcode + ' | ' + account.particulars} 
+          <option value={account.officecode + ' | ' + account.accountclassification + ' | ' + account.funding + ' | ' + account.accountcode + ' | ' + account.particulars} 
           key={account.id}>{account.officecode} | {account.funding} | {account.accountcode} | {account.particulars} </option>
       );
   })
@@ -190,7 +193,7 @@ const CreateObr = () => {
 
             <div className='mt-10'>
               <label htmlFor="account">Select Account</label>
-              <select  value={accountcode}  className='w-full rounded-md' id='account' onChange={(e)=>onChangeAccount(e.target.value)}>
+              <select  value={accountItem}  className='w-full rounded-md' id='account' onChange={(e)=>onChangeAccount(e.target.value)}>
                 <option value=""></option>
                 {accountsList}
               </select>

@@ -69,7 +69,7 @@ export default function Accounts() {
         
         <section>
           
-          <div className='card w-[60rem] bg-red-600 flex'>
+          <div className='card w-[60rem] bg-red-600 flex m-auto'>
             <div className='card-header flex bg-black-200'><h4>Accounts List</h4>
               <button className='btn btn-success btn-sm right-6 absolute ' onClick={handlesetAddNew}>Add New</button>
             </div>

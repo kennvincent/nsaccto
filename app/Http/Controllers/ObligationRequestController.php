@@ -300,8 +300,9 @@ class ObligationRequestController extends Controller
                 //This is the last update
                 $obrid = DB::getPdo()->lastInsertId();
                 foreach($details as $key => $detail){
-                    $obrDetail['accountclassification'] = $detail['name']['classification'];
-                    $obrDetail['particulars'] = $detail['name']['accountdesc'];
+                    $obrDetail['accountdesc'] = $detail['name']['accountdesc'];
+                    $obrDetail['accountclassification'] = $detail['name']['accountclassification'];
+                    $obrDetail['funding'] = $detail['name']['funding'];
                     $obrDetail['accountcode'] = $detail['name']['accountcode'];
                     $obrDetail['amount'] = $detail['name']['amount'];
                     $obrDetail['obrid'] = $obrid;

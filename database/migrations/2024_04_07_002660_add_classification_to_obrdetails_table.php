@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('obrdetails', function (Blueprint $table) {
-            $table->string('particulars')->after('accountclassification');
+            $table->text('accountclassification')->nullable()->after('accountdesc');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('obrdetails', function (Blueprint $table) {
-            $table->dropColumn('particulars');
+            $table->dropColumn('accountclassification');
         });
     }
 };

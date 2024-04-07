@@ -70,7 +70,7 @@ export default function Office() {
 
   return (
     <section>
-      <div className="card w-[1000px]">
+      <div className="card w-[1000px] m-auto">
         <div className="card-header flex">
           <h5>List of Offices/Departments</h5>
           <span className='absolute right-5 mt-1'>

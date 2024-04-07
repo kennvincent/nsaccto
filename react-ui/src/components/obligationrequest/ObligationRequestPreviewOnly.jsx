@@ -97,7 +97,7 @@ const ObligationRequestPreviewOnly = () => {
     //     })
     //  }
   return (
-    <div className='bg-white'>
+    <div className='bg-white mt-8'>
 
        <div ref={componentRef} className='overflow-hidden  text-xl w-[1200px] m-auto'>
 
@@ -116,7 +116,7 @@ const ObligationRequestPreviewOnly = () => {
             <div className='w-[1024px] text-center p-0 bg-slate-300 m-auto border border-black'>
                 <h4>OBLIGATION REQUEST</h4>
             </div>
-            <div className='h-[1300px]'>
+            <div className='h-auto'>
 
                 <div className='flex items-center w-[1024px] m-auto'>
                     <div className='w-[15%] h-10 items-center border py-0 px-2'>
@@ -293,8 +293,13 @@ const ObligationRequestPreviewOnly = () => {
             </div>
         </div>
 
-        {userType=="USR"?<ImPrinter  onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />:""}
-        <IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />
+        <div className='flex w-[1024px] m-auto  pb-4'>
+            {userType=="USR"?<button  onClick={handlePrint} className='btn btn-primary btn-sm mr-2' >Print</button>:""}
+            <button  onClick={handleClose}className='btn btn-primary btn-warning'>Close</button>
+        </div>
+        
+        
+
 
     </div>
   )

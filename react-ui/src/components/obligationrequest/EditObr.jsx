@@ -35,6 +35,7 @@ const EditObr = () => {
         setDetails(res.data.obr);
         setPayee(res.data.obr[0].payee);
         setParticulars(res.data.obr[0].particulars);
+        console.log(details[0].accountcode);
       });
       
       setOfficename(win.getItem('officename'));
