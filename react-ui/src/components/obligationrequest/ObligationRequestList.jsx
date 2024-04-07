@@ -51,6 +51,9 @@ export default function OBRList() {
     navigate('/obredit');
   }
   
+  const onClickClose = ()=>{
+    navigate("/dashboard");
+  }
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div>
@@ -94,6 +97,10 @@ export default function OBRList() {
         </table>
         
       </div>
+      <div className='relative'>
+        <button onClick={onClickClose} className='btn btn-primary mt-2 w-full md:w-[150px]  right-0'>Close</button>
+      </div>
+        
     </div>
 
 

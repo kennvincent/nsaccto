@@ -152,7 +152,7 @@ const CreateObr = () => {
       
     }
     const onClickClose = () => {
-      navigate("/officebudget");
+      navigate("/dashboard");
     }
 
     const handleEditItem = (id,amount) => {
