@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('obrdetails', function (Blueprint $table) {
             $table->text('accountdesc')->after('id');
+            $table->text('accountclassification')->nullable()->after('accountdesc');
             $table->text('funding')->after('accountclassification');
         });
     }
@@ -24,6 +25,7 @@ return new class extends Migration
     {
         Schema::table('obrdetails', function (Blueprint $table) {
             $table->dropColumn('accountdesc');
+            $table->dropColumn('accountclassification');
             $table->dropColumn('funding');
         });
     }
