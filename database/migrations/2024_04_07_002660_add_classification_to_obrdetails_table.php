@@ -23,6 +23,7 @@ return new class extends Migration
     {
         Schema::table('obrdetails', function (Blueprint $table) {
             $table->dropColumn('accountclassification');
+                                
         });
     }
 };
