@@ -22,7 +22,10 @@ export default function ObrListBudget() {
     }
     
 
-    const obrall = obrlist.map((obr)=>{
+    const forapproval = obrlist.filter((obr)=> obr.obrstatus.toLowerCase() ==='for approval');
+
+  
+    const forapprovalist = forapproval.map((obr)=>{
       return(
         <tr key={obr.id} className='p-0 m-0 border hover:bg-slate-100'> 
           <td className='py-1'>{obr.payee}</td>
@@ -54,7 +57,7 @@ export default function ObrListBudget() {
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div>
-        <h3 className="text-gray-700 font-medium">Obligation Requests</h3>
+        <h3 className="text-gray-700 font-medium">Obligation Request</h3>
       </div>
       <div className='flex'>
         <LoadOfficesDropDown onChangeOffice={onChangeOffice} />
@@ -74,7 +77,7 @@ export default function ObrListBudget() {
             </tr>
           </thead>
           <tbody>
-            {obrall}
+            {forapprovalist}
           </tbody>
         </table>
         

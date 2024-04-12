@@ -21,8 +21,7 @@ export default function OfficeApprovedObligationRequest() {
   }
   const onClickPreview = (e,obr)=>{
     e.preventDefault();
-    window.localStorage.setItem('obr_id',obr['id']);
-    navigate('/obrprintpreview');
+    navigate('/obrpreviewonly',{state:{obrid:obr['id']}});
   }
   
   const onClickApprove = (e,obr)=>{
@@ -43,6 +42,8 @@ export default function OfficeApprovedObligationRequest() {
       alert(res.data.message);
     })
   }
+
+  const approvedOBR = obrlist.filter((obr) =>obr.obrstatus.toLowerCase() !='for approval');
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div>
@@ -65,7 +66,7 @@ export default function OfficeApprovedObligationRequest() {
               </tr>
             </thead>
           <tbody>
-            {obrlist.map((obr)=>(
+            {approvedOBR.map((obr)=>(
               <tr key={obr.id} className='m-0 border hover:bg-slate-100 p-0'> 
                 <td className='p-2'>{obr.payee}</td>
                 {/* <td className='p-2'>{obr.officecode}</td>

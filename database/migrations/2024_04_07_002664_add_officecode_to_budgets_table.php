@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // 2024_03_26_011116
         Schema::table('budgets', function (Blueprint $table) {
             $table->string('officecode')->nullable()->after('sector');
         });

@@ -169,7 +169,7 @@ class ObligationRequestController extends Controller
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                              'officedesc','address','totalamount','obrstatus')
-                    ->where('officename',[$officename])
+                    // ->where('officename',[$officename])
                     ->orderBy('id','DESC')
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
