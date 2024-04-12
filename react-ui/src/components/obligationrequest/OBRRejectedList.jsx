@@ -4,12 +4,12 @@ import LoadOfficesDropDown from '../shared/LoadOfficesDropDown';
 
 const OBRRejectedList = () => {
     const[obrlist,setObrList] = useState([]);
+    const [officename,setOfficeName]=useState();
 
     useEffect(()=>{
         axiosClient.get(`obligationrequest/budgetview/rejectedobr`).then(res =>{
             setObrList(res.data.obrlist);
         });
-        console.log(obrlist);
     },[]);
    
 
@@ -27,10 +27,14 @@ const OBRRejectedList = () => {
         )
       })
 
+      const onChangeOffice= (office)=>{
+        setOfficeName(office);
+      }
+
   return (
     <div className='bg-white'>
         <h5>Rejected Obligation Request</h5>
-        <LoadOfficesDropDown />
+        <LoadOfficesDropDown onChangeOffice={onChangeOffice}/>
         <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">
             <table className='w-full text-gray-700 border-collapse  border-slate-400 border mt-2'>
             <thead className='sticky top-0 bg-slate-200'>

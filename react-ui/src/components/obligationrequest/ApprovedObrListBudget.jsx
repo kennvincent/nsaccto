@@ -8,6 +8,7 @@ import LoadOfficesDropDown from '../shared/LoadOfficesDropDown';
 export default function ApprovedObrListBudget() {
   const [obrlist,setObrList] = useState([]);
   const [officename,setOfficeName]=useState();
+  const [officeObr,setOfficeObr]=useState([]);
   const navigate = useNavigate();
   
   useEffect(()=>{
@@ -27,11 +28,19 @@ export default function ApprovedObrListBudget() {
  
   const onChangeOffice = (office)=>{
     setOfficeName(office);
+    console.log(office)
+    if(office!=''){
+      setOfficeObr(obrlist.filter((obr)=>obr.officename===office));
+    }else{
+      setOfficeObr(obrlist);
+    }
   }
 
-  const officeObr = obrlist.filter((obr)=>obr.officename===officename);
 
-    const approvedOBR = officeObr.map((obr)=> {
+
+
+
+  const approvedOBR = officeObr.map((obr)=> {
       return(
         <tr key={obr.id} className='p-0 m-0 border hover:bg-slate-100'> 
           <td className='py-1'>{obr.payee}</td>
