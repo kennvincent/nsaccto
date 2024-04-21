@@ -231,6 +231,26 @@ class ObligationRequestController extends Controller
         return response()->json(['message'=>"Obligation Request have been approved"]);
     }
 
+    public function officeapproveallobr(Request $request){
+
+        
+        return response()->json(['obr'=>$request]);
+
+            foreach($request as $key=>$obr){
+                $obrDetail['id'] = $detail['id'];
+            }
+
+
+        DB::beginTransaction();
+        // foreach($request as $key => $obr){
+        //     $affected = DB::table('obrheaders')
+        //     ->where('id', $obrid)
+        //     ->update(['obrstatus' => 2]);
+        //     return response()->json(['message'=>"Obligation Request have been approved"]);
+        // }
+        DB::commit();
+    }
+
     public function officecancel($obrid){
         $affected = DB::table('obrheaders')
               ->where('id', $obrid)

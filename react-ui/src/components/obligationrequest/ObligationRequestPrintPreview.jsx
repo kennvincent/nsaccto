@@ -266,7 +266,6 @@ export default function ObligationRequestPrintPreview() {
                                 <p className='p-0 m-0' key={index}>{item.name.accountcode.split('|')[0]}</p>
                             );
                         })}
-                        
                     </div>
                     <div className='w-[15%] h-96 border py-0 px-2'>
                         

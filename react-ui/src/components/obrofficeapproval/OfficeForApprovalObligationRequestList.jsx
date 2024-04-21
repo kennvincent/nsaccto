@@ -44,10 +44,17 @@ export default function OfficeForApprovalObligationRequestList() {
 
   const forApprovalObr = obrlist.filter((obr)=>obr.obrstatus.toLowerCase()==='for approval');
 
+  const approveAll = ()=>{
+   
+    axiosClient.put(`/obligationrequest/officeapproveallobr`,forApprovalObr).then(res =>{
+      console.log(res.data.obr);
+    })
+  }
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1 h-full overflow-scroll" >
-      <div>
+      <div className='flex mb-1 relative'>
         <h3 className="text-gray-700 font-medium">Obligation Request</h3>
+        <button onClick={approveAll} className='btn btn-primary btn-sm right-0 absolute'>Approve All</button>
       </div>
       <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">
         <table className='w-full text-gray-700 border-collapse border  border-slate-400'>
