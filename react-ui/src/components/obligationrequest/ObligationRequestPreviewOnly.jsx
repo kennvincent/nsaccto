@@ -191,7 +191,7 @@ const ObligationRequestPreviewOnly = () => {
 
                         {details.map((detail,index)=>(
 
-                            <p className='p-0 m-0 text-right' key={uuid()}> {Number(detail.amount).toLocaleString()}</p>
+                            <p className='p-0 m-0 text-right' key={uuid()}> {Number(detail.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                         ))}
                     </div>
@@ -204,7 +204,7 @@ const ObligationRequestPreviewOnly = () => {
                     </div>
                     <div className='w-[15%] h-12 border py-0 px-2'>
                         {/* <p className='text-right text-xl'> {Number(total).toLocaleString()}</p> */}
-                        <p className='text-right text-xl'> {Number(total).toLocaleString()}</p>
+                        <p className='text-right text-xl'> {Number(total).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                     </div>
                 </div>

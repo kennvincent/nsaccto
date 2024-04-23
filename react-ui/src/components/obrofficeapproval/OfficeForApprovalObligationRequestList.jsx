@@ -42,14 +42,17 @@ export default function OfficeForApprovalObligationRequestList() {
     })
   }
 
-  const forApprovalObr = obrlist.filter((obr)=>obr.obrstatus.toLowerCase()==='for approval');
 
+  const forApprovalObr = obrlist.filter((obr)=>obr.obrstatus.toLowerCase()==='for approval');
+ 
   const approveAll = ()=>{
-   
-    axiosClient.put(`/obligationrequest/officeapproveallobr`,forApprovalObr).then(res =>{
-      console.log(res.data.obr);
+    // console.log(forApprovalObr);
+    // return;
+    axiosClient.post(`/obligationrequest/officeapproveallobr`,forApprovalObr).then(res =>{
+      console.log(res.data.message);
     })
   }
+
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1 h-full overflow-scroll" >
       <div className='flex mb-1 relative'>

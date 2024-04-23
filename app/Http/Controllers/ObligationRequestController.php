@@ -232,23 +232,35 @@ class ObligationRequestController extends Controller
     }
 
     public function officeapproveallobr(Request $request){
+        try{
+            DB::beginTransaction();
+            foreach($request as $data){
+                return response()->json(['message'=>$request]);
 
-        
-        return response()->json(['obr'=>$request]);
+                // $affected = DB::table('obrheaders')  
+                // ->where('id', $obr->id);
+                // // ->update(['obrstatus' => 2]);
 
-            foreach($request as $key=>$obr){
-                $obrDetail['id'] = $detail['id'];
             }
 
-
-        DB::beginTransaction();
-        // foreach($request as $key => $obr){
-        //     $affected = DB::table('obrheaders')
-        //     ->where('id', $obrid)
-        //     ->update(['obrstatus' => 2]);
-        //     return response()->json(['message'=>"Obligation Request have been approved"]);
-        // }
-        DB::commit();
+            // foreach ($requestData as $data) {
+            //     // Retrieve the record by its ID
+            //     $record = YourModel::find($data['id']);
+        
+            //     // Check if the record exists
+            //     if ($record) {
+            //         // Update the record with the data from the request
+            //         $record->update($data);
+            //     }
+            // }
+            
+            DB::commit();
+            return response()->json(['message'=>'All OBR have been approved']);
+        }catch(\Exception $e){
+             DB::rollback();
+                Toastr::error('OBR create failed');
+                return redirect()->back();
+        }
     }
 
     public function officecancel($obrid){
@@ -292,7 +304,6 @@ class ObligationRequestController extends Controller
     }
 
     public function insert(Request $request){
-          
           
             try
             {
