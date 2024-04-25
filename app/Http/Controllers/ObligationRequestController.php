@@ -11,6 +11,7 @@ use App\Models\Paymentdetail;
 use App\Models\Idcounter;
 use Illuminate\Support\Facades\DB;
 
+
 class ObligationRequestController extends Controller
 {
 
@@ -33,8 +34,17 @@ class ObligationRequestController extends Controller
         return response()->json(['obrlist'=>$obrlist]);
     }
 
-    
-    
+    public function budgetsearchbypayee($payee){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                             'officedesc','address','totalamount','obrstatus')
+                    ->where('payee','LIKE','%'. $payee . '%')
+                    ->orderBy('id','DESC')
+                    ->get();
+        return response()->json(['obrlist'=>$obrlist]);
+
+    }
+
     public function viewobr($id){
         $obrlist = DB::table('vw_obr')
                     ->select('id','payee','particulars','officecode','officename',
@@ -147,6 +157,24 @@ class ObligationRequestController extends Controller
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
     }
+    public function budgetforaprrovalobr($officename){
+       
+                    $obrlist = DB::table('vw_obrheaders')
+                    ->select('id',
+                            'payee',
+                            'particulars',
+                            'officecode',
+                            'officename',
+                            'officedesc',
+                            'address',
+                            'totalamount',
+                            'obrstatus')
+                    ->where('officename',$officename)
+                    ->where('obrstatus1','2')
+                    ->get();
+                
+                    return response()->json(['obrlist'=>$obrlist]);
+    }
 
     public function approvedobr(){
         // Obligated
@@ -174,6 +202,18 @@ class ObligationRequestController extends Controller
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
     }
+
+    public function viewbypayee($src){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                            'officedesc','address','totalamount','obrstatus')
+                    ->where('payee','LIKE', '%'. $src. '%')
+                    ->orderBy('id','DESC')
+                    ->get();
+            return response()->json(['obrlist'=>$obrlist]);
+    }
+
+ 
 
     public function accountingviewlist(){
         $obrlist = DB::table('vw_obrheaders')
@@ -214,14 +254,13 @@ class ObligationRequestController extends Controller
 
 
 
-   
 
     public function updateobrnumber(Request $request){
-        
+
         $affected = DB::table('obrheaders')
               ->where('id', $obrid)
               ->update(['obrnumber' => $obrnumber]);
-        
+
     }
 
     public function officeapprove($obrid){
@@ -231,29 +270,34 @@ class ObligationRequestController extends Controller
         return response()->json(['message'=>"Obligation Request have been approved"]);
     }
 
+
+
     public function officeapproveallobr(Request $request){
+        
         try{
+           
+
             DB::beginTransaction();
-            foreach($request as $data){
-                return response()->json(['message'=>$request]);
+           
+            $details = $request->details;
 
-                // $affected = DB::table('obrheaders')  
-                // ->where('id', $obr->id);
-                // // ->update(['obrstatus' => 2]);
+            // foreach($details as $key => $data){
+            //     return response()->json(['message'=>$data['id']]);
 
+            // }
+
+            foreach ($details as $key => $data) {
+                // Retrieve the record by its ID
+                $record = Obrheader::find($data['id']);
+
+                // Check if the record exists
+                if ($record) {
+                    $affected = DB::table('obrheaders')
+                    ->where('id', $data['id'])
+                    ->update(['obrstatus' => 2]);
+                }
             }
 
-            // foreach ($requestData as $data) {
-            //     // Retrieve the record by its ID
-            //     $record = YourModel::find($data['id']);
-        
-            //     // Check if the record exists
-            //     if ($record) {
-            //         // Update the record with the data from the request
-            //         $record->update($data);
-            //     }
-            // }
-            
             DB::commit();
             return response()->json(['message'=>'All OBR have been approved']);
         }catch(\Exception $e){
@@ -299,12 +343,12 @@ class ObligationRequestController extends Controller
         $year=DB::table("currentbudgetyears")
                 ->select('budgetyear')
                 ->get();
-        
+
         return response()->json(['obryear'=>$year]);
     }
 
     public function insert(Request $request){
-          
+
             try
             {
                 DB::beginTransaction();
@@ -359,9 +403,9 @@ class ObligationRequestController extends Controller
     //           ->update(['obrstatus' => 3]);
     //     return response()->json(['message'=>"Obligation Request have been approved"]);
     // }
-    
+
     public function approve(Request $request){
-        
+
         DB::beginTransaction();
         try{
             DB::table('obrheaders')
@@ -381,7 +425,7 @@ class ObligationRequestController extends Controller
             return response()->json(['message' => 'Failed to update tables'], 500);
         }
 
-       
+
     }
 
 
@@ -419,5 +463,5 @@ class ObligationRequestController extends Controller
 
         return response()->json(['obrid'=>$obrid]);
     }
-   
+
 }

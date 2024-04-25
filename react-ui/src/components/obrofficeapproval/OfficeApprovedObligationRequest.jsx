@@ -43,11 +43,19 @@ export default function OfficeApprovedObligationRequest() {
     })
   }
 
+  const handleChange = (e)=>{
+    const payee = e;
+    axiosClient.get(`/obligationrequest/searchbypayee/${payee}`).then(res =>{
+      // console.log(res.data.obrlist);
+      setObrList(res.data.obrlist);
+    });
+  }
   const approvedOBR = obrlist.filter((obr) =>obr.obrstatus.toLowerCase() !='for approval');
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
-      <div>
+      <div className='flex'>
         <h3 className="text-gray-700 font-medium">Obligation Request</h3>
+        <input type="text" className='p-0 h-8 ml-4 w-[20rem]' onChange={(e)=>handleChange(e.target.value)} />
       </div>
       <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">
         <table className='w-full text-gray-700 border-collapse border  border-slate-400'>

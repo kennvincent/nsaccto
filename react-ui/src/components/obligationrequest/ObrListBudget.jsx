@@ -22,7 +22,7 @@ export default function ObrListBudget() {
     }
     
 
-    const forapproval = obrlist.filter((obr)=> obr.obrstatus.toLowerCase() ==='for approval');
+  const forapproval = obrlist.filter((obr)=> obr.obrstatus.toLowerCase() ==='approved');
 
   
     const forapprovalist = forapproval.map((obr)=>{
@@ -33,7 +33,7 @@ export default function ObrListBudget() {
           <td className='py-1'>{obr.officename}</td>
           <td className='py-1'>{obr.officedesc}</td>
           <td className='py-1'>{obr.particulars}</td>
-          <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
+          <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
           <td className='py-1'><button className='btn btn-success btn-sm' onClick={()=>handleShowOBR(obr.id)}>View</button></td>
         </tr>
       )
@@ -45,6 +45,7 @@ export default function ObrListBudget() {
           setObrList(res.data.obrlist);
         });
       }else{
+       console.log(officename);
         axiosClient.get(`/obligationrequest/budget/forapprovalobr/office/${officename}`).then(res =>{
           setObrList(res.data.obrlist);
         });

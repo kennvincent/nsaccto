@@ -21,6 +21,7 @@ class BudgetController extends Controller
                     ->where('t1.office',$officename)
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(t2.amount) FROM vw_obr as t2 
                                           where t1.office=t2.officename
+                                          and t1.officecode=t2.officecode
                                           and t1.accountcode=t2.accountcode
                                           and t2.obryear=2024
                                           and t2.obrstatus="Obligated"),0) as totalobligated'))
