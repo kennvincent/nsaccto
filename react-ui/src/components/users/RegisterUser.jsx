@@ -66,13 +66,13 @@ export default function registeruser() {
   return (
     <div>
        
-        <div className='card'>
+        <div className='card w-[30rem] m-auto'>
             <div className='card-header'>
                 <h5>Register New User</h5>
                 <h1>{officeid}</h1>
             </div>
             <form action="">
-            <div className='card-body'>
+            <div className='card-body w-full m-auto'>
                 <table>
                     <tbody>
                         <tr className='p-0 h-10'>

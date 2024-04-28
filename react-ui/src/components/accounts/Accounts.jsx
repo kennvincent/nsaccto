@@ -73,7 +73,7 @@ export default function Accounts() {
             <div className='card-header flex bg-black-200'><h4>Accounts List</h4>
               <button className='btn btn-success btn-sm right-6 absolute ' onClick={handlesetAddNew}>Add New</button>
             </div>
-            <div className='card-body p-0 overflow-y-auto '>
+            <div className='card-body p-0 overflow-y-scroll p-2'>
               <table className='table-auto w-full border-separate border border-slate-700'>
                 <thead>
                   <tr>

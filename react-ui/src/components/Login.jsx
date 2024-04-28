@@ -4,6 +4,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import axios from "../api/axios";
 import axiosClient from '../axios-client';
 import cors from "cors";
+import CheckBoxes from './CheckBoxes';
 
 
 export default function handleLogin() {
@@ -68,6 +69,9 @@ export default function handleLogin() {
         //console.log(e);
       }
   }
+
+  
+ 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -151,7 +155,10 @@ export default function handleLogin() {
   
            
           </div>
+                      
+                     
         </div>
+        
   )
 }
 
