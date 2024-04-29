@@ -19,11 +19,9 @@ export default function AddNewAccount({visible,onClose}) {
       accountdesc : account.accountdesc,
       accountcode : account.accountcode
     }
-
-
-  
     
     axiosClient.post(`/account`,newAccount).then(res =>{
+      setAccount('');
         alert(res.data.message);
     })
     .catch(function(error){ 

@@ -6,6 +6,7 @@ import { useNavigate,useLocation } from 'react-router-dom';
 import {useReactToPrint} from 'react-to-print'
 import { ImPrinter } from "react-icons/im";
 import { IoMdCloseCircleOutline,IoIosSave  } from "react-icons/io";
+import { FcViewDetails } from "react-icons/fc";
 
 
 export default function VoucherPrintPreview() {
@@ -72,7 +73,7 @@ export default function VoucherPrintPreview() {
             
             <tr key={index} className='p-0 m-0'>
               <td className='p-0 m-0 text-lg'>{deduct.description}</td>
-              <td className='text-right text-lg p-0 m-0'>{deduct.amount>0?Number(deduct.amount).toLocaleString():''}</td>
+              <td className='text-right text-lg p-0 m-0'>{deduct.amount>0?Number(deduct.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }):''}</td>
             </tr>
            
           </>
@@ -91,7 +92,7 @@ export default function VoucherPrintPreview() {
     }
 
   return (
-    <div  className='w-[full] h-auto pt-10 mt-16 '>
+    <div  className='w-[full] h-auto pt-2 mt-2 '>
       <div ref={componentRef} className='font-serif w-[1024px] border border-black  m-auto mt-16  bg-white'>
         <div className='text-center p-1 mt-16 '>
           <p className='p-0 m-0'>Republic of the Philippines</p>
@@ -152,10 +153,10 @@ export default function VoucherPrintPreview() {
 
         <div className='border-t border-black flex h-[250px]'>
           <div className='p-0  border-r border-black w-[740px] font-sans '>
-            <p>{explanation}</p>
+            <p className='p-2'>{explanation}</p>
           </div>
           <div className='p-1  w-[284px] text-right'>
-            <p className='p-0 mt-2 font-sans font-bold text-lg'>{Number(totalAmount).toLocaleString()}</p>
+            <p className='p-0 mt-2 font-sans font-bold text-lg'>{Number(totalAmount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
           </div>
         </div>
 
@@ -172,7 +173,7 @@ export default function VoucherPrintPreview() {
                     
                     <tr>
                       <td className='p-0 m-0 text-lg'>{totalDeductionsAmmount>0?'Total:':''}</td>
-                      <td className='text-right text-lg p-0 m-0'>{totalDeductionsAmmount>0?Number(totalDeductionsAmmount).toLocaleString():''}</td>
+                      <td className='text-right text-lg p-0 m-0'>{totalDeductionsAmmount>0?Number(totalDeductionsAmmount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }):''}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -184,10 +185,10 @@ export default function VoucherPrintPreview() {
 
           <div className='p-1  w-[284px] text-right font-sans text-lg'>
             <div>
-              <p>{totalDeductionsAmmount>0?'-' + Number(totalDeductionsAmmount).toLocaleString():''}</p>
+              <p>{totalDeductionsAmmount>0?Number(totalDeductionsAmmount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }):''}</p>
             </div>
             <div>
-              <p>{grandTotal>0?Number(grandTotal).toLocaleString():''}</p>
+              <p>{grandTotal>0?Number(grandTotal).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }):''}</p>
             </div>
           </div>
         </div>
@@ -397,8 +398,13 @@ export default function VoucherPrintPreview() {
         
       </div>
 
-      <ImPrinter  onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />
-      <IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  />
+      {/* <ImPrinter  onClick={handlePrint} className='absolute right-[22rem] top-20 text-3xl' />
+      <IoMdCloseCircleOutline  onClick={handleClose}className='absolute right-[19rem] top-20 text-3xl'  /> */}
+
+      <div className='flex w-[1024px] m-auto mt-2  pb-4'>
+          <button  onClick={handlePrint} className='btn btn-primary btn-sm mr-2' >Print</button>
+            <button  onClick={handleClose}className='btn btn-primary btn-warning'>Close</button>
+        </div>
     </div>
   )
 }

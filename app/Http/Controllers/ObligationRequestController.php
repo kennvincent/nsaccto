@@ -228,6 +228,9 @@ class ObligationRequestController extends Controller
         return response()->json(['obrlist'=>$obrlist]);
     }
 
+  
+
+
     public function accountingviewobrpaidlist(){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
@@ -240,12 +243,28 @@ class ObligationRequestController extends Controller
         return response()->json(['obrlist'=>$obrlist]);
     }
 
-    public function accountingviewlistselectedoffice($id){
+    public function accountingviewlistselectedoffice($officename){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                     'officedesc','address','totalamount','totalamountpaid',
                     'balance','obrstatus')
-                    ->where('officeid','=',$id)
+                    ->where('officename','=',$officename)
+                    ->where('balance','>',0)
+                    ->where('obrstatus','=','Obligated')
+                    ->orderBy('id','DESC')
+                    ->get();
+
+        return response()->json(['obrlist'=>$obrlist]);
+    }
+
+    public function accountingviewlistselectedpayee($payee){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                    'officedesc','address','totalamount','totalamountpaid',
+                    'balance','obrstatus')
+                    ->where('payee','LIKE','%'. $payee . '%')
+                    ->where('balance','>',0)
+                    ->where('obrstatus','=','Obligated')
                     ->orderBy('id','DESC')
                     ->get();
 

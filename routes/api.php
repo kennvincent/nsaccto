@@ -91,6 +91,7 @@ Route::get('obligationrequest/obrsum/{id}',[ObligationRequestController::class,'
 Route::get('obligationrequest/accounting/payable/view',[ObligationRequestController::class,'accountingviewlist']);
 Route::get('obligationrequest/accounting/paid/view',[ObligationRequestController::class,'accountingviewobrpaidlist']);
 Route::get('obligationrequest/accounting/selectedoffice/view/{id}',[ObligationRequestController::class,'accountingviewlistselectedoffice']);
+Route::get('obligationrequest/accounting/selectedpayee/view/{payee}',[ObligationRequestController::class,'accountingviewlistselectedpayee']);
 
 Route::get('obligationrequest/accounting/selected/view/{id}',[ObligationRequestController::class,'accountingselectedviewobr']);
 Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);

@@ -41,6 +41,10 @@ export default function CreateVoucher() {
       const fetchData = async()=>{
         try{
           await axiosClient.get(`/obligationrequest/accounting/selected/view/${obrid}`).then(res =>{
+            setPayee(res.data.obr[0].payee);
+            console.log(res.data.obr[0].particulars);
+            setAddress(res.data.obr[0].address)
+            setExplanation(res.data.obr[0].particulars);
             setBalance(res.data.obr[0].balance)
             setOfficeName(res.data.obr[0].officename)
             setObrNumber(res.data.obr[0].obrnumber);
@@ -100,6 +104,11 @@ export default function CreateVoucher() {
    const handleAddressInput = (e)=>{
     setAddress(e.target.value);
    }
+
+   const handleBalanceInput = (e)=>{
+    setBalance(e.target.value)
+   }
+
 
    const handleBankInput = (e)=>{
     setBank(e.target.value);
@@ -221,7 +230,7 @@ export default function CreateVoucher() {
             <p className='p-0 mt-2 '>Payee</p>
           </div>
           <div className='p-0 px-1 border-r border-black w-[630px]'>
-            <p className='p-0 mt-2 '><input type="text" onChange={handlePayeeInput} name="payee" id="payee" className='w-full' /></p>
+            <p className='p-0 mt-2 '><input type="text" value={payee} onChange={handlePayeeInput} name="payee" id="payee" className='w-full' /></p>
           </div>
           <div className='flex p-1  w-[284px]'>
             <p className='p-0 mt-2 '>TIN/Employee No:</p>
@@ -235,7 +244,7 @@ export default function CreateVoucher() {
             <p className='p-0 mt-2 '>Address</p>
           </div>
           <div className='p-0 px-1 border-r border-black w-[630px]'>
-            <p className='p-0 mt-2 '><p className='p-0 mt-2 '><input type="text" onChange={handleAddressInput} name="address" id="address" className='w-full' /></p></p>
+            <p className='p-0 mt-2 '><p className='p-0 mt-2 '><input type="text" value={address} onChange={handleAddressInput} name="address" id="address" className='w-full' /></p></p>
           </div>
           <div className='flex p-1 w-[284px]'>
             <p className='p-0 mt-2'>Responsibility Center</p>
@@ -256,10 +265,11 @@ export default function CreateVoucher() {
 
         <div className='border-t border-black flex h-[250px]'>
           <div className='p-0  border-r border-black w-[740px] font-sans '>
-            <textarea name="explanation" id="" onChange={handleExplanationInput} cols="30" rows="10" className='w-full border-0'></textarea>
+            <textarea value={explanation} onChange={handleExplanationInput} cols="30" rows="10" className='w-full border-0'></textarea>
           </div>
           <div className='p-1  w-[284px] text-right'>
-            <p className='p-0 mt-2 font-sans font-bold text-lg'>{Number(balance).toLocaleString()}</p>
+            <input type="text" className='text-right' onChange={handleBalanceInput} value={balance}/>
+            {/* <p className='p-0 mt-2 font-sans font-bold text-lg'>{Number(balance).toLocaleString()}</p> */}
           </div>
         </div>
 
@@ -290,7 +300,7 @@ export default function CreateVoucher() {
 
           <div className='p-1  w-[284px] text-right font-sans text-lg'>
             <div>
-              <p>{totalDeductionsAmmount>0?'-' + Number(totalDeductionsAmmount).toLocaleString():''}</p>
+              <p>{totalDeductionsAmmount>0? Number(totalDeductionsAmmount).toLocaleString():''}</p>
             </div>
             <div>
               <p>{grandTotal>0?Number(grandTotal).toLocaleString():''}</p>
