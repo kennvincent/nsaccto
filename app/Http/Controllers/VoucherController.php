@@ -41,6 +41,12 @@ class VoucherController extends Controller
                     voucherdeduction::create($voucherDeduction);
                 }
             }
+
+            $voucherstatus = $request->voucherstatus;
+            DB::table('obrheaders')
+            ->where('id',$request->obrid)
+            ->update(array('withvoucher' => $voucherstatus));
+
             
             DB::commit();
             return response()->json(['voucher'=>$voucher_id]);
@@ -86,11 +92,11 @@ class VoucherController extends Controller
     }
 
     public function updateobr(Request $request){
-        DB::table('obrheaders')
-            ->where('id',$request->obrid)
-            ->update(array('withvoucher' => '1'));
+        // DB::table('obrheaders')
+        //     ->where('id',$request->obrid)
+        //     ->update(array('withvoucher' => '1'));
         
-        return response()->json($obrid);
+        // return response()->json($obrid);
 
     }
 }

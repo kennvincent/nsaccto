@@ -8,7 +8,7 @@ export default function CreateVoucher() {
     const location = useLocation();
     const [totalAmount,setTotalAmount] = useState();
     const [balance,setBalance] = useState();
-    const [obrnumber,setObrNumber] = useState();
+    const [obrnumber,setObrNumber] = useState('');
     const [payee,setPayee] = useState('');
     const [explanation,setExplanation] = useState('');
     const [address,setAddress] = useState('');
@@ -48,6 +48,7 @@ export default function CreateVoucher() {
             setBalance(res.data.obr[0].balance)
             setOfficeName(res.data.obr[0].officename)
             setObrNumber(res.data.obr[0].obrnumber);
+            console.log('OBR Number'+obrnumber);
         
           })
         }
@@ -141,7 +142,8 @@ export default function CreateVoucher() {
       )
     })
     
-    const createDisbursementVoucher = ()=>{
+    const createDisbursementVoucher = (_voucherstatus)=>{
+     
       if(payee.trim().length==0){
         alert('Enter Paye name');
         return;
@@ -167,12 +169,14 @@ export default function CreateVoucher() {
       // }
 
       const voucherData = {
+        'obrid':obrid,
         'obrnumber' : obrnumber,
         'payee' :payee,
         'explanation':explanation,
         'address' : address,
         'obramount':balance,
         'checknumber':checknumber,
+        'voucherstatus': _voucherstatus,
         'bank' : bank,
         'deductions' : deductions,
         'signatory1' :signatory1,
@@ -515,7 +519,8 @@ export default function CreateVoucher() {
       </div>
 
       <div className='w-[1024px] h-10  m-auto mt-2 text-right'>
-        <button onClick={createDisbursementVoucher} className='btn btn-primary'>Create Disbursement Voucher</button>
+        <button onClick={(e)=>createDisbursementVoucher(2)} className='btn btn-primary ml-2'>Full Amount Voucher</button>
+        <button onClick={(e)=>createDisbursementVoucher(1)} className='btn btn-primary ml-2'>Partial Voucher</button>
         <button onClick={handleClose} className='btn btn-primary w-[120px] ml-2'>Close</button>
       </div>
       <AddDeduction visible={showAddDeduction} onClose={handleDeductionClose} passArrayData={getArrayData}/>
