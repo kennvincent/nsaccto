@@ -62,8 +62,11 @@ Route::get('obligationrequest/getobrid',[ObligationRequestController::class,'get
 Route::get('obligationrequest',[ObligationRequestController::class,'viewlist']);
 
 Route::get('obligationrequest/edit/{id}',[ObligationRequestController::class,'editpreview']);
+Route::get('obligationrequest/viewall/forapproval',[ObligationRequestController::class,'viewoallforapprovalobrlist']);
 Route::get('obligationrequest/{officename}',[ObligationRequestController::class,'viewofficeobrlist']);
-Route::get('obligationrequest/searchbypayee/{payee}',[ObligationRequestController::class,'viewbypayee']);
+Route::post('obligationrequest/searchbypayee',[ObligationRequestController::class,'viewbypayee']);
+Route::get('obligationrequest/searchbyofficepayee/{payee}',[ObligationRequestController::class,'viewbyofficepayee']);
+
 Route::get('obligationrequest/officeapproved/searchbypayee/{payee}',[ObligationRequestController::class,'approvedviewbypayee']);
 
 

@@ -13,11 +13,17 @@ export default function OfficeForApprovalObligationRequestList() {
 
 
   const displayOBR = ()=>{
-    const officename = win.getItem('officename');
-    axiosClient.get(`/obligationrequest/${officename}`).then(res =>{
-      // console.log(res.data.obrlist);
-      setObrList(res.data.obrlist);
+    
+
+    axiosClient.get(`/obligationrequest/viewall/forapproval`).then(res =>{
+        setObrList(res.data.obrlist);
     });
+
+    // const officename = win.getItem('officename');
+    // axiosClient.get(`/obligationrequest/${officename}`).then(res =>{
+    //   // console.log(res.data.obrlist);
+    //   setObrList(res.data.obrlist);
+    // });
   }
   const onClickPreview = (obrid)=>{
     navigate('/obrpreviewonly',{state:{obrid:obrid,usertype:'APRV'}});
@@ -58,11 +64,13 @@ export default function OfficeForApprovalObligationRequestList() {
 
   const handleChange = (e)=>{
     const payee = e;
-    axiosClient.get(`/obligationrequest/searchbypayee/${payee}`).then(res =>{
+    axiosClient.get(`/obligationrequest/searchbyofficepayee/${payee}`).then(res =>{
       // console.log(res.data.obrlist);
       setObrList(res.data.obrlist);
     });
   }
+
+  
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1 h-full overflow-scroll" >
       <div className='flex mb-1 relative'>

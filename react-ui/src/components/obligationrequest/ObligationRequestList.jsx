@@ -9,16 +9,20 @@ export default function OBRList() {
   const [obrlist,setObrList] = useState([]);
   const navigate = useNavigate();
   const win = window.sessionStorage;
+  const [officename,setOfficeName]=useState();
   useEffect(()=>{
+    setOfficeName(win.getItem('officename'));
+
     displayOBR();
   },[]);
 
 
   const displayOBR = ()=>{
-    const officename = win.getItem('officename');
-    axiosClient.get(`/obligationrequest/${officename}`).then(res =>{
+    let ofc=win.getItem('officename');
+    axiosClient.get(`/obligationrequest/${ofc}`).then(res =>{
       // console.log(res.data.obrlist);
       setObrList(res.data.obrlist);
+     
     });
   }
   const onClickPreview = (obrid)=>{
@@ -54,10 +58,31 @@ export default function OBRList() {
   const onClickClose = ()=>{
     navigate("/dashboard");
   }
+
+  const onHandleOnChangePayee = (payee)=>{
+    if(payee != ''){
+      const data = {
+        'officename':officename,
+        'payee':payee
+      }
+      
+    
+      axiosClient.post(`/obligationrequest/searchbypayee`,data).then(res =>{
+        setObrList(res.data.obrlist);
+      });
+    }else{
+      displayOBR();
+    }
+   
+  }
+
+  
+
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
-      <div>
+      <div className='flex'>
         <h3 className="text-gray-700 font-medium">Obligation Request</h3>
+        <input type="text" className='w-[300px] h-8 ml-4' onChange={(e)=>onHandleOnChangePayee(e.target.value)} />
       </div>
       <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">
         <table className='w-full text-gray-700 border-collapse border  border-slate-400'>

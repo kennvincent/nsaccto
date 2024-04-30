@@ -16,12 +16,12 @@ class ObligationRequestController extends Controller
 {
 
     public function viewlist(){
-        $obrlist = DB::table('vw_obrheaders')
-                    ->select('id','payee','particulars','officecode','officename',
-                             'officedesc','address','totalamount','obrstatus')
-                    ->orderBy('id','DESC')
-                    ->get();
-        return response()->json(['obrlist'=>$obrlist]);
+        // $obrlist = DB::table('vw_obrheaders')
+        //             ->select('id','payee','particulars','officecode','officename',
+        //                      'officedesc','address','totalamount','obrstatus')
+        //             ->orderBy('id','DESC')
+        //             ->get();
+        // return response()->json(['obrlist'=>$obrlist]);
     }
 
     public function viewlistbyoffice($office){
@@ -197,20 +197,49 @@ class ObligationRequestController extends Controller
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                              'officedesc','address','totalamount','obrstatus')
-                    // ->where('officename',[$officename])
+                    ->where('officename','=',$officename)
                     ->orderBy('id','DESC')
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
     }
 
-    public function viewbypayee($src){
+    
+    public function viewoallforapprovalobrlist(){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                             'officedesc','address','totalamount','obrstatus')
+                    ->where('obrstatus','For Approval')
+                    ->orderBy('id','DESC')
+                    ->get();
+        return response()->json(['obrlist'=>$obrlist]);
+    }
+
+    public function viewbypayee(Request $request){
+       
+        $payee =  $request->payee;
+        $officename = $request->officename;
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                             'officedesc','address','totalamount','obrstatus')
-                    ->where('payee','LIKE', '%'. $src. '%')
+                    ->where('payee','LIKE', '%'. $payee . '%')
+                    ->where('officename','=',$officename)
                     ->orderBy('id','DESC')
                     ->get();
-            return response()->json(['obrlist'=>$obrlist]);
+        return response()->json(['obrlist'=>  $obrlist]);
+        
+    }
+
+    public function viewbyofficepayee($payee){
+       
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                            'officedesc','address','totalamount','obrstatus')
+                    ->where('payee','LIKE', '%'. $payee . '%')
+                    ->where('obrstatus1','=','1')
+                    ->orderBy('id','DESC')
+                    ->get();
+        return response()->json(['obrlist'=>  $obrlist]);
+        
     }
 
  

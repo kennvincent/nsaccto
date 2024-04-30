@@ -56,18 +56,20 @@ const ObligationRequestPreviewOnly = () => {
 
     useEffect(()=>{
 
-        var obrid = win.getItem('obrid');
-        //var obrid = location.state.obrid;
+        
+        var obrid = location.state.obrid;
       
         setUserType(win.getItem('usertype'));
+        console.log(obrid);
    
 
          axiosClient.get(`/obligationrequest/printpreview/${obrid}`).then(res=>{
-            console.log(res.data.obr);
+        
              setPayee(res.data.obr[0].payee);
              setOfficeDesc(res.data.obr[0].officedesc);
              setAddress(res.data.obr[0].address);
              setOfficeName(res.data.obr[0].officename);
+             setResponsibilityCenter(res.data.obr[0].officename);
              setParticulars(res.data.obr[0].particulars);
              setOfficeCode(res.data.obr[0].officecode);
              setDetails(res.data.obr);

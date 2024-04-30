@@ -156,10 +156,10 @@ export default function CreateVoucher() {
         return;
       }
 
-      if(bank.trim().length==0){
-        alert('Enter Bank name');
-        return;
-      }
+      // if(bank.trim().length==0){
+      //   alert('Enter Bank name');
+      //   return;
+      // }
 
       // if(deductions.length==0){
       //   alert('Add deduction(s)');
@@ -183,8 +183,7 @@ export default function CreateVoucher() {
         'signatory3position' : signatory3Position
       }
 
-
-
+      
       axiosClient.post('/voucher',voucherData).then(res=>{
         if(res.data.voucher>0){
           const voucher_id = res.data.voucher;
