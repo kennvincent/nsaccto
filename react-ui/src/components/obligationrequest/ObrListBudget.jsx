@@ -45,16 +45,19 @@ export default function ObrListBudget() {
           setObrList(res.data.obrlist);
         });
       }else{
-       console.log(officename);
         axiosClient.get(`/obligationrequest/budget/forapprovalobr/office/${officename}`).then(res =>{
           setObrList(res.data.obrlist);
         });
       }
-
-      
-
     }
     
+
+    const handleOnChange = (payee)=>{
+      axiosClient.get(`/obligationrequest/budget/forapprovalobr/searchbypayee/${payee}`).then(res =>{
+        setObrList(res.data.obrlist);
+      });
+    }
+
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div>
@@ -62,6 +65,7 @@ export default function ObrListBudget() {
       </div>
       <div className='flex'>
         <LoadOfficesDropDown onChangeOffice={onChangeOffice} />
+        <input type="text" onChange={(e)=>handleOnChange(e.target.value)} className='h-8 ml-10 w-[300px]'/>
       </div>
       
       <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">

@@ -39,10 +39,10 @@ class ObligationRequestController extends Controller
                     ->select('id','payee','particulars','officecode','officename',
                              'officedesc','address','totalamount','obrstatus')
                     ->where('payee','LIKE','%'. $payee . '%')
+                    ->where('obrstatus','Approved')
                     ->orderBy('id','DESC')
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
-
     }
 
     public function viewobr($id){
@@ -157,6 +157,10 @@ class ObligationRequestController extends Controller
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
     }
+
+   
+
+
     public function budgetforaprrovalobr($officename){
        
                     $obrlist = DB::table('vw_obrheaders')

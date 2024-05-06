@@ -51,13 +51,11 @@ export default function AcctObrView() {
           <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
           <td className='py-1 text-right'>{Number(obr.totalamountpaid).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
           <td className='py-1 text-right'>{Number(obr.balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td className='py-1'>{obr.balance>0?<button disabled={obr.withvoucher==2?false:true}  className='btn btn-success btn-sm ' 
+          <td className='py-1'>{obr.balance>0?<button disabled={(obr.withvoucher==2 || obr.withvoucher==1)?false:true}  className='btn btn-success btn-sm ' 
             onClick={()=>handleShowOBR(obr.id)}>Pay</button>:<button className='btn btn-success btn-sm '  
             onClick={()=>handlePaidPreview(obr.id)}>Preview</button>}
             {obr.balance>0?<button disabled={obr.withvoucher==2?true:false} className='btn btn-success btn-sm  ml-1' 
             onClick={()=>handleCreateVoucher(obr.id)}>Voucher</button>:""}</td>
-          
-          
         </tr>
       )
     })

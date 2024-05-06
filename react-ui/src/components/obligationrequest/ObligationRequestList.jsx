@@ -29,7 +29,8 @@ export default function OBRList() {
     win.setItem('obrid',obrid);
     win.setItem('usertype','USR');
     
-    navigate('/obrpreviewonly');
+    // navigate('/obrpreviewonly');
+    navigate('/obrpreviewonly',{state:{obrid:obrid,usertype:'USR'}});
   }
   
   const onClickApprove = (e,obr)=>{
