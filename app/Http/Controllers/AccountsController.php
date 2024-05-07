@@ -48,35 +48,51 @@ class AccountsController extends Controller
                 'message'=>$validator->messages()
             ],422);
         }else{
-        
+            $account = new Account;
+            $account->accountdesc = $request->accountdesc;
+            $account->accountcode = $request->accountcode;
+            
+            
+            $account->save();
+
+            if($account){
+                return response()->json([
+                    'status'=>200,
+                    'message'=>"New account created successfully"
+                ],200);
+            }else{
+                return response()->json([
+                    'status'=>500,
+                    'message'=>"New account create failed"
+                ],200);
+            }
 
             $result = Account::where("accountcode", $request->accountcode)->exists();
             
-            if(!$result){
+            // if(!$result){
                 
-                $account = new Account;
+            //     $account = new Account;
+            //     $account->accountdesc = $request->accountdesc;
+            //     $account->accountcode = $request->accountcode;
+                
+                
+            //     $account->save();
 
-                $account->accountdesc = $request->accountdesc;
-                $account->accountcode = $request->accountcode;
-                
-                
-                $account->save();
-
-                if($account){
-                    return response()->json([
-                        'status'=>200,
-                        'message'=>"New account created successfully"
-                    ],200);
-                }else{
-                    return response()->json([
-                        'status'=>500,
-                        'message'=>"New account create failed"
-                    ],200);
-                }
-            }
-            else{
-                return response()->json(['message'=>"Account already exist"]);
-            }
+            //     if($account){
+            //         return response()->json([
+            //             'status'=>200,
+            //             'message'=>"New account created successfully"
+            //         ],200);
+            //     }else{
+            //         return response()->json([
+            //             'status'=>500,
+            //             'message'=>"New account create failed"
+            //         ],200);
+            //     }
+            // }
+            // else{
+            //     return response()->json(['message'=>"Account already exist"]);
+            // }
             
             
         }

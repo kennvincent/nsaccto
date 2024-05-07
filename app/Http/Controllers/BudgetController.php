@@ -34,6 +34,7 @@ class BudgetController extends Controller
         return response()->json(['budgets'=>$budgets]);
     }
     
+
     public function accountsperoffice($officename){
         $accounts = DB::table('budgets')
         ->select('id','particulars','accountcode','accountclassification','funding','officecode')
@@ -41,8 +42,6 @@ class BudgetController extends Controller
         ->get();
         return response()->json(['accounts'=>$accounts]);
     }
-
-    
    
     public function getaccount($id){
         $accountcode = DB::table('budgets')

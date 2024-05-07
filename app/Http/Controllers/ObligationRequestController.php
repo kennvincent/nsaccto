@@ -158,26 +158,27 @@ class ObligationRequestController extends Controller
         return response()->json(['obrlist'=>$obrlist]);
     }
 
+  
    
 
 
     public function budgetforaprrovalobr($officename){
        
-                    $obrlist = DB::table('vw_obrheaders')
-                    ->select('id',
-                            'payee',
-                            'particulars',
-                            'officecode',
-                            'officename',
-                            'officedesc',
-                            'address',
-                            'totalamount',
-                            'obrstatus')
-                    ->where('officename',$officename)
-                    ->where('obrstatus1','2')
-                    ->get();
-                
-                    return response()->json(['obrlist'=>$obrlist]);
+        $obrlist = DB::table('vw_obrheaders')
+        ->select('id',
+                'payee',
+                'particulars',
+                'officecode',
+                'officename',
+                'officedesc',
+                'address',
+                'totalamount',
+                'obrstatus')
+        ->where('officename',$officename)
+        ->where('obrstatus1','2')
+        ->get();
+    
+        return response()->json(['obrlist'=>$obrlist]);
     }
 
     public function approvedobr(){
@@ -457,7 +458,6 @@ class ObligationRequestController extends Controller
     // }
 
     public function approve(Request $request){
-
         DB::beginTransaction();
         try{
             DB::table('obrheaders')
@@ -476,8 +476,6 @@ class ObligationRequestController extends Controller
 
             return response()->json(['message' => 'Failed to update tables'], 500);
         }
-
-
     }
 
 

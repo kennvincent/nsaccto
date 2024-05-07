@@ -71,7 +71,7 @@ Route::get('obligationrequest/officeapproved/searchbypayee/{payee}',[ObligationR
 
 
 Route::get('obligationrequest/budget/forapprovalobr/view',[ObligationRequestController::class,'foraprrovalobr']);
-Route::get('obligationrequest/budget/forapprovalobr/office/{office}',[ObligationRequestController::class,'budgetforaprrovalobr']);
+Route::get('obligationrequest/budget/forapprovalobr/office/{officename}',[ObligationRequestController::class,'budgetforaprrovalobr']);
 Route::get('obligationrequest/budget/forapprovalobr/searchbypayee/{payee}',[ObligationRequestController::class,'budgetsearchbypayee']);
 
 Route::get('obligationrequest/budget/approvedobr/view',[ObligationRequestController::class,'approvedobr']);

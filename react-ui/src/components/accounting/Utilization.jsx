@@ -119,7 +119,7 @@ export default function Utilization() {
     <div>
       <div className='card bg-white'>
         <div className='card-header bg-green-600'><h5>Utilization Summary</h5></div>
-        <div className='card-body'>
+        <div className=''>
           <div>
             <select onChange={(e) => filterData(e.target.value)} className='p-1 mr-1 w-[10rem]'>
               <option value="all">All</option>
@@ -146,7 +146,7 @@ export default function Utilization() {
             </select>
             <button onClick={onClickDisplay} className='w-[10rem] bg-green-100 hover:bg-slate-400 hover:text-white ml-2 p-1 border border-black'>Display</button>
           </div>
-          <div className='mt-2'>
+          <div className='mt-2 card-body h-[500px] overflow-y-scroll'>
             <table className='border'>
               <thead>
                 <tr>

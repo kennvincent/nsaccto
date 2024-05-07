@@ -46,8 +46,11 @@ export default function ObrListBudget() {
         });
       }else{
         axiosClient.get(`/obligationrequest/budget/forapprovalobr/office/${officename}`).then(res =>{
+          
           setObrList(res.data.obrlist);
         });
+
+        
       }
     }
     
@@ -56,6 +59,8 @@ export default function ObrListBudget() {
       axiosClient.get(`/obligationrequest/budget/forapprovalobr/searchbypayee/${payee}`).then(res =>{
         setObrList(res.data.obrlist);
       });
+
+      
     }
 
   return (
