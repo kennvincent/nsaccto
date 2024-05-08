@@ -37,6 +37,7 @@ import OBRRejectedList from "./components/obligationrequest/OBRRejectedList";
 import DisplayOfficeBudget from "./components/accounting/DisplayOfficeBudget";
 import ObligationRequestPreviewOnly from "./components/obligationrequest/ObligationRequestPreviewOnly";
 import EditObr from "./components/obligationrequest/EditObr";
+import BudgetRealignment from "./components/budget/BudgetRealignment";
 
 const router = createBrowserRouter([
     {
@@ -117,6 +118,11 @@ const router = createBrowserRouter([
                 element:<ShowObrBudget/>
            }
            ,
+           {
+            path:'/budgetrealignment',
+            element:<BudgetRealignment/>
+            }
+            ,
            {
                 path:'/approvedobrpreview',
                 element:<ApprovedOBRPreview/>

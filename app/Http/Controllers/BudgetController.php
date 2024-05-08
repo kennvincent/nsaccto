@@ -26,7 +26,8 @@ class BudgetController extends Controller
                                           and t2.obryear=2024
                                           and t2.obrstatus="Obligated"),0) as totalobligated'))
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(amountpaid) FROM vw_payments as t3
-                                         WHERE t1.accountcode=t3.accountcode
+                                         WHERE t1.officecode=t3.officecode
+                                         AND t1.accountcode=t3.accountcode
                                          AND t3.obryear=2024
                                          AND t3.officename=t1.office),0) as utilized'))
                     ->get();
@@ -34,6 +35,10 @@ class BudgetController extends Controller
         return response()->json(['budgets'=>$budgets]);
     }
     
+
+    public function getavailablebudget(Request $request){
+        return response()->json(['message'=>'Hello']);
+    }
 
     public function accountsperoffice($officename){
         $accounts = DB::table('budgets')

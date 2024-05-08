@@ -33,6 +33,12 @@ export const DASHBOARD_BUDGET_SIDEBAR_LINKS =[
 		path: '/obrrejectedlist',
 		icon: <HiOutlineDocumentText />
 	},
+	{
+		key: 'budgetrealignment',
+		label: 'Budget Realignment',
+		path: '/budgetrealignment',
+		icon: <HiOutlineDocumentText />
+	},
 ]
 
 export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
