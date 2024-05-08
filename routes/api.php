@@ -107,6 +107,7 @@ Route::get('login/{username}',[LoginController::class,'currentuser']);
 
 Route::post('import',[BudgetImportController::class,'import']);
 Route::get('budgets',[BudgetImportController::class,'display']);
+Route::get('budgets/officebudget/accounts/{officename}',[BudgetImportController::class,'officeaccounts']);
 Route::get('budgets/available',[BudgetImportController::class,'getavailablebudget']);
 
 Route::get('displayofficebudget/{officename}',[BudgetController::class,'officebudget']);

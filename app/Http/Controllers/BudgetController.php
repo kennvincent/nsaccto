@@ -17,7 +17,8 @@ class BudgetController extends Controller
                              't1.proposedamount',
                              't1.accountclassification',
                              't1.funding',
-                             't1.sector')
+                             't1.sector',
+                             't1.officecode')
                     ->where('t1.office',$officename)
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(t2.amount) FROM vw_obr as t2 
                                           where t1.office=t2.officename
@@ -35,6 +36,20 @@ class BudgetController extends Controller
         return response()->json(['budgets'=>$budgets]);
     }
     
+    public function officeaccounts($officename){
+        $budgets = DB::table('budgets as t1')
+                    ->select('t1.id',
+                            't1.particulars',
+                             't1.accountcode',
+                             't1.proposedamount',
+                             't1.accountclassification',
+                             't1.funding',
+                             't1.sector',
+                             't1.officecode')
+                    ->where('t1.office',$officename)
+                    ->get();
+        return response()->json(['budgets'=>$budgets]);
+    }   
 
     public function getavailablebudget(Request $request){
         return response()->json(['message'=>'Hello']);

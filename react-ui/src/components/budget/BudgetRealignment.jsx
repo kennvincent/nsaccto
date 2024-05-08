@@ -21,14 +21,14 @@ const BudgetRealignment = () => {
     });
 
     const onChangeOffice = (ofc)=>{
-        axiosClient.get(`/displayofficebudget/${ofc}`,).then(res=>{
+        axiosClient.get(`budgets/officebudget/accounts/${ofc}`,).then(res=>{
             setAccounts(res.data.budgets);
           });
     }
 
     const officeAccounts = accounts.map((budget)=>{
         return(
-            <option key={budget.id} value={budget.id}>{budget.particulars}</option>
+            <option key={budget.id} value={budget.id}>{budget.officecode} | {budget.funding} | {budget.accountcode} | {budget.particulars}</option>
         );
     });
 
