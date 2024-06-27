@@ -37,10 +37,10 @@ export default function VoucherList() {
    
 
   return (
-    <div>
+    <div >
         <div className='card'>
             <div className='card-header'>Vouchers List</div>
-            <div className='card-body'>
+            <div className='card-body  h-[500px] overflow-scroll'>
                 <table className='w-full border-collapse border  border-slate-400'>
                     <thead className='sticky top-0 bg-slate-200'>
                         <tr>

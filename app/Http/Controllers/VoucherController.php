@@ -99,4 +99,11 @@ class VoucherController extends Controller
         // return response()->json($obrid);
 
     }
+
+    public function voucherdeductions($obrid){
+        $deductions = DB::table('vw_voucher')
+            ->select('amount')
+            ->where('id','=',$obrid)
+            ->get();
+    }
 }

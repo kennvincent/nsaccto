@@ -18,6 +18,7 @@ export default function ObligationRequestPrintPreview() {
 
     var officename = win.getItem('officename');
 
+
     const [obryear,setObrYear] = useState();
     const [officeid,setOfficeId] = useState();
     const [officeName,setOfficeName]=useState();
@@ -45,8 +46,9 @@ export default function ObligationRequestPrintPreview() {
     const particulars = location.state.particulars;
     const payee = location.state.payee;
 
+    var userid = win.getItem('userid');
     var username = win.getItem('username');
-    
+
     const componentRef = useRef();
 
     const handlePrint = useReactToPrint({
@@ -57,7 +59,7 @@ export default function ObligationRequestPrintPreview() {
     useEffect(()=>{
         
         setOfficeCode(location.state.officecode);
-
+        
         axiosClient.get(`signatories`).then(res =>{
             setBudgetAuthorized(res.data.signatories[0].budgetofficer);
         });
@@ -129,6 +131,7 @@ export default function ObligationRequestPrintPreview() {
             'position1' : authorizedposition,
             'signatory2' : budgetauthorized,
             'position2' : budgetPosition,
+            'userid':userid,
             'obrdetails': items
             
         };
@@ -148,7 +151,7 @@ export default function ObligationRequestPrintPreview() {
                     // setTotal(0);
                     // navigate('/obrprintpreview');
                     
-                    // navigate('/obrpreviewonly',{state:{obrid:obrid}});
+                    navigate('/obrpreviewonly',{state:{obrid:obr_id}});
                 }
                 
           

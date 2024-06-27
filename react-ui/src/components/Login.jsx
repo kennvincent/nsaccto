@@ -41,9 +41,10 @@ export default function handleLogin() {
 
               axiosClient.get(`/login/${userlogin.username}`).then(res=>{
                 win.setItem('usertype',res.data.office[0].usertype);
+                win.setItem('userid',res.data.office[0].id);
                 win.setItem('officename',res.data.office[0].officename);
                 win.setItem('username',userlogin.username);
-                console.log(res.data.office);
+                // console.log(res.data.office);
                 var usertype = res.data.office[0].usertype;
                 navigate('/dashboard');
 

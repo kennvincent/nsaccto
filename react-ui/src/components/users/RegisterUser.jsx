@@ -36,9 +36,11 @@ export default function registeruser() {
             email : useraccount.email,
             office_id : useraccount.office_id
           }
-      
+          
+          console.log(newUser);
           
           axiosClient.post(`/register`,newUser).then(res =>{
+            setNewUserAccount([]);
               alert(res.data.message);
           })
           .catch(function(error){ 

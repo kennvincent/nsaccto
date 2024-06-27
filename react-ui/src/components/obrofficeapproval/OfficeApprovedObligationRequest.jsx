@@ -8,17 +8,24 @@ export default function OfficeApprovedObligationRequest() {
   const navigate = useNavigate();
 
   useEffect(()=>{
-    displayOBR();
-  },[]);
-
-
-  const displayOBR = ()=>{
-    const officename = window.localStorage.getItem('officename');
-    axiosClient.get(`/obligationrequest/${officename}`).then(res =>{
+    // displayOBR();
+    axiosClient.get(`/obligationrequest/viewall/officeapproved`).then(res =>{
       // console.log(res.data.obrlist);
       setObrList(res.data.obrlist);
     });
-  }
+  },[]);
+
+
+  // const displayOBR = ()=>{
+  //   const officename = window.localStorage.getItem('officename');
+  //   axiosClient.get(`/obligationrequest/${officename}`).then(res =>{
+  //     // console.log(res.data.obrlist);
+  //     setObrList(res.data.obrlist);
+      
+  //   });
+  // }
+
+
   const onClickPreview = (e,obr)=>{
     e.preventDefault();
     navigate('/obrpreviewonly',{state:{obrid:obr['id']}});
@@ -27,7 +34,6 @@ export default function OfficeApprovedObligationRequest() {
   const onClickApprove = (e,obr)=>{
     e.preventDefault();
     const obrid = obr['id'];
-  
     axiosClient.get(`/obligationrequest/officeapprove/${obrid}`).then(res =>{
       displayOBR();
       alert(res.data.message);
@@ -50,7 +56,8 @@ export default function OfficeApprovedObligationRequest() {
       setObrList(res.data.obrlist);
     });
   }
-  const approvedOBR = obrlist.filter((obr) =>obr.obrstatus.toLowerCase() !='for approval');
+  const approvedOBR = obrlist.filter((obr) =>obr.obrstatus.toLowerCase() =='approved');
+  console.log(approvedOBR);
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div className='flex'>

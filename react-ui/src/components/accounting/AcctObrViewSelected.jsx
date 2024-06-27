@@ -141,7 +141,9 @@ export default function AcctObrViewSelected() {
                 <td className='p-1'><input type="text" name="accountcode" value={detail.accountcode} 
                 onChange={(e)=>handleAccountCodeChange(index,e)} className='py-1' /></td>
                  
-                <td className='p-1'><input type="text" name="amount1" value={Number(detail.amount1).toLocaleString()} 
+                {/* <td className='p-1'><input type="text" name="amount1" value={Number(detail.amount1).toLocaleString()} 
+                onChange={(e)=>handleAmountChange(index,e)} className='py-1 text-right' /></td> */}
+                <td className='p-1'><input type="text" name="netamount" value={Number(detail.amount1).toLocaleString()} 
                 onChange={(e)=>handleAmountChange(index,e)} className='py-1 text-right' /></td>
 
                 <td className='p-1'><input type="text" name="paid" value={Number(detail.paid).toLocaleString()} 

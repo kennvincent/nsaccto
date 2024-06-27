@@ -74,7 +74,7 @@ export default function OfficeForApprovalObligationRequestList() {
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1 h-full overflow-scroll" >
       <div className='flex mb-1 relative'>
-        <h3 className="text-gray-700 font-medium">Obligation Request</h3>
+        <h3 className="text-gray-700 font-medium">Obligation Requests</h3>
         <input type="text" className='p-0 h-8 ml-4 w-[20rem]' onChange={(e)=>handleChange(e.target.value)} />
         <button onClick={approveAll} className='btn btn-primary btn-sm right-0 absolute'>Approve All</button>
       </div>

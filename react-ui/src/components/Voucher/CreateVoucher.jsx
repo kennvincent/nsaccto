@@ -168,13 +168,15 @@ export default function CreateVoucher() {
       //   return;
       // }
 
+      const convertedAmount = balance.replace(/,/g, '');
+
       const voucherData = {
         'obrid':obrid,
         'obrnumber' : obrnumber,
         'payee' :payee,
         'explanation':explanation,
         'address' : address,
-        'obramount':balance,
+        'obramount':parseFloat(convertedAmount).toFixed(2),
         'checknumber':checknumber,
         'voucherstatus': _voucherstatus,
         'bank' : bank,

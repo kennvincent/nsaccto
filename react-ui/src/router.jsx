@@ -38,6 +38,7 @@ import DisplayOfficeBudget from "./components/accounting/DisplayOfficeBudget";
 import ObligationRequestPreviewOnly from "./components/obligationrequest/ObligationRequestPreviewOnly";
 import EditObr from "./components/obligationrequest/EditObr";
 import BudgetRealignment from "./components/budget/BudgetRealignment";
+import ExportToExcel from "./components/exportdata/ExportToExcel";
 
 const router = createBrowserRouter([
     {
@@ -150,6 +151,11 @@ const router = createBrowserRouter([
            {
             path:'/acctpaidpreview',
             element:<AcctPaidPreview/>
+           }
+           ,
+           {
+            path:'/exporttoexcel',
+            element:<ExportToExcel />
            }
            ,
            {

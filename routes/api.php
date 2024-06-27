@@ -62,7 +62,8 @@ Route::get('obligationrequest/getobrid',[ObligationRequestController::class,'get
 Route::get('obligationrequest',[ObligationRequestController::class,'viewlist']);
 
 Route::get('obligationrequest/edit/{id}',[ObligationRequestController::class,'editpreview']);
-Route::get('obligationrequest/viewall/forapproval',[ObligationRequestController::class,'viewoallforapprovalobrlist']);
+Route::get('obligationrequest/viewall/forapproval',[ObligationRequestController::class,'viewallforapprovalobrlist']);
+Route::get('obligationrequest/viewall/officeapproved',[ObligationRequestController::class,'viewallofficeapprovedobrlist']);
 Route::get('obligationrequest/{officename}',[ObligationRequestController::class,'viewofficeobrlist']);
 Route::post('obligationrequest/searchbypayee',[ObligationRequestController::class,'viewbypayee']);
 Route::get('obligationrequest/searchbyofficepayee/{payee}',[ObligationRequestController::class,'viewbyofficepayee']);
@@ -99,6 +100,8 @@ Route::get('obligationrequest/accounting/selectedpayee/view/{payee}',[Obligation
 Route::get('obligationrequest/accounting/selected/view/{id}',[ObligationRequestController::class,'accountingselectedviewobr']);
 Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);
 
+Route::post('obligationrequest/exporttoexcel',[ObligationRequestController::class,'obrexporttoexcel']);
+
 Route::get('signatories',[SignatoriesController::class,'getsignatories']);
 
 Route::post('register',[RegisterController::class,'register']);
@@ -119,8 +122,10 @@ Route::get('budget/view',[BudgetController::class,'samplebudget']);
 Route::post('voucher',[VoucherController::class,'savevoucher']);
 Route::put('voucher/obr/update',[VoucherController::class,'updateobr']);
 Route::get('voucher/printpreview/{id}',[VoucherController::class,'printpreview']);
+Route::get('voucher/deductions/{id}',[VoucherController::class,'voucherdeductions']);
 Route::get('voucher/list',[VoucherController::class,'voucherslist']);
 Route::get('voucher/{id}',[VoucherController::class,'selectedvoucher']);
 
 Route::get('payment/display',[PaymentController::class,'displaypayments']);
 Route::get('utilization/display',[PaymentController::class,'utilization']);
+

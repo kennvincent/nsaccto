@@ -27,7 +27,7 @@ class ObligationRequestController extends Controller
     public function viewlistbyoffice($office){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
-                             'officedesc','address','totalamount','obrstatus')
+                             'officedesc','address','totalamount','obrstatus','withvoucher')
                     ->where('officename','=',$office)
                     ->orderBy('id','DESC')
                     ->get();
@@ -37,7 +37,7 @@ class ObligationRequestController extends Controller
     public function budgetsearchbypayee($payee){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
-                             'officedesc','address','totalamount','obrstatus')
+                             'officedesc','address','totalamount','obrstatus','withvoucher')
                     ->where('payee','LIKE','%'. $payee . '%')
                     ->where('obrstatus','Approved')
                     ->orderBy('id','DESC')
@@ -48,7 +48,7 @@ class ObligationRequestController extends Controller
     public function viewobr($id){
         $obrlist = DB::table('vw_obr')
                     ->select('id','payee','particulars','officecode','officename',
-                        'officedesc','address','accountcode','amount','totalamount','obrstatus')
+                        'officedesc','address','accountcode','amount','totalamount','obrstatus','withvoucher')
                     ->where('id','=',[$id])
                     ->get();
         return response()->json(['obr'=>$obrlist]);
@@ -125,7 +125,7 @@ class ObligationRequestController extends Controller
                         'position1',
                         'signatory2',
                         'position2',
-                        'obrstatus')
+                        'obrstatus','withvoucher')
                 ->where('id','=',[$id])
                 ->get();
         return response()->json(['obr'=>$obr]);
@@ -152,11 +152,14 @@ class ObligationRequestController extends Controller
                             'officedesc',
                             'address',
                             'totalamount',
-                            'obrstatus')
+                            'obrstatus',
+                            'withvoucher')
                     ->where('obrstatus','Approved')
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
     }
+
+   
 
   
    
@@ -173,7 +176,8 @@ class ObligationRequestController extends Controller
                 'officedesc',
                 'address',
                 'totalamount',
-                'obrstatus')
+                'obrstatus',
+                'withvoucher')
         ->where('officename',$officename)
         ->where('obrstatus1','2')
         ->get();
@@ -209,11 +213,21 @@ class ObligationRequestController extends Controller
     }
 
     
-    public function viewoallforapprovalobrlist(){
+    public function viewallforapprovalobrlist(){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                              'officedesc','address','totalamount','obrstatus')
                     ->where('obrstatus','For Approval')
+                    ->orderBy('id','DESC')
+                    ->get();
+        return response()->json(['obrlist'=>$obrlist]);
+    }
+
+    public function viewallofficeapprovedobrlist(){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                             'officedesc','address','totalamount','obrstatus')
+                    ->where('obrstatus','Approved')
                     ->orderBy('id','DESC')
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
@@ -238,7 +252,7 @@ class ObligationRequestController extends Controller
        
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
-                            'officedesc','address','totalamount','obrstatus')
+                            'officedesc','address','totalamount','obrstatus','withvoucher')
                     ->where('payee','LIKE', '%'. $payee . '%')
                     ->where('obrstatus1','=','1')
                     ->orderBy('id','DESC')
@@ -281,7 +295,7 @@ class ObligationRequestController extends Controller
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                     'officedesc','address','totalamount','totalamountpaid',
-                    'balance','obrstatus')
+                    'balance','obrstatus',with)
                     ->where('officename','=',$officename)
                     ->where('balance','>',0)
                     ->where('obrstatus','=','Obligated')
@@ -363,7 +377,7 @@ class ObligationRequestController extends Controller
     public function officecancel($obrid){
         $affected = DB::table('obrheaders')
               ->where('id', $obrid)
-              ->update(['obrstatus' => 0]);
+              ->delete(['obrstatus' => 0]);
         return response()->json(['message'=>"Obligation Request have been cancelled"]);
     }
 
@@ -416,6 +430,7 @@ class ObligationRequestController extends Controller
                 $obr->position1 = $request->position1;
                 $obr->signatory2 = $request->signatory2;
                 $obr->position2 = $request->position2;
+                $obr->userid = $request->userid;
                 $obr->obrstatus='1';
                 $obr->withvoucher='0';
                 $obr->ispaid='0';
@@ -436,7 +451,6 @@ class ObligationRequestController extends Controller
                     $obrDetail['obrid'] = $obrid;
                     Obrdetail::create($obrDetail);
                 }
-
 
                 DB::commit();
                 return response()->json(['obr_id'=>$obrid]);
@@ -513,5 +527,4 @@ class ObligationRequestController extends Controller
 
         return response()->json(['obrid'=>$obrid]);
     }
-
 }
