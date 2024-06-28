@@ -100,7 +100,6 @@ Route::get('obligationrequest/accounting/selectedpayee/view/{payee}',[Obligation
 Route::get('obligationrequest/accounting/selected/view/{id}',[ObligationRequestController::class,'accountingselectedviewobr']);
 Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);
 
-Route::post('obligationrequest/exporttoexcel',[ObligationRequestController::class,'obrexporttoexcel']);
 
 Route::get('signatories',[SignatoriesController::class,'getsignatories']);
 
