@@ -528,8 +528,6 @@ class ObligationRequestController extends Controller
         return response()->json(['obrid'=>$obrid]);
     }
 
-   public function obrexport(){
-        return response()->json(['message'=>'Export']);
-   }
+   
    
 }

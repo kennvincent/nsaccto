@@ -8,13 +8,15 @@ import axiosClient from '../../axios-client';
 const ExportToExcel = () => {
 
     const [obrlist,setObrList] = useState([]);
+  
     useEffect(()=>{
-      axiosClient.get(`/obligationrequest/exporttoexcel`).then(res =>{
-        setObrList(res.data.obrlist);
-        
-      });
+      // axiosClient.get(`/obligationrequest/exporttoexcel`).then(res =>{
+      //   // setObrList(res.data.message);
+      //   console.log(res.data);
+      // });
+
     },[]);
-    
+
    
     const data = [
         { name: "John", email: "john@example.com", age: 28 },
@@ -22,11 +24,8 @@ const ExportToExcel = () => {
     ];
 
     const exportToExcel = () => {
-      // axiosClient.get(`/obligationrequest/exporttoexcel`).then(res =>{
-      //   setObrList(res.data.obrlist);
-      // });
-      
-      console.log(obrlist);
+    
+
         // const worksheet = XLSX.utils.json_to_sheet(obrlist);
         // const workbook = XLSX.utils.book_new();
         // XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
