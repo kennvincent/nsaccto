@@ -528,14 +528,8 @@ class ObligationRequestController extends Controller
         return response()->json(['obrid'=>$obrid]);
     }
 
-    public function obrexporttoexcel(){
-        $obrid=DB::table("idcounters")
-        ->select('obrid')
-        ->get();
-
-        return response()->json(['obrid'=>$obrid]);
-       
-    }
-
+   public function obrexport(){
+        return response()->json(['message'=>'Export']);
+   }
    
 }
