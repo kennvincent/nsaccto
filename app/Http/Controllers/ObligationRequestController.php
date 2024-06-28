@@ -528,6 +528,6 @@ class ObligationRequestController extends Controller
         return response()->json(['obrid'=>$obrid]);
     }
 
-   
+ 
    
 }

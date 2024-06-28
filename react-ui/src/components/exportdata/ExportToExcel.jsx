@@ -9,13 +9,7 @@ const ExportToExcel = () => {
 
     const [obrlist,setObrList] = useState([]);
   
-    useEffect(()=>{
-      // axiosClient.get(`/obligationrequest/exporttoexcel`).then(res =>{
-      //   // setObrList(res.data.message);
-      //   console.log(res.data);
-      // });
-
-    },[]);
+   
 
    
     const data = [
@@ -25,7 +19,11 @@ const ExportToExcel = () => {
 
     const exportToExcel = () => {
     
-
+       axiosClient.get(`/obligationrequest/exporttoexcel`).then(res =>{
+          // setObrList(res.data.message);
+          console.log(res.data);
+        });
+  
         // const worksheet = XLSX.utils.json_to_sheet(obrlist);
         // const workbook = XLSX.utils.book_new();
         // XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
