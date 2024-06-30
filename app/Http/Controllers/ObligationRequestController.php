@@ -529,11 +529,12 @@ class ObligationRequestController extends Controller
     }
 
  
-    public function obrtoexcel(){
+    public function obrtoexcel($yr){
          $obrlist = DB::table('vw_obr')
                     ->select('id','payee','particulars','officecode','officename',
                         'officedesc','address','accountdesc','funding','accountcode','amount')
                     ->where('obrstatus','=','Obligated')
+                    ->where('obryear','=',$yr)
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
     }

@@ -99,8 +99,8 @@ Route::get('obligationrequest/accounting/selectedpayee/view/{payee}',[Obligation
 
 Route::get('obligationrequest/accounting/selected/view/{id}',[ObligationRequestController::class,'accountingselectedviewobr']);
 Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);
-Route::get('obrtoexcel',[ObligationRequestController::class,'obrtoexcel']);
 
+Route::get('obrtoexcel/{yr}',[ObligationRequestController::class,'obrtoexcel']);
 
 
 Route::get('signatories',[SignatoriesController::class,'getsignatories']);
