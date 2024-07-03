@@ -94,17 +94,18 @@ export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
 		icon: <HiOutlineDocumentText />,
 	},
 	{
+		key: 'exporttoexcel',
+		label: 'Export OBR Details',
+		path: '/exporttoexcel',
+		icon: <HiOutlineDocumentText />
+	},
+	{
 		key: 'register',
 		label: 'Register User',
 		path: '/register',
 		icon: <HiOutlineDocumentText />
-	},
-	{
-		key: 'exporttoexcel',
-		label: 'Export',
-		path: '/exporttoexcel',
-		icon: <HiOutlineDocumentText />
 	}
+	
 	
 ]
 

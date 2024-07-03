@@ -14,11 +14,12 @@ class VoucherController extends Controller
         try{
             DB::beginTransaction();
             $voucher = new Voucher;
+            $voucher->obrid = $request->obrid;
             $voucher->obrnumber = $request->obrnumber;
             $voucher->payee = $request->payee;
             $voucher->explanation = $request->explanation;
             $voucher->address = $request->address;
-            $voucher->obramount = $request->obramount;
+            $voucher->voucheramount = $request->voucheramount;
             $voucher->checknumber = $request->checknumber;
             $voucher->bank = $request->bank;
             $voucher->signatory1 = $request->signatory1;

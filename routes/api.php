@@ -62,6 +62,7 @@ Route::get('obligationrequest/getobrid',[ObligationRequestController::class,'get
 Route::get('obligationrequest',[ObligationRequestController::class,'viewlist']);
 
 Route::get('obligationrequest/edit/{id}',[ObligationRequestController::class,'editpreview']);
+Route::put('obligationrequest/update',[ObligationRequestController::class,'updateobr']);
 Route::get('obligationrequest/viewall/forapproval',[ObligationRequestController::class,'viewallforapprovalobrlist']);
 Route::get('obligationrequest/viewall/officeapproved',[ObligationRequestController::class,'viewallofficeapprovedobrlist']);
 Route::get('obligationrequest/{officename}',[ObligationRequestController::class,'viewofficeobrlist']);
@@ -101,7 +102,6 @@ Route::get('obligationrequest/accounting/selected/view/{id}',[ObligationRequestC
 Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);
 
 Route::get('obrtoexcel/{yr}',[ObligationRequestController::class,'obrtoexcel']);
-
 
 Route::get('signatories',[SignatoriesController::class,'getsignatories']);
 

@@ -176,7 +176,7 @@ export default function CreateVoucher() {
         'payee' :payee,
         'explanation':explanation,
         'address' : address,
-        'obramount':parseFloat(convertedAmount).toFixed(2),
+        'voucheramount':parseFloat(convertedAmount).toFixed(2),
         'checknumber':checknumber,
         'voucherstatus': _voucherstatus,
         'bank' : bank,

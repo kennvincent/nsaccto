@@ -7,9 +7,11 @@ import AccountItem from './AccountItem';
 const EditObr = () => {
     const location = useLocation();
     const [officename,setOfficename] = useState();
+    const [officecode,setOfficecode] = useState();
     const [accounts,setAccounts] = useState([]);
     const [items,setItems] = useState([]);
     const [details,setDetails] = useState([]);
+    const [accountItem,setAccountItem] = useState('');
     const [accountcode,setAccountCode] = useState('');
     const [amount,setAmount] = useState('');
     const [particulars,setParticulars] = useState('');
@@ -19,12 +21,7 @@ const EditObr = () => {
     const navigate = useNavigate();
     const win = window.sessionStorage;
 
-    useEffect(()=>{
-        
-       
-
-       
-    },[]);
+ 
 
     useEffect(() => {
      
@@ -35,7 +32,6 @@ const EditObr = () => {
         setDetails(res.data.obr);
         setPayee(res.data.obr[0].payee);
         setParticulars(res.data.obr[0].particulars);
-        console.log(details[0].accountcode);
       });
       
       setOfficename(win.getItem('officename'));
@@ -75,8 +71,8 @@ const EditObr = () => {
     const onClickAdd = () => {
       
       
-     
-      if(accountcode.trim().length == 0){
+      
+      if(accountItem.trim().length == 0){
         alert("Select account");
         return;
       }
@@ -92,9 +88,17 @@ const EditObr = () => {
         return;
       }
 
+      let strAmount = amount.replace(/,/g, '');
+      
+      setOfficecode(accountItem.split('|')[0]);
+
       const newItem = {
-        accountcode:accountcode.split(' ')[0],
-        amount:amount
+        officecode:accountItem.split('|')[0].trim(),
+        accountclassification:accountItem.split('|')[1].trim(),
+        funding:accountItem.split('|')[2].trim(),
+        accountcode:accountItem.split('|')[3].trim(),
+        accountdesc:accountItem.split('|')[4].trim(),
+        amount:strAmount
       }
 
       setItems([...items,{id:uuid(),name:newItem}]);
@@ -141,7 +145,7 @@ const EditObr = () => {
 
     const onChangeAccount = (e) =>{
       
-      setAccountCode(e);
+      setAccountItem(e);
     }
 
     const onChangeAmount = (e) => {
@@ -164,7 +168,7 @@ const EditObr = () => {
 
     
       if(items.length>0){
-        navigate('/obrprintpreview',{state:{items,payee,particulars}});
+        navigate('/updateobrpreview',{state:{obrid,items,payee,particulars}});
       } else {
         alert('Account details cannot be empty!')
       }
@@ -175,30 +179,24 @@ const EditObr = () => {
     }
 
     const handleEditItem = (id,amount) => {
-        try{
-            const updateItems = items.map((item) => {
-                if(item.id == id){
-                  return {...item,amount:amount};
-                }
+      const updateItems = items.map((item) => {
+ 
         
-                return item;
-              })
-        }catch(e){
-
+        if(item.id == id){
+          return {...item,amount:amount};
         }
-      
+
+        return item;
+      })
     }
 
     
 
-    const accountsList = accounts.map((account) =>{
-        try{
-            return(
-                <option value={account.accountcode + ' ' + account.particulars} key={account.id}>{account.accountcode} - {account.particulars}</option>
-            );
-        }catch(e){
-
-        }
+     const accountsList = accounts.map((account) =>{
+      return(
+          <option value={account.officecode + ' | ' + account.accountclassification + ' | ' + account.funding + ' | ' + account.accountcode + ' | ' + account.particulars} 
+          key={account.id}>{account.officecode} | {account.funding} | {account.accountcode} | {account.particulars} </option>
+      );
       
   })
   return (
@@ -222,7 +220,7 @@ const EditObr = () => {
 
             <div className='mt-10'>
               <label htmlFor="account">Select Account</label>
-              <select  value={accountcode}  className='w-full rounded-md' id='account' onChange={(e)=>onChangeAccount(e.target.value)}>
+              <select  value={accountItem}  className='w-full rounded-md' id='account' onChange={(e)=>onChangeAccount(e.target.value)}>
                 <option value=""></option>
                 {accountsList}
               </select>
@@ -243,8 +241,8 @@ const EditObr = () => {
             <div  className='mt-10'>
               <table>
                 <tbody>
-                  {/* {details.map((item)=> (<AccountItem key={item.id} item={item} 
-                  handleEditItem={handleEditItem} removeItem={removeItem}/>))} */}
+                  {items.map((item)=> (<AccountItem key={item.id} item={item} 
+                    handleEditItem={handleEditItem} removeItem={removeItem}/>))}
                 </tbody>
               </table>
             </div>

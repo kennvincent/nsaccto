@@ -119,7 +119,9 @@ class ObligationRequestController extends Controller
                         'officename',
                         'officedesc',
                         'address',
+                        'funding',
                         'accountcode',
+                        'accountdesc',
                         'amount',
                         'signatory1',
                         'position1',
@@ -266,7 +268,7 @@ class ObligationRequestController extends Controller
     public function accountingviewlist(){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
-                    'officedesc','address','totalamount','totalamountpaid',
+                    'officedesc','address','totalamount','voucher',
                     'balance','obrstatus','withvoucher')
                     ->where('balance','>',0)
                     ->where('obrstatus','=','Obligated')
@@ -539,4 +541,8 @@ class ObligationRequestController extends Controller
         return response()->json(['obrlist'=>$obrlist]);
     }
    
+
+    public function updateobr(Request $request){
+
+    }
 }

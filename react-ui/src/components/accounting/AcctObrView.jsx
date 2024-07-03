@@ -49,7 +49,7 @@ export default function AcctObrView() {
           <td className='py-1'>{obr.officedesc}</td>
           <td className='py-1 overflow-hidden'>{obr.particulars}</td>
           <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td className='py-1 text-right'>{Number(obr.totalamountpaid).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td className='py-1 text-right'>{Number(obr.voucher).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
           <td className='py-1 text-right'>{Number(obr.balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
           <td className='py-1'>{obr.balance>0?<button disabled={(obr.withvoucher==2 || obr.withvoucher==1)?false:true}  className='btn btn-success btn-sm ' 
             onClick={()=>handleShowOBR(obr.id)}>Pay</button>:<button className='btn btn-success btn-sm '  
@@ -107,7 +107,7 @@ export default function AcctObrView() {
               <th>Office Description</th>
               <th>Particulars</th>
               <th>Total Amount</th>
-              <th>Amount Paid</th>
+              <th>Voucher</th>
               <th>Balance</th>
               <th className='w-[200px]'></th>
             </tr>

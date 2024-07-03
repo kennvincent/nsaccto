@@ -42,10 +42,6 @@ const ExportToExcel = () => {
         });
 
        
-
-        
-       
-       
          
       }else{
         alert("Select Year");
@@ -54,19 +50,26 @@ const ExportToExcel = () => {
       
     };
 
-    
-
   return (
-    <div className='flex'>
-      <select onChange={handleChange} className='w-[150px] mr-2 h-8 p-0 px-1'>
-        <option value=''>Select Year</option>
-        {years.map((year,index) =>(
-          <option key={index} value={year}>
-            {year}
-          </option>
-        ))}
-      </select>
-      <button onClick={exportToExcel} className='btn btn-primary btn-sm'>Export as Excel</button>
+    <div>
+      <div className='card w-[50rem] m-auto'>
+        <div className='card-header'>
+          <h6>Export Obligation Request Details</h6>
+        </div>
+        <div className='card-body flex'>
+          <select onChange={handleChange} className='w-[150px] mr-2 h-8 p-0 px-1'>
+            <option value=''>Select Year</option>
+            {years.map((year,index) =>(
+              <option key={index} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+          <button onClick={exportToExcel} className='btn btn-primary btn-sm'>Export as Excel</button>
+      </div>
+      </div>
+  
+      
     </div>
   )
 }

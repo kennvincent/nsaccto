@@ -39,6 +39,7 @@ import ObligationRequestPreviewOnly from "./components/obligationrequest/Obligat
 import EditObr from "./components/obligationrequest/EditObr";
 import BudgetRealignment from "./components/budget/BudgetRealignment";
 import ExportToExcel from "./components/exportdata/ExportToExcel";
+import UpdateObligationRequest from "./components/obligationrequest/UpdateObligationRequest";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
     {
         path:'/obrprintpreview',
         element:<ObligationRequestPrintPreview/>
+    },
+    {
+        path:'/updateobrpreview',
+        element:<UpdateObligationRequest/>
     },
     {
         path:'voucherprintpreview',
