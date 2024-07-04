@@ -55,10 +55,37 @@ class ObligationRequestController extends Controller
     }
 
     public function accountingselectedviewobr($id){
-        $obrlist = DB::table('vw_obr')
+        // $obrlist = DB::table('vw_obr')
+        //             ->select('id',
+        //                     'obrnumber',
+        //                     'obr_detail_id',
+        //                     'payee',
+        //                     'address',
+        //                     'particulars',
+        //                     'officecode',
+        //                     'officename',
+        //                     'officedesc',
+        //                     'address',
+        //                     'accountcode1',
+        //                     'accountcode',
+        //                     'amount1',
+        //                     'amount',
+        //                     'totalamount',
+        //                     'paid',
+        //                     'totalamountpaid',
+        //                     'balance1',
+        //                     'balance',
+        //                     'totalbalance',
+        //                     'signatory1',
+        //                     'position1',
+        //                     'signatory2',
+        //                     'position2',
+        //                     'obrstatus',
+        //                     'withvoucher')
+        //             ->where('id','=',[$id])
+        //             ->get();
+        $obrlist = DB::table('vw_obrheaders')
                     ->select('id',
-                            'obrnumber',
-                            'obr_detail_id',
                             'payee',
                             'address',
                             'particulars',
@@ -66,22 +93,7 @@ class ObligationRequestController extends Controller
                             'officename',
                             'officedesc',
                             'address',
-                            'accountcode1',
-                            'accountcode',
-                            'amount1',
-                            'amount',
-                            'totalamount',
-                            'paid',
-                            'totalamountpaid',
-                            'balance1',
-                            'balance',
-                            'totalbalance',
-                            'signatory1',
-                            'position1',
-                            'signatory2',
-                            'position2',
-                            'obrstatus',
-                            'withvoucher')
+                            'balance')
                     ->where('id','=',[$id])
                     ->get();
         return response()->json(['obr'=>$obrlist]);
@@ -269,8 +281,7 @@ class ObligationRequestController extends Controller
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                     'officedesc','address','totalamount','voucher',
-                    'balance','obrstatus','withvoucher')
-                    ->where('balance','>',0)
+                    'balance','paid','obrstatus','withvoucher')
                     ->where('obrstatus','=','Obligated')
                     ->orderBy('id','DESC')
                     ->get();
@@ -285,8 +296,7 @@ class ObligationRequestController extends Controller
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
                     'officedesc','address','totalamount','totalamountpaid',
-                    'balance','obrstatus')
-                    ->where('balance','=',0)
+                    'balance','paid','obrstatus')
                     ->orderBy('id','DESC')
                     ->get();
 
@@ -296,10 +306,9 @@ class ObligationRequestController extends Controller
     public function accountingviewlistselectedoffice($officename){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
-                    'officedesc','address','totalamount','totalamountpaid',
-                    'balance','obrstatus',with)
+                    'officedesc','address','totalamount','voucher',
+                    'balance','paid','obrstatus','withvoucher')
                     ->where('officename','=',$officename)
-                    ->where('balance','>',0)
                     ->where('obrstatus','=','Obligated')
                     ->orderBy('id','DESC')
                     ->get();
@@ -310,10 +319,9 @@ class ObligationRequestController extends Controller
     public function accountingviewlistselectedpayee($payee){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
-                    'officedesc','address','totalamount','totalamountpaid',
-                    'balance','obrstatus')
+                    'officedesc','address','totalamount','voucher',
+                    'balance','paid','obrstatus')
                     ->where('payee','LIKE','%'. $payee . '%')
-                    ->where('balance','>',0)
                     ->where('obrstatus','=','Obligated')
                     ->orderBy('id','DESC')
                     ->get();

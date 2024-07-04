@@ -76,7 +76,7 @@ class VoucherController extends Controller
                             'payee',
                             'explanation',
                             'address',
-                            'obramount',
+                            'voucheramount',
                             'description',
                             'amount',
                             'checknumber',

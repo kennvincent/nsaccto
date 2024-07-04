@@ -42,13 +42,12 @@ export default function CreateVoucher() {
         try{
           await axiosClient.get(`/obligationrequest/accounting/selected/view/${obrid}`).then(res =>{
             setPayee(res.data.obr[0].payee);
-            console.log(res.data.obr[0].particulars);
             setAddress(res.data.obr[0].address)
             setExplanation(res.data.obr[0].particulars);
             setBalance(res.data.obr[0].balance)
             setOfficeName(res.data.obr[0].officename)
             setObrNumber(res.data.obr[0].obrnumber);
-            console.log('OBR Number'+obrnumber);
+            // console.log('OBR Number'+obrnumber);
         
           })
         }
@@ -145,7 +144,7 @@ export default function CreateVoucher() {
     const createDisbursementVoucher = (_voucherstatus)=>{
      
       if(payee.trim().length==0){
-        alert('Enter Paye name');
+        alert('Enter Payee name');
         return;
       }
 
@@ -521,8 +520,8 @@ export default function CreateVoucher() {
       </div>
 
       <div className='w-[1024px] h-10  m-auto mt-2 text-right'>
-        <button onClick={(e)=>createDisbursementVoucher(2)} className='btn btn-primary ml-2'>Full Amount Voucher</button>
-        <button onClick={(e)=>createDisbursementVoucher(1)} className='btn btn-primary ml-2'>Partial Voucher</button>
+        {/* <button onClick={(e)=>createDisbursementVoucher(2)} className='btn btn-primary ml-2'>Full Amount Voucher</button> */}
+        <button onClick={(e)=>createDisbursementVoucher(1)} className='btn btn-primary ml-2'>Create Voucher</button>
         <button onClick={handleClose} className='btn btn-primary w-[120px] ml-2'>Close</button>
       </div>
       <AddDeduction visible={showAddDeduction} onClose={handleDeductionClose} passArrayData={getArrayData}/>

@@ -42,7 +42,7 @@ export default function VoucherPrintPreview() {
         setSignatory3Position('Governor')
         let voucher_id = window.localStorage.getItem('voucher_id');
 
-        
+       
         axiosClient.get(`voucher/${voucher_id}`).then(res=>{
           setVoucher(res.data.voucher);
           setObrNumber(res.data.voucher[0].obrnumber);
@@ -51,7 +51,7 @@ export default function VoucherPrintPreview() {
           setCheckNumber(res.data.voucher[0].checknumber);
           setBank(res.data.voucher[0].bank);
           setExplanation(res.data.voucher[0].explanation);
-          setTotalAmount(res.data.voucher[0].obramount)
+          setTotalAmount(res.data.voucher[0].voucheramount)
           console.log(totalAmount);
 
         });

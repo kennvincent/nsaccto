@@ -43,19 +43,25 @@ export default function AcctObrView() {
     const payableOBR = obrlist.map((obr)=>{
       return(
         <tr key={obr.id} className='p-0 m-0 border hover:bg-slate-100'> 
-          <td className='py-1'>{obr.payee}</td>
-          <td className='py-1'>{obr.officecode}</td>
-          <td className='py-1'>{obr.officename}</td>
-          <td className='py-1'>{obr.officedesc}</td>
-          <td className='py-1 overflow-hidden'>{obr.particulars}</td>
-          <td className='py-1 text-right'>{Number(obr.totalamount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td className='py-1 text-right'>{Number(obr.voucher).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td className='py-1 text-right'>{Number(obr.balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td className='py-1'>{obr.balance>0?<button disabled={(obr.withvoucher==2 || obr.withvoucher==1)?false:true}  className='btn btn-success btn-sm ' 
+          <td className='py-1 text-xs'>{obr.payee}</td>
+          <td className='py-1 text-xs'>{obr.officecode}</td>
+          <td className='py-1 text-xs'>{obr.officename}</td>
+          <td className='py-1 text-xs'>{obr.officedesc}</td>
+          <td className='py-1 text-xs overflow-hidden'>{obr.particulars}</td>
+          <td className='py-1 text-right text-xs'>{Number(obr.totalamount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td className='py-1 text-right text-xs'>{Number(obr.voucher).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td className='py-1 text-right text-xs'>{Number(obr.balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td className='py-1 text-right text-xs'>{Number(obr.paid).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td className='py-1'>
+            <button disabled={obr.balance==0?true:false} className='btn btn-success btn-sm  ml-1 text-xs' 
+              onClick={()=>handleCreateVoucher(obr.id)}>Voucher</button>
+          </td>
+
+          {/* <td className='py-1'>{obr.balance>0?<button disabled={(obr.withvoucher==2 || obr.withvoucher==1)?false:true}  className='btn btn-success btn-sm ' 
             onClick={()=>handleShowOBR(obr.id)}>Pay</button>:<button className='btn btn-success btn-sm '  
             onClick={()=>handlePaidPreview(obr.id)}>Preview</button>}
             {obr.balance>0?<button disabled={obr.withvoucher==2?true:false} className='btn btn-success btn-sm  ml-1' 
-            onClick={()=>handleCreateVoucher(obr.id)}>Voucher</button>:""}</td>
+            onClick={()=>handleCreateVoucher(obr.id)}>Voucher</button>:""}</td> */}
         </tr>
       )
     })
@@ -106,9 +112,10 @@ export default function AcctObrView() {
               <th className='w-[100px]'>Responsibility Center</th>
               <th>Office Description</th>
               <th>Particulars</th>
-              <th>Total Amount</th>
-              <th>Voucher</th>
-              <th>Balance</th>
+              <th className='text-right'>Total Amount</th>
+              <th className='text-right'>Voucher</th>
+              <th className='text-right'>Balance</th>
+              <th className='text-right'>Paid</th>
               <th className='w-[200px]'></th>
             </tr>
           </thead>
