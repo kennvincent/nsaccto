@@ -107,4 +107,15 @@ class VoucherController extends Controller
             ->where('id','=',$obrid)
             ->get();
     }
+
+    public function getobrvoucher($obrid){
+        $vouchers = DB::table('vouchers')
+                ->select('id','checknumber','bank','created_at','voucheramount')
+                ->where('obrid','=',$obrid)
+                ->orderBy('id','DESC')
+                ->get();
+
+        return response()->json(['vouchers'=>$vouchers]);
+
+    }
 }

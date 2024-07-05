@@ -4,6 +4,7 @@ import { useNavigate,Link } from 'react-router-dom';
 import axiosClient from '../../axios-client';
 import LoadOfficesDropDown from '../shared/LoadOfficesDropDown';
 import { FcViewDetails } from "react-icons/fc";
+import VoucherDisplay from '../Voucher/VoucherDisplay';
 
 export default function AcctObrView() {
     const [obrlist,setObrList] = useState([]);
@@ -38,6 +39,24 @@ export default function AcctObrView() {
       navigate("/createvoucher",{state:{obrid:obrid}});
     }
 
+    const [showVoucher,setShowVoucher]=useState(false);
+    const [obrdata,setObrData]=useState();
+    const [voucherdata,setVoucherData]=useState([]);
+
+    const handleShowVoucher = (obrid)=>{
+      axiosClient.get(`/voucher/getobrvoucher/${obrid}`).then(res=>{
+          setVoucherData(res.data.vouchers);
+      });
+
+     setShowVoucher(true);
+    }
+ 
+    const handleCloseVoucher = ()=>{
+     setShowVoucher(false);
+    }
+    
+
+
     // const obrWithVoucher = obrlist.filter((obr)=>obr.withvoucher !== '2');
 
     const payableOBR = obrlist.map((obr)=>{
@@ -55,6 +74,8 @@ export default function AcctObrView() {
           <td className='py-1'>
             <button disabled={obr.balance==0?true:false} className='btn btn-success btn-sm  ml-1 text-xs' 
               onClick={()=>handleCreateVoucher(obr.id)}>Voucher</button>
+            
+            <button onClick={()=>handleShowVoucher(obr.id)} disabled={obr.voucher>0?false:true} className='btn btn-success btn-sm  ml-1 text-xs' >Pay</button>
           </td>
 
           {/* <td className='py-1'>{obr.balance>0?<button disabled={(obr.withvoucher==2 || obr.withvoucher==1)?false:true}  className='btn btn-success btn-sm ' 
@@ -93,6 +114,8 @@ export default function AcctObrView() {
     });
    }
 
+
+  
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div>
@@ -125,6 +148,7 @@ export default function AcctObrView() {
         </table>
         
       </div>
+      <VoucherDisplay visible={showVoucher} onClose={handleCloseVoucher} data={voucherdata}/>
     </div>
   )
 }

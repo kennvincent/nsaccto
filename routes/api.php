@@ -126,6 +126,7 @@ Route::get('voucher/printpreview/{id}',[VoucherController::class,'printpreview']
 Route::get('voucher/deductions/{id}',[VoucherController::class,'voucherdeductions']);
 Route::get('voucher/list',[VoucherController::class,'voucherslist']);
 Route::get('voucher/{id}',[VoucherController::class,'selectedvoucher']);
+Route::get('voucher/getobrvoucher/{id}',[VoucherController::class,'getobrvoucher']);
 
 Route::get('payment/display',[PaymentController::class,'displaypayments']);
 Route::get('utilization/display',[PaymentController::class,'utilization']);
