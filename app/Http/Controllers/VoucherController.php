@@ -110,7 +110,7 @@ class VoucherController extends Controller
 
     public function getobrvoucher($obrid){
         $vouchers = DB::table('vouchers')
-                ->select('id','checknumber','bank','created_at','voucheramount')
+                ->select('id','obrid','checknumber','bank','created_at','voucheramount')
                 ->where('obrid','=',$obrid)
                 ->orderBy('id','DESC')
                 ->get();

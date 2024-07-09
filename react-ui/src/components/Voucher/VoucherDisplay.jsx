@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axiosClient from '../../axios-client';
+import { useNavigate } from 'react-router-dom';
 
 export default function VoucherDisplay({visible,onClose,data}) {
-
+  const navigate = useNavigate();
     const vouchersList = data.map((voucher)=>{
         
     
@@ -12,14 +13,16 @@ export default function VoucherDisplay({visible,onClose,data}) {
                 <td>{voucher.checknumber}</td>
                 <td>{voucher.bank}</td>
                 <td className='p-0 text-right px-2'>{Number(voucher.voucheramount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td onClick={()=>handlePay(voucher.id)} className='p-0'><button className='btn btn-primary btn-sm h-7'>Pay</button></td>
+                <td onClick={()=>handlePay(voucher.id,voucher.obrid)} className='p-0'><button className='btn btn-primary btn-sm h-7'>Pay</button></td>
            </tr>
         );
         
     });
 
-    const handlePay = (voucherid)=>{
-      
+   
+
+    const handlePay = (voucherid,obrid)=>{
+      navigate("/acctobrviewselected",{state:{obrid:obrid}});
     }
 
     if(!visible) return null;

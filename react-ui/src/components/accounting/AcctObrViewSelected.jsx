@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import axiosClient from '../../axios-client';
 import PaymentHistory from './PaymentHistory';
 
 export default function AcctObrViewSelected() {
   const location = useLocation();
-
+  const navigate = useNavigate();
+  const win = window.sessionStorage;
   const [obr,setObr] = useState([]);
   const [obr2,setObr2] = useState([]);
   let obrid = location.state.obrid;
@@ -18,6 +19,7 @@ export default function AcctObrViewSelected() {
   const [amounttopay,setAmountToPay]=useState(0);
   const [checknumber,setCheckNumber] =useState();
   const [bankname,setBankname] =useState();
+  const [issaved,setIsSaved] = useState(false);
 
   let payee="";
   let officedesc="";
@@ -30,12 +32,20 @@ export default function AcctObrViewSelected() {
 
   const [inputFields, setInputFields] = useState([]);
 
+  var userid = win.getItem('userid');
+
   useEffect(()=>{
-    axiosClient.get(`/obligationrequest/accounting/selected/view/${location.state.obrid}`).then(res=>{
+    //original
+    // axiosClient.get(`/obligationrequest/accounting/selected/view/${location.state.obrid}`).then(res=>{
+    //     setObr(res.data.obr);
+    //     setObr2(res.data.obr);
+    //   });
+
+    axiosClient.get(`/obligationrequest/accounting/getobrforpayment/${location.state.obrid}`).then(res=>{
         setObr(res.data.obr);
         setObr2(res.data.obr);
-        
       });
+      
   },[]);
 
   let _total_amount =0;
@@ -81,11 +91,16 @@ export default function AcctObrViewSelected() {
             'checknumber':checknumber,
             'bankname':bankname,
             'obrid':obrid,
+            'userid':userid,
             'details':paymentDetails
         }
         
         axiosClient.post(`obligationrequest/accounting/payment`,payments).then(res=>{
-            alert(res.data.message);
+            // alert(res.data.message);
+            if(res.data.message=='success'){
+                setIsSaved(true)
+                alert('Payment have been saved');
+            }
 
         });
         
@@ -163,6 +178,10 @@ export default function AcctObrViewSelected() {
         return(
             <PaymentHistory />
         )
+    }
+
+    const handleClickClose = ()=>{
+        navigate("/acctobrview",{});
     }
   return (
     <div className='bg-white'>
@@ -265,7 +284,8 @@ export default function AcctObrViewSelected() {
                         
                 </div>
                 <div className='w-[85rem] h-11 border p-1'>
-                    <button onClick={handleClickSave} className='btn btn-primary btn-sm w-[15rem]'>Save</button>
+                    <button disabled={issaved==true?true:false} onClick={handleClickSave} className='btn btn-primary btn-sm w-[15rem]'>Save</button>
+                    <button onClick={handleClickClose} className='btn btn-primary btn-sm w-[15rem]  ml-2'>Close</button>
                 </div>
             </div>
 

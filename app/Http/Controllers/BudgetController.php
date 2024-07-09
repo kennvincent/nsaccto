@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Budget;
 use App\Models\Office;
+use App\Models\Aumentationheader;
 
 class BudgetController extends Controller
 {
@@ -18,6 +19,7 @@ class BudgetController extends Controller
                              't1.accountclassification',
                              't1.funding',
                              't1.sector',
+                             't1.office',
                              't1.officecode')
                     ->where('t1.office',$officename)
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(t2.amount) FROM vw_obr as t2 
@@ -31,6 +33,10 @@ class BudgetController extends Controller
                                          AND t1.accountcode=t3.accountcode
                                          AND t3.obryear=2024
                                          AND t3.officename=t1.office),0) as utilized'))
+                    ->addSelect(DB::raw('IFNULL((SELECT SUM(amount_to) FROM vw_augmentation as t4
+                                        WHERE t4.officename=t1.office
+                                        AND t1.accountcode=t4.object_expenditures_to
+                                        AND fy=2024),0) as augmentation'))
                     ->get();
 
         return response()->json(['budgets'=>$budgets]);

@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import axiosClient from '../../axios-client';
 import AddDeduction from './AddDeduction';
 import { useNavigate } from 'react-router-dom';
+import VoucherEditAmount from './VoucherEditAmount';
 
 export default function CreateVoucher() {
     const location = useLocation();
@@ -84,8 +85,8 @@ export default function CreateVoucher() {
     }
 
     const getArrayData =(deduction,amount)=>{
-
-      let newfield = { description: deduction, amount: amount }
+      const cleanedValue = amount.replace(/,/g, '');
+      let newfield = { description: deduction, amount: cleanedValue }
 
       setDeductions([...deductions, newfield])
       setShowAddDeduction(false);
@@ -106,7 +107,18 @@ export default function CreateVoucher() {
    }
 
    const handleBalanceInput = (e)=>{
+    // const value = e.target.value;
+    // const regex = /^[0-9,]*$/;
+
+    // if (regex.test(value)) {
+    //   setBalance(value);
+    //   // setError('');
+    // } else {
+    //   // setError('Please enter a valid numeric value with commas');
+    // }
+    
     setBalance(e.target.value)
+   
    }
 
 
@@ -205,9 +217,28 @@ export default function CreateVoucher() {
     const handleClose = ()=>{
       navigate('/acctobrview');
     }
+
+   const [showEditAmount,setShowEditAmount] =useState(false);
+   const handleAmountClose = ()=>{
+    setShowEditAmount(false);
+   }
+
+   const [dataAmount,setDataAmount] = useState(0);
+    const handleShowEditAmount=()=>{
+      setShowEditAmount(true);
+      setDataAmount(balance);
+    }
+
+    const handleUpdateAmount =()=>{
+      setShowEditAmount(false);
+    }
+   
+    const handleNewAmount = (data)=>{
+      setBalance(data); 
+    }
   return (
     <div className='w-[full] h-[800px] overflow-scroll'>
-      <div className='font-serif w-[1024px] border border-black  m-auto bg-white'>
+      <div className='w-[1024px] border border-black  m-auto bg-white'>
         <div className='text-center p-1 '>
           <p className='p-0 m-0'>Republic of the Philippines</p>
           <p className='p-0 m-0'>PROVINCE OF NORTHERN SAMAR</p>
@@ -239,7 +270,6 @@ export default function CreateVoucher() {
           <div className='flex p-1  w-[284px]'>
             <p className='p-0 mt-2 '>TIN/Employee No:</p>
             <p className='p-0 px-2 mt-2 '></p>
-            
           </div>
         </div>
 
@@ -272,7 +302,9 @@ export default function CreateVoucher() {
             <textarea value={explanation} onChange={handleExplanationInput} cols="30" rows="10" className='w-full border-0'></textarea>
           </div>
           <div className='p-1  w-[284px] text-right'>
-            <input type="text" className='text-right' onChange={handleBalanceInput} value={balance}/>
+          
+            <input type="text" className='text-right w-full' onChange={handleBalanceInput} value={balance}/>
+            
             {/* <p className='p-0 mt-2 font-sans font-bold text-lg'>{Number(balance).toLocaleString()}</p> */}
           </div>
         </div>
@@ -521,10 +553,12 @@ export default function CreateVoucher() {
 
       <div className='w-[1024px] h-10  m-auto mt-2 text-right'>
         {/* <button onClick={(e)=>createDisbursementVoucher(2)} className='btn btn-primary ml-2'>Full Amount Voucher</button> */}
+        
         <button onClick={(e)=>createDisbursementVoucher(1)} className='btn btn-primary ml-2'>Create Voucher</button>
         <button onClick={handleClose} className='btn btn-primary w-[120px] ml-2'>Close</button>
       </div>
       <AddDeduction visible={showAddDeduction} onClose={handleDeductionClose} passArrayData={getArrayData}/>
+      <VoucherEditAmount visible={showEditAmount} onCloseAmount={handleAmountClose} updateAmount={handleUpdateAmount} passAmount={dataAmount} newAmount={handleNewAmount}/>
     </div>
     
   )

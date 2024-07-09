@@ -86,7 +86,9 @@ Route::put('obligationrequest/budgetview/selected/approve',[ObligationRequestCon
 
 Route::get('obligationrequest/officeapprove/{id}',[ObligationRequestController::class,'officeapprove']);
 Route::post('obligationrequest/officeapproveallobr',[ObligationRequestController::class,'officeapproveallobr']);
-Route::get('obligationrequest/officecancel/{id}',[ObligationRequestController::class,'officecancel']);
+
+// Route::get('obligationrequest/officecancel/{id}',[ObligationRequestController::class,'officecancel']);
+Route::put('obligationrequest/officecancel/',[ObligationRequestController::class,'officecancel']);
 
 Route::put('obligationrequest/budgetview/selected/reject',[ObligationRequestController::class,'reject']);
 Route::get('obligationrequest/printpreview/{id}',[ObligationRequestController::class,'printpreview']);
@@ -99,6 +101,7 @@ Route::get('obligationrequest/accounting/selectedoffice/view/{id}',[ObligationRe
 Route::get('obligationrequest/accounting/selectedpayee/view/{payee}',[ObligationRequestController::class,'accountingviewlistselectedpayee']);
 
 Route::get('obligationrequest/accounting/selected/view/{id}',[ObligationRequestController::class,'accountingselectedviewobr']);
+Route::get('obligationrequest/accounting/getobrforpayment/{id}',[ObligationRequestController::class,'getobrforpayment']);
 Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);
 
 Route::get('obrtoexcel/{yr}',[ObligationRequestController::class,'obrtoexcel']);

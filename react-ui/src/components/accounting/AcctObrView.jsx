@@ -46,6 +46,7 @@ export default function AcctObrView() {
     const handleShowVoucher = (obrid)=>{
       axiosClient.get(`/voucher/getobrvoucher/${obrid}`).then(res=>{
           setVoucherData(res.data.vouchers);
+          console.log(res.data.vouchers);
       });
 
      setShowVoucher(true);
@@ -71,7 +72,7 @@ export default function AcctObrView() {
           <td className='py-1 text-right text-xs'>{Number(obr.voucher).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
           <td className='py-1 text-right text-xs'>{Number(obr.balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
           <td className='py-1 text-right text-xs'>{Number(obr.paid).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td className='py-1'>
+          <td className='py-1 flex'>
             <button disabled={obr.balance==0?true:false} className='btn btn-success btn-sm  ml-1 text-xs' 
               onClick={()=>handleCreateVoucher(obr.id)}>Voucher</button>
             
@@ -108,7 +109,7 @@ export default function AcctObrView() {
     }
 
    const onChangePayee = (payee)=>{
-   console.log(payee);
+
     axiosClient.get(`/obligationrequest/accounting/selectedpayee/view/${payee}`).then(res =>{
       setObrList(res.data.obrlist);
     });
@@ -128,7 +129,7 @@ export default function AcctObrView() {
       
       <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">
         <table className='w-full text-gray-700 border-collapse  border-slate-400 border mt-2'>
-          <thead className='sticky top-0 bg-slate-200'>
+          <thead className='sticky -top-1 bg-slate-200 z-[9999]'>
             <tr >
               <th>Payee</th>
               <th>Office Code</th>
@@ -139,7 +140,7 @@ export default function AcctObrView() {
               <th className='text-right'>Voucher</th>
               <th className='text-right'>Balance</th>
               <th className='text-right'>Paid</th>
-              <th className='w-[200px]'></th>
+              <th className=''></th>
             </tr>
           </thead>
           <tbody>

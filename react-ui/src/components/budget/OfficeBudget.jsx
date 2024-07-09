@@ -68,7 +68,7 @@ import Pagination from './Pagination';
   
   return (
     <div className='p-2 w-full bg-white'>
-        <h4>Office: {officename}</h4>
+        <h4>Office: {officename} </h4>
 
         <CurrentPosts posts={currentPosts} />
         <Pagination totalPosts={budgets.length} postsPerPage={postsPerPage} onPageClicked={handlePageClick}/>

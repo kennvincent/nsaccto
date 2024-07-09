@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export default function AddDeduction({visible,onClose,passArrayData}) {
     const [amount,setAmount] =useState(0);
-    const [deduction,setDeduction]=useState();
+    const [deduction,setDeduction]=useState('');
   
 
     const handleInputDeduction=(e)=>{

@@ -45,7 +45,10 @@ export default function OBRList() {
 
   const onClickCancel = (e,obr)=>{
     const obrid = obr['id'];
-    axiosClient.get(`/obligationrequest/officecancel/${obrid}`).then(res =>{
+    const data = {
+      'obrid':obrid
+    }
+    axiosClient.put(`/obligationrequest/officecancel/`,data).then(res =>{
       displayOBR();
       alert(res.data.message);
     })

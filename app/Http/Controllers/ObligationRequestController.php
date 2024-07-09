@@ -99,6 +99,38 @@ class ObligationRequestController extends Controller
         return response()->json(['obr'=>$obrlist]);
     }
 
+    public function getobrforpayment($obrid){
+        $obrlist = DB::table('vw_obr')
+                    ->select('id',
+                            'obrnumber',
+                            'obr_detail_id',
+                            'payee',
+                            'address',
+                            'particulars',
+                            'officecode',
+                            'officename',
+                            'officedesc',
+                            'address',
+                            'accountcode1',
+                            'accountcode',
+                            'amount1',
+                            'amount',
+                            'totalamount',
+                            'paid',
+                            'totalamountpaid',
+                            'balance1',
+                            'balance',
+                            'totalbalance',
+                            'signatory1',
+                            'position1',
+                            'signatory2',
+                            'position2',
+                            'obrstatus',
+                            'withvoucher')
+                    ->where('id','=',[$obrid])
+                    ->get();
+        return response()->json(['obr'=>$obrlist]);
+    }
     public function printpreview($id){
 
         $obr = DB::table('vw_obr')
@@ -221,6 +253,7 @@ class ObligationRequestController extends Controller
                     ->select('id','payee','particulars','officecode','officename',
                              'officedesc','address','totalamount','obrstatus')
                     ->where('officename','=',$officename)
+                    ->where('obrstatus','!=','Cancelled')
                     ->orderBy('id','DESC')
                     ->get();
         return response()->json(['obrlist'=>$obrlist]);
@@ -371,6 +404,7 @@ class ObligationRequestController extends Controller
                 if ($record) {
                     $affected = DB::table('obrheaders')
                     ->where('id', $data['id'])
+                    ->where('obrstatus', 1)
                     ->update(['obrstatus' => 2]);
                 }
             }
@@ -384,10 +418,14 @@ class ObligationRequestController extends Controller
         }
     }
 
-    public function officecancel($obrid){
-        $affected = DB::table('obrheaders')
-              ->where('id', $obrid)
-              ->delete(['obrstatus' => 0]);
+    public function officecancel(Request $request){
+        DB::table('obrheaders')
+        ->where('id',$request->obrid)
+        ->update(array('obrstatus' => 0));
+
+        // $affected = DB::table('obrheaders')
+        //       ->where('id', $obrid)
+        //       ->delete(['obrstatus' => 0]);
         return response()->json(['message'=>"Obligation Request have been cancelled"]);
     }
 
@@ -510,7 +548,7 @@ class ObligationRequestController extends Controller
             $payment->obrid = $request->obrid;
             $payment->checknumber = $request->checknumber;
             $payment->bankname = $request->bankname;
-            $payment->userid=2;
+            $payment->userid=$request->userid;
             $payment->save();
 
             $paymentid = DB::getPdo()->lastInsertId();
@@ -524,7 +562,7 @@ class ObligationRequestController extends Controller
                 Paymentdetail::create($paymentDetail);
             }
             DB::commit();
-            return response()->json(['message'=>'Payment have been saved']);
+            return response()->json(['message'=>'success']);
         }catch(e){
 
         }
