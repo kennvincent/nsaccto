@@ -15,7 +15,7 @@ class BudgetController extends Controller
                     ->select('t1.id',
                             't1.particulars',
                              't1.accountcode',
-                            't1.proposedamount',
+                             't1.proposedamount',
                              't1.accountclassification',
                              't1.funding',
                              't1.sector',
