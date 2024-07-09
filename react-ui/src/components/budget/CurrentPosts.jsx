@@ -32,19 +32,23 @@ const CurrentPosts = ({posts}) => {
                     <tr key={budget.id} className='border hover:bg-slate-100 p-0'>
                         <td className='py-1'>{budget.particulars}</td>
                         <td className='py-1'>{budget.accountcode}</td>
-                        <td className='py-1 text-right'>{budget.proposedamount>0?Number(budget.proposedamount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                        <td className='py-1 text-right'>{(budget.proposedamount - budget.lessaugmentation)>0?(Number(budget.proposedamount) -Number(budget.lessaugmentation)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 :''}</td>
                         <td className='py-1 text-right'>{Number(budget.augmentation).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                     }</td>
-                        <td className='py-1 text-right'></td>
+                        {/* realignment */}
+                        <td className='py-1 text-right'></td> 
+
                         {/* <td className='py-1 text-right'>{budget.proposedamount>0?Number(budget.proposedamount).toLocaleString():''}</td> */}
-                        <td className='py-1 text-right'>{(Number(budget.proposedamount) + Number(budget.augmentation)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                        {/* total appropriation */}
+                        <td className='py-1 text-right'>{((Number(budget.proposedamount)- Number(budget.lessaugmentation)) + Number(budget.augmentation)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                     }</td>
                         <td className='py-1 text-right'>{budget.totalobligated>0?Number(budget.totalobligated).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }):""}</td>
                         <td className='py-1 text-right'>{budget.utilized>0?Number(budget.utilized).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }):""}</td>
                         {/* <td className='py-1 text-right'>{Number((budget.proposedamount) - budget.totalobligated)>0?Number(budget.proposedamount - budget.totalobligated).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-:''}</td> */}
-                        <td className='py-1 text-right'>{(Number(budget.proposedamount) + Number(budget.augmentation)) - Number(budget.totalobligated) >0?((Number(budget.proposedamount) + Number(budget.augmentation)) - Number(budget.totalobligated)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+:''}</td> */}           
+                        {/* Balance  */}
+                        <td className='py-1 text-right'>{((Number(budget.proposedamount) - Number(budget.lessaugmentation)) + Number(budget.augmentation)) - Number(budget.totalobligated) >0?(((Number(budget.proposedamount) -Number(budget.lessaugmentation)) + Number(budget.augmentation)) - Number(budget.totalobligated)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 :''}</td>
                         {usertype=='ACTG'?<td className='py-1 text-right'>{budget.funding}</td>:''}
                         {usertype=='ACTG'?<td className='py-1 text-right'>{budget.sector}</td>:''}
