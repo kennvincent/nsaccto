@@ -47,7 +47,7 @@ Route::get('budgetallotment',[BudgetAllotmentController::class,'index']);
 Route::get('budgetalloted/{yr}',[BudgetAllotmentController::class,'allbudget']);
 Route::get('budgetallotment/{id}',[BudgetAllotmentController::class,'officebudget']);
 Route::post('budgetallotment',[BudgetAllotmentController::class,'insert']);
-Route::post('budgetaugmentation/save',[BudgetAllotmentController::class,'saveaugmentation']);
+
 
 //Route::put('employee/{id}/edit',[EmployeeController::class,'update']);
 
@@ -122,6 +122,8 @@ Route::get('budgets/available',[BudgetImportController::class,'getavailablebudge
 Route::get('displayofficebudget/{officename}',[BudgetController::class,'officebudget']);
 Route::get('getaccounts/{officename}',[BudgetController::class,'accountsperoffice']);
 Route::get('getaccount/{id}',[BudgetController::class,'getaccount']);
+Route::post('budgetaugmentation/save',[BudgetController::class,'saveaugmentation']);
+
 
 Route::get('budget/view',[BudgetController::class,'samplebudget']);
 

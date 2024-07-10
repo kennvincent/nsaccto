@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Budget;
 use App\Models\Office;
+use App\Models\Augmentationheader;
+use App\Models\Augmentationdetail;
 use App\Models\Aumentationheader;
 
 class BudgetController extends Controller
@@ -84,5 +86,46 @@ class BudgetController extends Controller
     public function samplebudget(){
         $budgets = Office::all();
         return response()->json(['budgets'=>$budgets]);
+    }
+
+    public function saveaugmentation(Request $request){
+        try
+            {
+                DB::beginTransaction();
+
+                $budget = new Augmentationheader;
+                $budget->fy = $request->fy;
+                $budget->lgu = $request->lgu;
+                $budget->officename = $request->officename;
+                $budget->ordinanceno = $request->ordinanceno;
+                $budget->dated = $request->dated;
+                $budget->augmentationno = $request->augmentationno;
+                $budget->userid = $request->userid;
+               
+                $budget->save();
+
+               
+
+                //This is the last update
+                $augmentationid = DB::getPdo()->lastInsertId();
+                // foreach($details as $key => $detail){
+                //     $obrDetail['accountdesc'] = $detail['name']['accountdesc'];
+                //     $obrDetail['accountclassification'] = $detail['name']['accountclassification'];
+                //     $obrDetail['funding'] = $detail['name']['funding'];
+                //     $obrDetail['accountcode'] = $detail['name']['accountcode'];
+                //     $obrDetail['amount'] = $detail['name']['amount'];
+                //     $obrDetail['obrid'] = $obrid;
+                //     Obrdetail::create($obrDetail);
+                // }
+
+                DB::commit();
+                return response()->json(['augmentationid'=>$augmentationid]);
+                //  Toastr::success('Obligation Request have been created!!!');
+                //  return redirect()->back();
+            }catch(\Exception $e){
+                DB::rollback();
+                Toastr::error('OBR create failed');
+                return redirect()->back();
+            }
     }
 }

@@ -64,6 +64,7 @@ import Pagination from './Pagination';
 
   const handlePageClick = (page)=>{
    setCurrentPage(page);
+   
   }
   
   return (
@@ -71,7 +72,7 @@ import Pagination from './Pagination';
         <h4>Office: {officename} </h4>
 
         <CurrentPosts posts={currentPosts} />
-        <Pagination totalPosts={budgets.length} postsPerPage={postsPerPage} onPageClicked={handlePageClick}/>
+        <Pagination totalPosts={budgets.length} postsPerPage={postsPerPage} onPageClicked={handlePageClick} curPage={currentPage}/>
       
     </div>
   )

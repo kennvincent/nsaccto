@@ -3,12 +3,16 @@ import axiosClient from '../../axios-client';
 
 const BudgetAugmentation = () => {
     const [offices,setOffices]=useState([]);
-    const [office,setOffice]=useState('');
+    const [officename,setOfficeName]=useState('');
     const [fy,setFY] =useState('');
     const [lgu,setLGU] =useState('');
     const [ordinanceno,setOrdinanceNo] =useState('');
     const [dated,setDated] =useState('');
     const [augmentationno,setAugmentationNo] =useState('');
+    const [budgetfrom,setBudgetFrom]=useState([]);
+
+    const win = window.sessionStorage;
+    var userid = win.getItem('userid');
 
     useEffect(()=>{
         axiosClient.get(`/offices`).then(res=>{
@@ -23,7 +27,10 @@ const BudgetAugmentation = () => {
     })
 
     const handleChangeOffice = (e)=>{
-        setOffice(e)
+        setOfficeName(e)
+        axiosClient.get(`/displayofficebudget/${officename}`,).then(res=>{
+            setBudgetFrom(res.data.budgets);
+        });
     }
 
     const handleChangeFY = (e)=>{
@@ -47,7 +54,7 @@ const BudgetAugmentation = () => {
     }
 
     const handleSaveAugmentation = ()=>{
-        if(office==''){
+        if(officename==''){
             alert('Select Office');
             return;
         }
@@ -78,14 +85,21 @@ const BudgetAugmentation = () => {
         }
 
         const data = {
-            'office':office,
+            'officename':officename,
             'fy':fy,
             'lgu':lgu,
             'ordinanceno':ordinanceno,
             'dated':dated,
-            'augmentationno':augmentationno
+            'augmentationno':augmentationno,
+            'userid':userid
         }
+
         console.log(data);
+        
+        axiosClient.post(`budgetaugmentation/save`,data).then(res=>{
+            alert(res.data.augmentationid);
+
+        });
     }
   return (
     <div className='card w-[60rem] m-auto'>
@@ -119,11 +133,13 @@ const BudgetAugmentation = () => {
                     <td className='p-1  '><input type="text" onChange={(e)=>handleChangeAugmentationNo(e.target.value)} className='h-8'/></td>
                     
                 </tr>
+
                 <tr>
                     <td></td>
                     <td className='p-1'><button onClick={handleSaveAugmentation} className='btn btn-primary btn-sm'>Save</button></td>
                 </tr>
             </table>
+            
             
       </div>
     </div>
