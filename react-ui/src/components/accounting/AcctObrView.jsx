@@ -76,7 +76,7 @@ export default function AcctObrView() {
             <button disabled={obr.balance==0?true:false} className='btn btn-success btn-sm  ml-1 text-xs' 
               onClick={()=>handleCreateVoucher(obr.id)}>Voucher</button>
             
-            <button onClick={()=>handleShowVoucher(obr.id)} disabled={obr.voucher>0?false:true} className='btn btn-success btn-sm  ml-1 text-xs' >Pay</button>
+            {/* <button onClick={()=>handleShowVoucher(obr.id)} disabled={obr.voucher>0?false:true} className='btn btn-success btn-sm  ml-1 text-xs' >Pay</button> */}
           </td>
 
           {/* <td className='py-1'>{obr.balance>0?<button disabled={(obr.withvoucher==2 || obr.withvoucher==1)?false:true}  className='btn btn-success btn-sm ' 

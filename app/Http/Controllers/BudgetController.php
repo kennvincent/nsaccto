@@ -23,16 +23,16 @@ class BudgetController extends Controller
                              't1.officecode')
                     ->where('t1.office',$officename)
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(t2.amount) FROM vw_obr as t2
-                                          where t1.office=t2.officename
-                                          and t1.officecode=t2.officecode
-                                          and t1.accountcode=t2.accountcode
-                                          and t2.obryear=2024
-                                          and t2.obrstatus="Obligated"),0) as totalobligated'))
+                            where t1.office=t2.officename
+                            and t1.officecode=t2.officecode
+                            and t1.accountcode=t2.accountcode
+                            and t2.obryear=2024
+                            and t2.obrstatus="Obligated"),0) as totalobligated'))
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(amountpaid) FROM vw_payments as t3
-                                         WHERE t1.officecode=t3.officecode
-                                         AND t1.accountcode=t3.accountcode
-                                         AND t3.obryear=2024
-                                         AND t3.officename=t1.office),0) as utilized'))
+                            WHERE t1.officecode=t3.officecode
+                            AND t1.accountcode=t3.accountcode
+                            AND t3.obryear=2024
+                            AND t3.officename=t1.office),0) as utilized'))
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(amount_to) FROM vw_augmentation as t4
                             WHERE t4.officename=t1.office
                             AND t1.accountcode=t4.object_expenditures_to

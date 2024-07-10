@@ -34,11 +34,18 @@ export const DASHBOARD_BUDGET_SIDEBAR_LINKS =[
 		icon: <HiOutlineDocumentText />
 	},
 	{
+		key: 'budgetaugmentation',
+		label: 'Budget Augmentation',
+		path: '/budgetaugmentation',
+		icon: <HiOutlineDocumentText />
+	},
+	{
 		key: 'budgetrealignment',
 		label: 'Budget Realignment',
 		path: '/budgetrealignment',
 		icon: <HiOutlineDocumentText />
 	},
+	
 ]
 
 export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [

@@ -47,6 +47,8 @@ Route::get('budgetallotment',[BudgetAllotmentController::class,'index']);
 Route::get('budgetalloted/{yr}',[BudgetAllotmentController::class,'allbudget']);
 Route::get('budgetallotment/{id}',[BudgetAllotmentController::class,'officebudget']);
 Route::post('budgetallotment',[BudgetAllotmentController::class,'insert']);
+Route::post('budgetaugmentation/save',[BudgetAllotmentController::class,'saveaugmentation']);
+
 //Route::put('employee/{id}/edit',[EmployeeController::class,'update']);
 
 
