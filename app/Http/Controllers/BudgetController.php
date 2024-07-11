@@ -101,22 +101,24 @@ class BudgetController extends Controller
                 $budget->dated = $request->dated;
                 $budget->augmentationno = $request->augmentationno;
                 $budget->userid = $request->userid;
+                
                
                 $budget->save();
 
-               
+                $details = $request->details;
 
                 //This is the last update
                 $augmentationid = DB::getPdo()->lastInsertId();
-                // foreach($details as $key => $detail){
-                //     $obrDetail['accountdesc'] = $detail['name']['accountdesc'];
-                //     $obrDetail['accountclassification'] = $detail['name']['accountclassification'];
-                //     $obrDetail['funding'] = $detail['name']['funding'];
-                //     $obrDetail['accountcode'] = $detail['name']['accountcode'];
-                //     $obrDetail['amount'] = $detail['name']['amount'];
-                //     $obrDetail['obrid'] = $obrid;
-                //     Obrdetail::create($obrDetail);
-                // }
+                foreach($details as $key => $detail){
+                    $budgetdetail['augmentation_id'] = $augmentationid;
+                    $budgetdetail['object_expenditures_from'] = $detail['accountFrom'];
+                    $budgetdetail['expense_class_from'] = $detail['classFrom'];
+                    $budgetdetail['amount_from'] = $detail['amountFrom'];
+                    $budgetdetail['object_expenditures_to'] = $detail['accountTo'];
+                    $budgetdetail['expense_class_to'] = $detail['classTo'];
+                    $budgetdetail['amount_to'] = $detail['amountTo'];
+                    Augmentationdetail::create($budgetdetail);
+                }
 
                 DB::commit();
                 return response()->json(['augmentationid'=>$augmentationid]);
