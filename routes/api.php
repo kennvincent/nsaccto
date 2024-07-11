@@ -123,7 +123,10 @@ Route::get('displayofficebudget/{officename}',[BudgetController::class,'officebu
 Route::get('getaccounts/{officename}',[BudgetController::class,'accountsperoffice']);
 Route::get('getaccount/{id}',[BudgetController::class,'getaccount']);
 Route::post('budgetaugmentation/save',[BudgetController::class,'saveaugmentation']);
-
+Route::get('budgetaugmentation/list/{yr}',[BudgetController::class,'displayaugmentationlist']);
+Route::get('budgetaugmentation/list/{yr}/{office}',[BudgetController::class,'displayaugmentationlistbyoffice']);
+Route::get('budgetaugmentation/show/{id}',[BudgetController::class,'showselectedaugmentation']);
+Route::get('budgetaugmentation/show/header/{id}',[BudgetController::class,'showselectedaugmentationheader']);
 
 Route::get('budget/view',[BudgetController::class,'samplebudget']);
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axiosClient from '../../axios-client';
 import BudgetAugmentationAdd from './BudgetAugmentationAdd';
+import {v4 as uuid} from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 const BudgetAugmentation = () => {
     const [offices,setOffices]=useState([]);
@@ -116,8 +118,7 @@ const BudgetAugmentation = () => {
 
         }
         
-        console.log(details);
-        return;
+        
         axiosClient.post(`budgetaugmentation/save`,data).then(res=>{
             if(res.data.augmentationid>0){
                 alert('Augmentation have been saved');
@@ -193,7 +194,7 @@ const BudgetAugmentation = () => {
         const amountFromCleaned = amountFrom.replace(/,/g, '');
         const amountToCleaned = amountTo.replace(/,/g, '');
 
-        const newItem = {id: details.length,
+        const newItem = {id: uuid(),
                          accountFrom:accountFrom,
                          classFrom:classFrom,
                          amountFrom:amountFromCleaned,
@@ -234,13 +235,14 @@ const BudgetAugmentation = () => {
        
     })
 
-    const tableHeader = ()=>{
-        return(
-            <tr>
-                <td colspan="3" className='border border-gray-300 text-center'>Sources of funds</td>
-                <td colspan="3" className='border border-gray-300 text-center'>Uses of funds</td>
-            </tr>
-        );
+    
+    const navigate = useNavigate();
+    const handleClose = ()=>{
+        navigate('/dashboard');
+    }
+
+    const handleViewList = ()=>{
+        navigate('/budgetaugmentationlist');
     }
   return (
     <div className='card w-[70rem] m-auto'>
@@ -323,7 +325,8 @@ const BudgetAugmentation = () => {
 
                 <div className='p-1 mt-6'>
                     <button onClick={handleSaveAugmentation} className='btn btn-primary btn-sm w-[150px] mr-2'>Save</button>
-                    <button className='btn btn-primary btn-sm w-[150px]'>Close</button>
+                    <button onClick={handleViewList} className='btn btn-primary btn-sm w-[150px] mr-4'>View List</button>
+                    <button onClick={handleClose} className='btn btn-primary btn-sm w-[150px]'>Close</button>
                 
                 </div>
       </div>

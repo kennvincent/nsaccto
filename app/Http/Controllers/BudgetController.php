@@ -101,6 +101,7 @@ class BudgetController extends Controller
                 $budget->dated = $request->dated;
                 $budget->augmentationno = $request->augmentationno;
                 $budget->userid = $request->userid;
+                $budget->status = 1;
                 
                
                 $budget->save();
@@ -129,5 +130,68 @@ class BudgetController extends Controller
                 Toastr::error('OBR create failed');
                 return redirect()->back();
             }
+    }
+
+    function displayaugmentationlist($yr){
+
+        $augmentation=DB::table('augmentationheaders as t1')
+                        ->select('t1.id','t1.fy','t1.lgu','t1.officename',
+                                't1.ordinanceno','t1.dated','t1.augmentationno')
+                        ->where('t1.fy','=',$yr)
+                        // ->where('t1.officename','=',$office)
+                        ->where('t1.status','=',1)
+                        ->addSelect(DB::raw('(SELECT SUM(t2.amount_to) FROM augmentationdetails as t2
+                            where t1.id=t2.augmentation_id) as totalamount'))
+                        ->orderBy('id','desc')
+                        ->get();
+        return response()->json(['augmentation'=>$augmentation]);
+    }
+
+    function displayaugmentationlistbyoffice($yr,$officename){
+        $augmentation=DB::table('augmentationheaders as t1')
+                        ->select('t1.id','t1.fy','t1.lgu','t1.officename',
+                                't1.ordinanceno','t1.dated','t1.augmentationno')
+                        ->where('t1.fy','=',$yr)
+                        ->where('t1.officename','=',$officename)
+                        ->where('t1.status','=',1)
+                        ->addSelect(DB::raw('(SELECT SUM(t2.amount_to) FROM augmentationdetails as t2
+                            where t1.id=t2.augmentation_id) as totalamount'))
+                        ->orderBy('id','desc')
+                        ->get();
+                return response()->json(['augmentation'=>$augmentation]);
+    }
+
+    function showselectedaugmentation($id){
+        $augmentation = DB::table("vw_augmentation")
+                        ->select('id',
+                                 'fy',
+                                 'lgu',
+                                 'officename',
+                                 'ordinanceno',
+                                 'dated',
+                                 'augmentationno',
+                                 'object_expenditures_from',
+                                 'expense_class_from',
+                                 'amount_from',
+                                 'object_expenditures_to',
+                                 'expense_class_to',
+                                 'amount_to')
+                        ->where('id','=',$id)
+                        ->get();
+        return response()->json(['augmentation'=>$augmentation]);
+    }
+
+    public function showselectedaugmentationheader($id){
+        $augmentation = DB::table("augmentationheaders")
+                        ->select('id',
+                                'fy',
+                                'lgu',
+                                'officename',
+                                'ordinanceno',
+                                'dated',
+                                'augmentationno')
+                        ->where('id','=',$id)
+                        ->get();
+                return response()->json(['augmentationheader'=>$augmentation]);
     }
 }
