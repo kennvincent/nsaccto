@@ -42,6 +42,7 @@ import ExportToExcel from "./components/exportdata/ExportToExcel";
 import UpdateObligationRequest from "./components/obligationrequest/UpdateObligationRequest";
 import BudgetAugmentation from "./components/budget/BudgetAugmentation";
 import BudgetAugmentationList from "./components/budget/BudgetAugmentationList";
+import BudgetAugmentationEdit from "./components/budget/BudgetAugmentationEdit";
 
 const router = createBrowserRouter([
     {
@@ -138,6 +139,11 @@ const router = createBrowserRouter([
             {
                 path:'/budgetaugmentationlist',
                 element:<BudgetAugmentationList/>
+            }
+            ,
+            {
+                path:'/budgetaugmentationedit',
+                element:<BudgetAugmentationEdit/>
             }
             ,
            {

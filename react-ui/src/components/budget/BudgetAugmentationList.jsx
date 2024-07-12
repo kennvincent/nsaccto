@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axiosClient from '../../axios-client';
 import BudgetAugmentationShow from './BudgetAugmentationShow';
+import { useNavigate,useLocation } from 'react-router-dom';
 
 const BudgetAugmentationList = () => {
 
+    const navigate = useNavigate();
+    const win = window.sessionStorage;
     const currentYear = new Date().getFullYear();
     const years=[];
     const [selectedYear,setSelectedYear] = useState(currentYear);
@@ -65,7 +68,9 @@ const BudgetAugmentationList = () => {
     const [showAugmentation,setShowAugmention] =useState(false);
 
     const handleEditClick =(id)=>{
-        
+        win.setItem('augmentationid',id);
+        // navigate('/budgetaugmentationedit',{state:{augmentationid:id}});
+        navigate('/budgetaugmentationedit');
     }
 
     const [selectedAugmentation,setSelectedAugmention]=useState([]);
