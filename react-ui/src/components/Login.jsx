@@ -16,7 +16,11 @@ export default function handleLogin() {
  
   const logged = window.localStorage.getItem('isLoggedIn');
 
- 
+   win.removeItem('usertype');
+   win.removeItem('userid');
+   win.removeItem('officename');
+   win.removeItem('username');
+   win.removeItem('augmentationid');
 
   const handleInput = (e)=>{
     e.persist();

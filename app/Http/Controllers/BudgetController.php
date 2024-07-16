@@ -181,7 +181,7 @@ class BudgetController extends Controller
         return response()->json(['augmentation'=>$augmentation]);
     }
 
-    public function showselectedaugmentationheader($id){
+    public function getselectedaugmentationheader($id){
         $augmentation = DB::table("augmentationheaders")
                         ->select('id',
                                 'fy',
@@ -193,5 +193,76 @@ class BudgetController extends Controller
                         ->where('id','=',$id)
                         ->get();
                 return response()->json(['augmentationheader'=>$augmentation]);
+    }
+
+    public function getselectedaugmentationdetail($id){
+        $details = DB::table("augmentationdetails")
+                        ->select('id',
+                                 'object_expenditures_from as accountFrom',
+                                 'expense_class_from as classFrom',
+                                 'amount_from as amountFrom',
+                                 'object_expenditures_to as accountTo',
+                                 'expense_class_to as classTo',
+                                 'amount_to as amountTo')
+                        ->where('augmentation_id','=',$id)
+                        ->get();
+        return response()->json(['details'=>$details]);
+    }
+
+    public function updateaugmentation(Request $request,$id){
+        try{
+            $augmentation = Augmentationheader::find($id);
+            if($augmentation){
+                $augmentation->fy = $request->fy;
+                $augmentation->lgu = $request->lgu;
+                $augmentation->officename = $request->officename;
+                $augmentation->ordinanceno = $request->ordinanceno;
+                $augmentation->dated = $request->dated;
+                $augmentation->augmentationno = $request->augmentationno;
+                
+                $augmentation->save();
+    
+                Augmentationdetail::where('augmentation_id',$id)->delete();
+                
+                $details = $request->details;
+
+                foreach($details as $key => $detail){
+                    $budgetdetail['augmentation_id'] = $id;
+                    $budgetdetail['object_expenditures_from'] = $detail['accountFrom'];
+                    $budgetdetail['expense_class_from'] = $detail['classFrom'];
+                    $budgetdetail['amount_from'] = $detail['amountFrom'];
+                    $budgetdetail['object_expenditures_to'] = $detail['accountTo'];
+                    $budgetdetail['expense_class_to'] = $detail['classTo'];
+                    $budgetdetail['amount_to'] = $detail['amountTo'];
+                    Augmentationdetail::create($budgetdetail);
+                }
+
+
+                
+            }
+
+            DB::commit();
+            return response()->json(['message'=>'Augmentaion have been updated!!!']);
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Updated Failed');
+            return redirect()->back();
+        }
+
+    }
+
+    public function objectexpenditures($office,$fy){
+        $budgets = DB::table('budgets')
+                    ->select('id',
+                            'particulars',
+                            'accountclassification',
+                            'accountcode',
+                            'funding',
+                            'officecode')
+                    ->where('office',$office)
+                    ->where('budgetyear',$fy)
+                    ->where('proposedamount','>',0)
+                    ->get();
+        return response()->json(['budgets'=>$budgets]);
     }
 }

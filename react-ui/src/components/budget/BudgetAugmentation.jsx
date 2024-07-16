@@ -3,6 +3,7 @@ import axiosClient from '../../axios-client';
 import BudgetAugmentationAdd from './BudgetAugmentationAdd';
 import {v4 as uuid} from 'uuid';
 import { useNavigate } from 'react-router-dom';
+import SelectAccountFrom from './SelectAccountFrom';
 
 const BudgetAugmentation = () => {
     const [offices,setOffices]=useState([]);
@@ -216,6 +217,7 @@ const BudgetAugmentation = () => {
        const updateDetails = details.filter(detail => detail.id !== id);
        setDetails(updateDetails);
     }
+    
     const detailsList = details.map((detail)=>{
         const cleanedAmountFrom = detail.amountFrom.replace(/,/g, '')
         const cleanedAmountTo = detail.amountTo.replace(/,/g, '')
@@ -244,6 +246,35 @@ const BudgetAugmentation = () => {
     const handleViewList = ()=>{
         navigate('/budgetaugmentationlist');
     }
+
+    
+    const [showAccountFrom,setShowAccountFrom] =useState(false);
+    const [budgetFrom,setBudgetFrom]=useState([]);
+    const handleSelectAccountFrom = ()=>{
+        if(officename==''){
+            alert('Select Office');
+            return;
+        }
+       
+        if(fy==''){
+            alert('Enter FY');
+            return;
+        }
+
+        
+        axiosClient.get(`/budgetaugmentation/objectexpenditures/${officename}/${fy}`).then(res=>{
+            setBudgetFrom(res.data.budgets);
+        });
+        setShowAccountFrom(true);
+    }
+
+    const handleHideAccountFrom = ()=>{
+        setShowAccountFrom(false);
+    }
+    const handleSelectAccountTo = ()=>{
+
+    }
+
   return (
     <div className='card w-[70rem] m-auto'>
       <div className='card-header'><h6>Budget Augmentation</h6></div>
@@ -304,7 +335,14 @@ const BudgetAugmentation = () => {
                         <td className='p-1 border border-gray-300 text-center'><input type="text" value={classTo} onChange={(e)=>handleClassTo(e)} className=' h-8 w-[150px]'/></td>
                         <td className='p-1 border border-gray-300 text-center'><input type="text" value={amountTo} onChange={(e)=>handleAmountTo(e)} className=' h-8 w-[150px]'/></td>
                     </tr>
-                    
+                    <tr>
+                        <td className='p-1 border border-gray-300 w-[150px] text-center'><a href="#" onClick={handleSelectAccountFrom}>Select Account</a></td>
+                        <td className='p-1 border border-gray-300 w-[150px]'></td>
+                        <td className='p-1 border border-gray-300 w-[150px]'></td>
+                        <td className='p-1 border border-gray-300 w-[150px] text-center'><a href="#">Select Account</a></td>
+                        <td className='p-1 border border-gray-300 w-[150px]'></td>
+                        <td className='p-1 border border-gray-300 w-[150px]'></td>
+                    </tr>
                    
                    
                 </table>
@@ -315,10 +353,7 @@ const BudgetAugmentation = () => {
                 </div>
                 <div className='max-h-[200px] overflow-y-scroll p-1'> 
                     <table className='border-collapse border border-gray-300 mt-4'>
-                        {/* <tr>
-                            <td colspan="3" className='border border-gray-300 text-center'>Sources of funds</td>
-                            <td colspan="3" className='border border-gray-300 text-center'>Uses of funds</td>
-                        </tr> */}
+                       
                         {detailsList}
                     </table>
                 </div>
@@ -330,7 +365,7 @@ const BudgetAugmentation = () => {
                 
                 </div>
       </div>
-      <BudgetAugmentationAdd visible={showAdd} onClose={handleCloseAdd}/>
+        <SelectAccountFrom visible={showAccountFrom} dataBudgetFrom={budgetFrom} onClose={handleHideAccountFrom}/>
     </div>
   )
 }

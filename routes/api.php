@@ -126,7 +126,10 @@ Route::post('budgetaugmentation/save',[BudgetController::class,'saveaugmentation
 Route::get('budgetaugmentation/list/{yr}',[BudgetController::class,'displayaugmentationlist']);
 Route::get('budgetaugmentation/list/{yr}/{office}',[BudgetController::class,'displayaugmentationlistbyoffice']);
 Route::get('budgetaugmentation/show/{id}',[BudgetController::class,'showselectedaugmentation']);
-Route::get('budgetaugmentation/show/header/{id}',[BudgetController::class,'showselectedaugmentationheader']);
+Route::get('budgetaugmentation/get/header/{id}',[BudgetController::class,'getselectedaugmentationheader']);
+Route::get('budgetaugmentation/get/detail/{id}',[BudgetController::class,'getselectedaugmentationdetail']);
+Route::put('budgetaugmentation/update/{id}',[BudgetController::class,'updateaugmentation']);
+Route::get('budgetaugmentation/objectexpenditures/{office}/{fy}',[BudgetController::class,'objectexpenditures']);
 
 Route::get('budget/view',[BudgetController::class,'samplebudget']);
 

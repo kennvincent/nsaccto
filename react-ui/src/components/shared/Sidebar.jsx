@@ -17,7 +17,6 @@ const navigate = useNavigate();
 const win = window.sessionStorage;
 
 const handleLogout = ()=>{
-  alert('Are you sure?');
   window.localStorage.removeItem('isLoggedIn');
   window.localStorage.removeItem('user');
   window.localStorage.removeItem('usertype');
@@ -26,6 +25,7 @@ const handleLogout = ()=>{
   win.removeItem('obrid');
   win.removeItem('augmentationid');
   win.removeItem('userid');
+  win.removeItem('obrid');
   navigate("/");
   }
 
