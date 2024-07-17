@@ -218,6 +218,7 @@ const BudgetAugmentation = () => {
                          officecodeto:officecodeto
                     };
        
+        
         setDetails([...details,newItem]);
         setAccountFrom('');
         setClassFrom('');
@@ -267,9 +268,9 @@ const BudgetAugmentation = () => {
 
     
     const [objectexpenditures,setObjectExpenditures] = useState('');
-
     const [showAccountFrom,setShowAccountFrom] =useState(false);
     const [budgetFrom,setBudgetFrom]=useState([]);
+
     const handleSelectAccountFrom = (selected)=>{
         setObjectExpenditures(selected);
       

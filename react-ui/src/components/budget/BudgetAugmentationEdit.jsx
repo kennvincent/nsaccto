@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import axiosClient from '../../axios-client';
 import BudgetAugmentationAdd from './BudgetAugmentationAdd';
 import {v4 as uuid} from 'uuid';
+import SelectAccount from './SelectAccount';
 
 
 const BudgetAugmentationEdit = () => {
@@ -25,6 +26,8 @@ const BudgetAugmentationEdit = () => {
     const [accountFrom,setAccountFrom]=useState('');
     const [classFrom,setClassFrom]=useState('');
     const [amountFrom,setAmountFrom]=useState('');
+    const [officecodefrom,setOfficeCodeFrom] = useState('');
+    const [officecodeto,setOfficeCodeTo] = useState('');
     const [amountFromEdit,setAmountFromEdit]=useState('');
 
     const [accountTo,setAccountTo]=useState('');
@@ -53,22 +56,7 @@ const BudgetAugmentationEdit = () => {
        
         axiosClient.get(`/budgetaugmentation/get/detail/${augmentationid}`).then(res=>{
             setDetails(res.data.details);
-          details.forEach(detail=>{
-            
-            // item.push({id:uuid(),accountFrom:detail.accountFrom,
-            //            classFrom:detail.classFrom,
-            //            amountFrom:detail.amountFrom,
-            //            accountTo:detail.accountTo,
-            //            classTo:detail.accountTo,
-            //            amountTo:detail.amountTo
-            // });
-           
-            
-
-            // setDetails2(item);
-         
-            // console.log(detail.accountFrom +  ' ' + detail.classFrom + ' ' + detail.amountFrom);
-          });
+            console.log(res.data.details);
         });
 
        
@@ -156,8 +144,8 @@ const BudgetAugmentationEdit = () => {
             'details': details
         }
         
-        console.log(data);
-      
+       
+       console.log(data);
         axiosClient.put(`/budgetaugmentation/update/${augmentationid}`,data).then(res=>{
             alert(res.data.message);
         });
@@ -181,9 +169,11 @@ const BudgetAugmentationEdit = () => {
 
     const handleAmountFrom = (e)=>{
         setAmountFrom(e.target.value)
+        setAmountTo(e.target.value)
     }
 
     const handleAccountTo = (e)=>{
+       
         setAccountTo(e.target.value);
     }
 
@@ -192,6 +182,7 @@ const BudgetAugmentationEdit = () => {
     }
 
     const handleAmountTo = (e)=>{
+        setAmountFrom(e.target.value)
         setAmountTo(e.target.value);
     }
 
@@ -235,16 +226,22 @@ const BudgetAugmentationEdit = () => {
                          amountFrom:amountFromCleaned,
                          accountTo:accountTo,
                          classTo:classTo,
-                         amountTo:amountToCleaned
+                         amountTo:amountToCleaned,
+                         officecodefrom:officecodefrom,
+                         officecodeto:officecodeto
                     };
-       
+      
         setDetails([...details,newItem]);
+        console.log(details);
         setAccountFrom('');
         setClassFrom('');
         setAmountFrom('');
         setAccountTo('');
         setClassTo('');
         setAmountTo('');
+        setOfficeCodeFrom('');
+        setOfficeCodeTo('');
+   
     }
 
     const handleRemove = (id)=>{
@@ -259,12 +256,13 @@ const BudgetAugmentationEdit = () => {
             <td className='p-1 border border-gray-300 w-[150px]'>{detail.accountFrom}</td>
             <td className='p-1 border border-gray-300 w-[150px]'>{detail.classFrom}</td>
             <td className='p-1 border border-gray-300 w-[150px] text-right'>{Number(cleanedAmountFrom).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+            <td className='p-1 border border-gray-300 w-[150px]'>{detail.officecodefrom}</td>
 
             <td className='p-1 border border-gray-300 w-[150px]'>{detail.accountTo}</td>
             <td className='p-1 border border-gray-300 w-[150px]'>{detail.classTo}</td>
             <td className='p-1 border border-gray-300 w-[150px] text-right'>{Number(cleanedAmountTo).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+            <td className='p-1 border border-gray-300 w-[150px]'>{detail.officecodeto}</td>
             <td className='p-1 border border-gray-300 w-[50px]'><a href="#" onClick={(e)=>handleRemove(detail.id)} >remove</a></td>
-
         </tr>
         );
        
@@ -273,7 +271,7 @@ const BudgetAugmentationEdit = () => {
     
     const navigate = useNavigate();
     const handleClose = ()=>{
-        navigate('/dashboard');
+        navigate('/budgetaugmentationlist');
     }
 
     const handleViewList = ()=>{
@@ -281,11 +279,55 @@ const BudgetAugmentationEdit = () => {
     }
     
 
-    const handleSelectAccountFrom = ()=>{
+    
+    const [objectexpenditures,setObjectExpenditures] = useState('');
+    const [showAccountFrom,setShowAccountFrom] =useState(false);
+    const [budgetFrom,setBudgetFrom]=useState([]);
+
+    const handleSelectAccountFrom = (selected)=>{
+        setObjectExpenditures(selected);
+      
+      
+        if(officename==''){
+            alert('Select Office');
+            return;
+        }
+       
+        if(fy==''){
+            alert('Enter FY');
+            return;
+        }
+
+        
+        axiosClient.get(`/budgetaugmentation/objectexpenditures/${officename}/${fy}`).then(res=>{
+            setBudgetFrom(res.data.budgets);
+        });
+
+        setShowAccountFrom(true);
+    }
+
+    const handleHideAccountFrom = ()=>{
+        setShowAccountFrom(false);
+    }
+    const handleSelectAccountTo = ()=>{
 
     }
+
+    const handleCloseOnSelect=(data)=>{
+
+        console.log(data);
+        setShowAccountFrom(false);
+        if(objectexpenditures=="from"){
+            setAccountFrom(data.accountcode);
+            setOfficeCodeFrom(data.officecode);
+        }else if(objectexpenditures=="to"){
+            setAccountTo(data.accountcode);
+            setOfficeCodeTo(data.officecode);
+        }
+        
+    }
   return (
-    <div className='card w-[70rem] m-auto'>
+    <div className='card w-[82rem] m-auto'>
       <div className='card-header'><h6>Budget Augmentation</h6></div>
       <div className='card-body'>
             <table>
@@ -324,32 +366,38 @@ const BudgetAugmentationEdit = () => {
             
             <table className='border-collapse border border-gray-300 mt-4'>
                     <tr>
-                        <td colspan="3" className='border border-gray-300 text-center'>Sources of funds</td>
-                        <td colspan="4" className='border border-gray-300 text-center'>Uses of funds</td>
+                        <td colspan="4" className='border border-gray-300 text-center'>Sources of funds</td>
+                        <td colspan="5" className='border border-gray-300 text-center'>Uses of funds</td>
                     </tr>
                     <tr>
                         <td className='p-1 border border-gray-300 text-center'>Object of Expenditures</td>
                         <td className='p-1 border border-gray-300 text-center'>Expense Class</td>
                         <td className='p-1 border border-gray-300'>Amount</td>
+                        <td className='p-1 border border-gray-300'>Office Code</td>
 
                         <td className='p-1 border border-gray-300 text-center'>Object of Expenditures</td>
                         <td className='p-1 border border-gray-300 text-center'>Expense Class</td>
                         <td className='p-1 border border-gray-300 text-center'>Amount</td>
+                        <td className='p-1 border border-gray-300'>Office Code</td>
                     </tr>
                     <tr>
-                        <td className='p-1 border border-gray-300 text-center'><input type="text" value={accountFrom} onChange={(e)=>handleAccountFrom(e)} className=' h-8 w-[150px]'/></td>
+                        <td className='p-1 border border-gray-300 text-center'><input type="text" value={accountFrom}  className=' h-8 w-[150px]'/></td>
                         <td className='p-1 border border-gray-300 text-center'><input type="text" value={classFrom} onChange={(e)=>handleClassFrom(e)} className=' h-8 w-[150px]'/></td>
                         <td className='p-1 border border-gray-300 text-center'><input type="text" value={amountFrom} onChange={(e)=>handleAmountFrom(e)} className=' h-8 w-[150px]'/></td>
+                        <td className='p-1 border border-gray-300 text-center'><input type="text" value={officecodefrom}  className=' h-8 w-[150px]'/></td>
 
-                        <td className='p-1 border border-gray-300 text-center'><input type="text" value={accountTo} onChange={(e)=>handleAccountTo(e)} className=' h-8 w-[150px]'/></td>
+                        <td className='p-1 border border-gray-300 text-center'><input type="text" value={accountTo}  className=' h-8 w-[150px]'/></td>
                         <td className='p-1 border border-gray-300 text-center'><input type="text" value={classTo} onChange={(e)=>handleClassTo(e)} className=' h-8 w-[150px]'/></td>
                         <td className='p-1 border border-gray-300 text-center'><input type="text" value={amountTo} onChange={(e)=>handleAmountTo(e)} className=' h-8 w-[150px]'/></td>
+                        <td className='p-1 border border-gray-300 text-center'><input type="text" value={officecodeto}  className=' h-8 w-[150px]'/></td>
                     </tr>
                     <tr>
-                        <td className='p-1 border border-gray-300 w-[150px] text-center'><a href="#" onClick={handleSelectAccountFrom}>Select Account</a></td>
+                        <td className='p-1 border border-gray-300 w-[150px] text-center'><a href="#" onClick={()=>handleSelectAccountFrom('from')}>Select Account</a></td>
                         <td className='p-1 border border-gray-300 w-[150px]'></td>
                         <td className='p-1 border border-gray-300 w-[150px]'></td>
-                        <td className='p-1 border border-gray-300 w-[150px] text-center'><a href="#">Select Account</a></td>
+                        <td className='p-1 border border-gray-300 w-[150px]'></td>
+                        <td className='p-1 border border-gray-300 w-[150px] text-center'><a href="#" onClick={()=>handleSelectAccountFrom('to')}>Select Account</a></td>
+                        <td className='p-1 border border-gray-300 w-[150px]'></td>
                         <td className='p-1 border border-gray-300 w-[150px]'></td>
                         <td className='p-1 border border-gray-300 w-[150px]'></td>
                     </tr>
@@ -378,7 +426,7 @@ const BudgetAugmentationEdit = () => {
                 
                 </div>
       </div>
-      {/* <BudgetAugmentationAdd visible={showAdd} onClose={handleCloseAdd}/> */}
+    <SelectAccount visible={showAccountFrom} dataBudgetFrom={budgetFrom} onClose={handleHideAccountFrom} onCloseSelect={handleCloseOnSelect}/>
     </div>
 
   )

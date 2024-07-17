@@ -203,9 +203,11 @@ class BudgetController extends Controller
                                  'object_expenditures_from as accountFrom',
                                  'expense_class_from as classFrom',
                                  'amount_from as amountFrom',
+                                 'officecode_from as officecodefrom',
                                  'object_expenditures_to as accountTo',
                                  'expense_class_to as classTo',
-                                 'amount_to as amountTo')
+                                 'amount_to as amountTo',
+                                 'officecode_to as officecodeto',)
                         ->where('augmentation_id','=',$id)
                         ->get();
         return response()->json(['details'=>$details]);
@@ -233,10 +235,11 @@ class BudgetController extends Controller
                     $budgetdetail['object_expenditures_from'] = $detail['accountFrom'];
                     $budgetdetail['expense_class_from'] = $detail['classFrom'];
                     $budgetdetail['amount_from'] = $detail['amountFrom'];
+                    $budgetdetail['officecode_from'] = $detail['officecodefrom'];
                     $budgetdetail['object_expenditures_to'] = $detail['accountTo'];
                     $budgetdetail['expense_class_to'] = $detail['classTo'];
                     $budgetdetail['amount_to'] = $detail['amountTo'];
-                    $budgetdetail['officecode'] = $detail['officecode'];
+                    $budgetdetail['officecode_to'] = $detail['officecodeto'];
                     Augmentationdetail::create($budgetdetail);
                 }
 
