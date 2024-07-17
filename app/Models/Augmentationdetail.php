@@ -13,8 +13,10 @@ class Augmentationdetail extends Model
         'object_expenditures_from',
         'expense_class_from',
         'amount_from',
+        'officecode_from',
         'object_expenditures_to',
         'expense_class_to',
-        'amount_to'
+        'amount_to',
+        'officecode_to'
     ];
 }

@@ -115,9 +115,11 @@ class BudgetController extends Controller
                     $budgetdetail['object_expenditures_from'] = $detail['accountFrom'];
                     $budgetdetail['expense_class_from'] = $detail['classFrom'];
                     $budgetdetail['amount_from'] = $detail['amountFrom'];
+                    $budgetdetail['officecode_from'] = $detail['officecodefrom'];
                     $budgetdetail['object_expenditures_to'] = $detail['accountTo'];
                     $budgetdetail['expense_class_to'] = $detail['classTo'];
                     $budgetdetail['amount_to'] = $detail['amountTo'];
+                    $budgetdetail['officecode_to'] = $detail['officecodeto'];
                     Augmentationdetail::create($budgetdetail);
                 }
 
@@ -234,6 +236,7 @@ class BudgetController extends Controller
                     $budgetdetail['object_expenditures_to'] = $detail['accountTo'];
                     $budgetdetail['expense_class_to'] = $detail['classTo'];
                     $budgetdetail['amount_to'] = $detail['amountTo'];
+                    $budgetdetail['officecode'] = $detail['officecode'];
                     Augmentationdetail::create($budgetdetail);
                 }
 
