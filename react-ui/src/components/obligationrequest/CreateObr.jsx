@@ -81,9 +81,10 @@ const CreateObr = () => {
       
      
       setItems([...items,{id:uuid(),name:newItem}]);
- 
+      
+    
       setAmount('');
-      setAccountCode('');
+   
      
     }
 
@@ -98,28 +99,12 @@ const CreateObr = () => {
     const removeItem = (id) => {
       const filteredItems = items.filter((item) =>item.id !== id);
       setItems(filteredItems);
-      // let data = [...items];
-
-      // data.splice(id,1);
-      // setItems(data);
+      
     
     }
 
 
-    // const selectedItems = items.map((item) => {
-    //   return(
-    //     <tr key={item.id}>
-    //       <td>{item.accountcode}</td>
-    //       <td>{isEditing?<input type="text" name="" id="" />: item.amount}</td>
-          
-    //       <td><div>
-    //         <button onClick={(e)=> setIsEditing(true)}>{isEditing?'Save':'Edit'}</button>
-    //         <button onClick={(e) => removeItem (index)}>Remove</button>
-    //       </div></td>
-    //       <td></td>
-    //     </tr>
-    //   )
-    // });
+   
 
     const onChangeAccount = (e) =>{
       
@@ -157,8 +142,7 @@ const CreateObr = () => {
 
     const handleEditItem = (id,amount) => {
       const updateItems = items.map((item) => {
- 
-        
+       
         if(item.id == id){
           return {...item,amount:amount};
         }

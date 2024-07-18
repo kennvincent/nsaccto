@@ -107,6 +107,7 @@ Route::get('obligationrequest/accounting/getobrforpayment/{id}',[ObligationReque
 Route::post('obligationrequest/accounting/payment',[ObligationRequestController::class,'savepayment']);
 
 Route::get('obrtoexcel/{yr}',[ObligationRequestController::class,'obrtoexcel']);
+Route::get('obrtoexcel/bydate/{dt}',[ObligationRequestController::class,'obrtoexcelbydate']);
 
 Route::get('signatories',[SignatoriesController::class,'getsignatories']);
 

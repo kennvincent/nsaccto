@@ -22,6 +22,7 @@ const AccountItem = ({item,handleEditItem,removeItem}) => {
    
        let strAmount = amount.replace(/,/g, '');
        setAmount(strAmount);
+
         handleEditItem(item.id,amount);
         setIsEditing(false);
     }

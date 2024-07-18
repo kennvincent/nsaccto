@@ -587,7 +587,17 @@ class ObligationRequestController extends Controller
         return response()->json(['obrlist'=>$obrlist]);
     }
    
+    public function obrtoexcelbydate($dt){
+        $obrlist = DB::table('vw_obr')
+                   ->select('id','payee','particulars','officecode','officename',
+                       'officedesc','address','accountdesc','funding','accountcode','amount')
+                   ->where('obrstatus','=','Obligated')
+                   ->where('created_at','=',$dt)
+                   ->get();
+       return response()->json(['obrlist'=>$obrlist]);
+   }
 
+ 
     public function updateobr(Request $request){
 
     }
