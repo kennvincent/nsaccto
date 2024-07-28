@@ -80,8 +80,6 @@ export default function OBRList() {
    
   }
 
-  
-
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div className='flex'>
@@ -114,7 +112,7 @@ export default function OBRList() {
                 <td className='p-2'>{obr.particulars}</td>
                 <td className='p-2 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
                 <td className='p-2'>{obr.obrstatus}</td>
-                <td className='p-2'><a href="#" onClick={(e) => onClickCancel(e,{id:obr.id})}>{obr.obrstatus==='For Approval' && 'Cancel'}</a></td>
+                <td className='p-2'><a href="#" onClick={(e) => onClickCancel(e,{id:obr.id})}>Cancel</a></td>
                  <td className='p-2'><a href="#" onClick={(e) => onClickEdit(obr.id)}>{obr.obrstatus==='For Approval' && 'Edit'}</a></td> 
                 <td className='p-2'><a href="#" onClick={(e) => onClickPreview(obr.id)}>Print Preview</a></td>
                 {/* <td className='p-2'><a href="#" onClick={(e) => onClickPreview(e,{id:obr.id})}>Print Preview</a></td> */}

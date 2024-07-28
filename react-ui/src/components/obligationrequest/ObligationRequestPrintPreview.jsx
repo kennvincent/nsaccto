@@ -111,15 +111,12 @@ export default function ObligationRequestPrintPreview() {
          var subtotal=0;
          items.map((item) =>{
 
-             subtotal = subtotal + parseFloat(item.name.amount);
+             subtotal = subtotal + parseFloat(item.amount);
              setTotal(subtotal);
          })
      },[]);
 
     const handleCreateOBR = ()=>{
-    
-       
-     
         const obr = {
             'payee' : payee,
             'officeid' : officeid,
@@ -136,7 +133,7 @@ export default function ObligationRequestPrintPreview() {
             
         };
         
-        
+    
         axiosClient.post(`/obligationrequest`,obr).then(res=>{
             
                 const obr_id = res.data.obr_id;
@@ -266,7 +263,7 @@ export default function ObligationRequestPrintPreview() {
                     <div className='w-[15%] h-96 border py-0 px-2'>
                         {items.map((item,index)=>{
                             return(
-                                <p className='p-0 m-0' key={index}>{item.name.accountcode.split('|')[0]}</p>
+                                <p className='p-0 m-0' key={index}>{item.accountcode.split('|')[0]}</p>
                             );
                         })}
                     </div>
@@ -274,7 +271,7 @@ export default function ObligationRequestPrintPreview() {
                         
                         {items.map((item,index)=>(
                             
-                            <p className='p-0 m-0 text-right' key={index}> {Number(item.name.amount).toLocaleString()}</p>
+                            <p className='p-0 m-0 text-right' key={index}> {Number(item.amount).toLocaleString()}</p>
                         
                         ))}
                     </div>

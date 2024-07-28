@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 const SelectAccount = ({visible,dataBudgetFrom,onClose,onCloseSelect}) => {
     
-    const handleClickSelect = (accountcode,funding,officecode)=>{
+    const handleClickSelect = (id,accountcode,funding,officecode)=>{
         const data = {
+            'budgetid':id,
             'accountcode':accountcode,
             'funding':funding,
             'officecode':officecode,
@@ -25,7 +26,7 @@ const SelectAccount = ({visible,dataBudgetFrom,onClose,onCloseSelect}) => {
                 <td className='p-1'>{budget.accoountclassification}</td>
                 <td className='p-1'>{budget.funding}</td>
                 <td className='p-1'>{budget.officecode}</td>
-                <td className='p-1'><a href="#" onClick={(e)=>handleClickSelect(budget.accountcode,budget.funding,budget.officecode)}>Select</a></td>
+                <td className='p-1'><a href="#" onClick={(e)=>handleClickSelect(budget.id,budget.accountcode,budget.funding,budget.officecode)}>Select</a></td>
             </tr>
         );
     });

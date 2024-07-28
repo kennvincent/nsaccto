@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 const AccountItem = ({item,handleEditItem,removeItem}) => {
     const [isEditing,setIsEditing] = useState(false);
-    const [officecode,setOfficecode] = useState(item.name.officecode);
-    const [funding,setFunding] = useState(item.name.funding);
-    const [accountcode,setAccountCode] = useState(item.name.accountcode);
-    const [accountdesc,setAccountDesc] = useState(item.name.accountdesc);
-    const [amount,setAmount] = useState(item.name.amount);
+    const [officecode,setOfficecode] = useState(item.officecode);
+    const [funding,setFunding] = useState(item.funding);
+    const [accountcode,setAccountCode] = useState(item.accountcode);
+    const [accountdesc,setAccountDesc] = useState(item.accountdesc);
+    const [amount,setAmount] = useState(item.amount);
     
     const onEdit = ()=> {
         if(amount.trim().length == 0){

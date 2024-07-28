@@ -13,6 +13,7 @@ use App\Models\Aumentationheader;
 class BudgetController extends Controller
 {
     public function officebudget($officename){
+        $obrstatus='oblicated';
         $budgets = DB::table('budgets as t1')
                     ->select('t1.id',
                             't1.particulars',
@@ -25,24 +26,26 @@ class BudgetController extends Controller
                              't1.officecode')
                     ->where('t1.office',$officename)
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(t2.amount) FROM vw_obr as t2
-                            where t1.office=t2.officename
-                            and t1.officecode=t2.officecode
-                            and t1.accountcode=t2.accountcode
-                            and t2.obryear=2024
-                            and t2.obrstatus="Obligated"),0) as totalobligated'))
+                            WHERE t1.office=t2.officename
+                            AND t1.officecode=t2.officecode
+                            AND t1.accountcode=t2.accountcode
+                            AND t2.obryear=2024
+                            AND t2.obrstat=3),0) as totalobligated'))
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(amountpaid) FROM vw_payments as t3
-                            WHERE t1.officecode=t3.officecode
+                            where t1.office=t3.officename
                             AND t1.accountcode=t3.accountcode
                             AND t3.obryear=2024
                             AND t3.officename=t1.office),0) as utilized'))
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(amount_to) FROM vw_augmentation as t4
                             WHERE t4.officename=t1.office
                             AND t1.accountcode=t4.object_expenditures_to
-                            AND fy=2024),0) as augmentation'))
+                            AND fy=2024
+                            AND t4.status=1),0) as augmentation'))
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(amount_from) FROM vw_augmentation as t5
                             WHERE t5.officename=t1.office
                             AND t1.accountcode=t5.object_expenditures_from
-                            AND fy=2024),0) as lessaugmentation'))
+                            AND fy=2024
+                            AND t5.status=1),0) as lessaugmentation'))
                     ->get();
 
         return response()->json(['budgets'=>$budgets]);
@@ -112,10 +115,12 @@ class BudgetController extends Controller
                 $augmentationid = DB::getPdo()->lastInsertId();
                 foreach($details as $key => $detail){
                     $budgetdetail['augmentation_id'] = $augmentationid;
+                    $budgetdetail['budget_id_from'] = $detail['budgetIdFrom'];
                     $budgetdetail['object_expenditures_from'] = $detail['accountFrom'];
                     $budgetdetail['expense_class_from'] = $detail['classFrom'];
                     $budgetdetail['amount_from'] = $detail['amountFrom'];
                     $budgetdetail['officecode_from'] = $detail['officecodefrom'];
+                    $budgetdetail['budget_id_to'] = $detail['budgetIdTo'];
                     $budgetdetail['object_expenditures_to'] = $detail['accountTo'];
                     $budgetdetail['expense_class_to'] = $detail['classTo'];
                     $budgetdetail['amount_to'] = $detail['amountTo'];
@@ -200,10 +205,12 @@ class BudgetController extends Controller
     public function getselectedaugmentationdetail($id){
         $details = DB::table("augmentationdetails")
                         ->select('id',
+                                 'budget_id_from as budgetIdFrom',
                                  'object_expenditures_from as accountFrom',
                                  'expense_class_from as classFrom',
                                  'amount_from as amountFrom',
                                  'officecode_from as officecodefrom',
+                                 'budget_id_to as budgetIdTo',
                                  'object_expenditures_to as accountTo',
                                  'expense_class_to as classTo',
                                  'amount_to as amountTo',
@@ -232,10 +239,12 @@ class BudgetController extends Controller
 
                 foreach($details as $key => $detail){
                     $budgetdetail['augmentation_id'] = $id;
+                    $budgetdetail['budget_id_from'] = $detail['budgetIdFrom'];
                     $budgetdetail['object_expenditures_from'] = $detail['accountFrom'];
                     $budgetdetail['expense_class_from'] = $detail['classFrom'];
                     $budgetdetail['amount_from'] = $detail['amountFrom'];
                     $budgetdetail['officecode_from'] = $detail['officecodefrom'];
+                    $budgetdetail['budget_id_to'] = $detail['budgetIdTo'];
                     $budgetdetail['object_expenditures_to'] = $detail['accountTo'];
                     $budgetdetail['expense_class_to'] = $detail['classTo'];
                     $budgetdetail['amount_to'] = $detail['amountTo'];

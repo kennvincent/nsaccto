@@ -16,10 +16,12 @@ const BudgetAugmentation = () => {
     const [accounts,setAccounts]=useState([]);
     const [details,setDetails] = useState([]);
 
+    const [budgetIdFrom,setBudgetIdFrom]=useState('');
     const [accountFrom,setAccountFrom]=useState('');
     const [classFrom,setClassFrom]=useState('');
     const [amountFrom,setAmountFrom]=useState('');
 
+    const [budgetIdTo,setBudgetIdTo] = useState('');
     const [accountTo,setAccountTo]=useState('');
     const [classTo,setClassTo]=useState('');
     const [amountTo,setAmountTo]=useState('');
@@ -45,11 +47,11 @@ const BudgetAugmentation = () => {
 
     const handleChangeOffice = (e)=>{
         setOfficeName(e)
-        axiosClient.get(`/displayofficebudget/${officename}`,).then(res=>{
-            setAccounts(res.data.budgets);
-        });
+        // axiosClient.get(`/displayofficebudget/${officename}`,).then(res=>{
+        //     setAccounts(res.data.budgets);
+        // });
 
-        setDetails([]);
+        // setDetails([]);
     }
 
     const accountsList = accounts.map((account)=>{
@@ -123,9 +125,7 @@ const BudgetAugmentation = () => {
 
         }
         
-        // console.log(data);
-        // return;
-        
+       
         axiosClient.post(`budgetaugmentation/save`,data).then(res=>{
             if(res.data.augmentationid>0){
                 alert('Augmentation have been saved');
@@ -208,9 +208,11 @@ const BudgetAugmentation = () => {
         const amountToCleaned = amountTo.replace(/,/g, '');
 
         const newItem = {id: uuid(),
+                         budgetIdFrom:budgetIdFrom,
                          accountFrom:accountFrom,
                          classFrom:classFrom,
                          amountFrom:amountFromCleaned,
+                         budgetIdTo:budgetIdTo,
                          accountTo:accountTo,
                          classTo:classTo,
                          amountTo:amountToCleaned,
@@ -220,9 +222,11 @@ const BudgetAugmentation = () => {
        
         
         setDetails([...details,newItem]);
+        setBudgetIdFrom('');
         setAccountFrom('');
         setClassFrom('');
         setAmountFrom('');
+        setBudgetIdTo('');
         setAccountTo('');
         setClassTo('');
         setAmountTo('');
@@ -288,9 +292,10 @@ const BudgetAugmentation = () => {
         
         axiosClient.get(`/budgetaugmentation/objectexpenditures/${officename}/${fy}`).then(res=>{
             setBudgetFrom(res.data.budgets);
+            setShowAccountFrom(true);
         });
 
-        setShowAccountFrom(true);
+        
     }
 
     const handleHideAccountFrom = ()=>{
@@ -301,11 +306,14 @@ const BudgetAugmentation = () => {
     }
 
     const handleCloseOnSelect=(data)=>{
+        
         setShowAccountFrom(false);
         if(objectexpenditures=="from"){
+            setBudgetIdFrom(data.budgetid);
             setAccountFrom(data.accountcode);
             setOfficeCodeFrom(data.officecode);
         }else if(objectexpenditures=="to"){
+            setBudgetIdTo(data.budgetid);
             setAccountTo(data.accountcode);
             setOfficeCodeTo(data.officecode);
         }

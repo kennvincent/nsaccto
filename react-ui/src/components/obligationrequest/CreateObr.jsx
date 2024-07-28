@@ -63,26 +63,31 @@ const CreateObr = () => {
         return;
       }
 
-      let strAmount = amount.replace(/,/g, '');
+      let cleanedAmount = amount.replace(/,/g, '');
       
-      setOfficecode(accountItem.split('|')[0]);
       
+      setOfficecode(accountItem.split('|')[1]);
+      
+    
+
       const newItem = {
-        officecode:accountItem.split('|')[0].trim(),
-        accountclassification:accountItem.split('|')[1].trim(),
-        funding:accountItem.split('|')[2].trim(),
-        accountcode:accountItem.split('|')[3].trim(),
-        accountdesc:accountItem.split('|')[4].trim(),
-        amount:strAmount
+        id:uuid(),
+        budgetid:accountItem.split('|')[0].trim(),
+        officecode:accountItem.split('|')[1].trim(),
+        accountclassification:accountItem.split('|')[2].trim(),
+        funding:accountItem.split('|')[3].trim(),
+        accountcode:accountItem.split('|')[4].trim(),
+        accountdesc:accountItem.split('|')[5].trim(),
+        amount:cleanedAmount
       }
 
       // console.log(newItem);
       // return;
       
      
-      setItems([...items,{id:uuid(),name:newItem}]);
-      
-    
+      // setItems([...items,{id:uuid(),name:newItem}]);
+      setItems([...items,newItem]);
+      return;
       setAmount('');
    
      
@@ -124,12 +129,16 @@ const CreateObr = () => {
     }
 
     const onClickNext = ()=>{
+      
+
       if(particulars.trim().length == 0){
         alert("Enter particulars");
         return;
       }
 
       if(items.length>0){
+        console.log(items);
+
         navigate('/obrprintpreview',{state:{items,officecode,payee,particulars}});
       } else {
         alert('Account details cannot be empty!')
@@ -141,20 +150,35 @@ const CreateObr = () => {
     }
 
     const handleEditItem = (id,amount) => {
-      const updateItems = items.map((item) => {
+      const cleanedAmount= amount.replace(/,/g, '')
+      try{
+        const updateItems = items.map((item) => 
        
-        if(item.id == id){
-          return {...item,amount:amount};
-        }
 
-        return item;
-      })
+          item.id===id? {...item,amount:cleanedAmount}:item
+  
+          
+          // if(item.id == id){
+           
+          //   return {...item,amount:amount};
+       
+          // }
+      
+        )
+
+        setItems(updateItems);
+      }  catch (e) {
+        // Handle the error
+      }
+
+      
+     
     }
 
     const accountsList = accounts.map((account) =>{
       return(
-          <option value={account.officecode + ' | ' + account.accountclassification + ' | ' + account.funding + ' | ' + account.accountcode + ' | ' + account.particulars} 
-          key={account.id}>{account.officecode} | {account.funding} | {account.accountcode} | {account.particulars} </option>
+          <option value={account.id + ' | ' + account.officecode + ' | ' + account.accountclassification + ' | ' + account.funding + ' | ' + account.accountcode + ' | ' + account.particulars} 
+          key={account.id}>{account.id} | {account.officecode} | {account.funding} | {account.accountcode} | {account.particulars} </option>
       );
   })
 
