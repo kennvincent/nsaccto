@@ -68,7 +68,6 @@ const CreateObr = () => {
       
       setOfficecode(accountItem.split('|')[1]);
       
-    
 
       const newItem = {
         id:uuid(),
@@ -87,8 +86,10 @@ const CreateObr = () => {
      
       // setItems([...items,{id:uuid(),name:newItem}]);
       setItems([...items,newItem]);
-      return;
       setAmount('');
+      setAccountItem('');
+      return;
+      
    
      
     }
@@ -112,7 +113,7 @@ const CreateObr = () => {
    
 
     const onChangeAccount = (e) =>{
-      
+     
       setAccountItem(e);
     }
 
@@ -137,8 +138,7 @@ const CreateObr = () => {
       }
 
       if(items.length>0){
-        console.log(items);
-
+       
         navigate('/obrprintpreview',{state:{items,officecode,payee,particulars}});
       } else {
         alert('Account details cannot be empty!')
@@ -178,7 +178,7 @@ const CreateObr = () => {
     const accountsList = accounts.map((account) =>{
       return(
           <option value={account.id + ' | ' + account.officecode + ' | ' + account.accountclassification + ' | ' + account.funding + ' | ' + account.accountcode + ' | ' + account.particulars} 
-          key={account.id}>{account.id} | {account.officecode} | {account.funding} | {account.accountcode} | {account.particulars} </option>
+          key={account.id}> {account.officecode} | {account.funding} | {account.accountcode} | {account.particulars} </option>
       );
   })
 

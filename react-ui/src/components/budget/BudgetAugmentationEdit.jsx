@@ -39,6 +39,7 @@ const BudgetAugmentationEdit = () => {
     const [showAdd,setShowAdd] = useState(false);
     let item = [];
 
+    const [newListItem,setNewListItem]=useState([]);
     var userid = win.getItem('userid');
 
     useEffect(()=>{
@@ -319,7 +320,6 @@ const BudgetAugmentationEdit = () => {
 
     const handleCloseOnSelect=(data)=>{
 
-        console.log(data);
         setShowAccountFrom(false);
         if(objectexpenditures=="from"){
             setBudgetIdFrom(data.budgetid);

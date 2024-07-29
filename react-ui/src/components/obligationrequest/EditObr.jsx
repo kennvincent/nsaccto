@@ -10,7 +10,6 @@ const EditObr = () => {
     const [officecode,setOfficecode] = useState();
     const [accounts,setAccounts] = useState([]);
     const [items,setItems] = useState([]);
-    const [details,setDetails] = useState([]);
     const [accountItem,setAccountItem] = useState('');
     const [accountcode,setAccountCode] = useState('');
     const [amount,setAmount] = useState('');
@@ -20,8 +19,8 @@ const EditObr = () => {
     const [obrid,setObrid] = useState();
     const navigate = useNavigate();
     const win = window.sessionStorage;
+    const [newListItem,setNewListItem]=useState([]);
 
- 
 
     useEffect(() => {
      
@@ -29,9 +28,15 @@ const EditObr = () => {
       setObrid(id);
     
       axiosClient.get(`/obligationrequest/edit/${id}`).then(res=>{
-        setDetails(res.data.obr);
         setPayee(res.data.obr[0].payee);
         setParticulars(res.data.obr[0].particulars);
+        setOfficecode(res.data.obr[0].officecode);
+        console.log(officecode);
+      });
+
+      axiosClient.get(`/obligationrequest/edit/details/${id}`).then(res=>{
+        setItems(res.data.obr);
+        console.log(items);
       });
       
       setOfficename(win.getItem('officename'));
@@ -59,18 +64,18 @@ const EditObr = () => {
     },[]);
 
 
-    const displayItems = ()=>{
-      details.map((item)=>{
-        return(
-          console.log(item)
-        );
+    // const displayItems = ()=>{
+    //   details.map((item)=>{
+    //     return(
+    //       console.log(item)
+    //     );
         
-      })
-    }
+    //   })
+    // }
 
     const onClickAdd = () => {
       
-      
+   
       
       if(accountItem.trim().length == 0){
         alert("Select account");
@@ -88,23 +93,29 @@ const EditObr = () => {
         return;
       }
 
-      let strAmount = amount.replace(/,/g, '');
+      let cleanedAmount = amount.replace(/,/g, '');
       
-      setOfficecode(accountItem.split('|')[0]);
+      setOfficecode(accountItem.split('|')[1]);
+      
 
       const newItem = {
-        officecode:accountItem.split('|')[0].trim(),
-        accountclassification:accountItem.split('|')[1].trim(),
-        funding:accountItem.split('|')[2].trim(),
-        accountcode:accountItem.split('|')[3].trim(),
-        accountdesc:accountItem.split('|')[4].trim(),
-        amount:strAmount
+        id:uuid(),
+        budgetid:accountItem.split('|')[0].trim(),
+        officecode:accountItem.split('|')[1].trim(),
+        accountclassification:accountItem.split('|')[2].trim(),
+        funding:accountItem.split('|')[3].trim(),
+        accountcode:accountItem.split('|')[4].trim(),
+        accountdesc:accountItem.split('|')[5].trim(),
+        amount:cleanedAmount
       }
-
-      setItems([...items,{id:uuid(),name:newItem}]);
- 
+   
+      
+      setItems([...items,newItem]);
+      
+      
       setAmount('');
       setAccountCode('');
+      setAccountItem('');
     
     }
 
@@ -119,6 +130,9 @@ const EditObr = () => {
     const removeItem = (id) => {
       const filteredItems = items.filter((item) =>item.id !== id);
       setItems(filteredItems);
+
+  
+
       // let data = [...items];
 
       // data.splice(id,1);
@@ -126,11 +140,15 @@ const EditObr = () => {
     
     }
 
+    const [retrievedItems,setRetrievedItems]=useState([]);
 
-    const selectedItems = details.map((item) => {
+    
+
+
+    const selectedItems = items.map((item) => {
       return(
       
-        <tr key={item.id}>
+        <tr key={item.obr_detail_id}>
           <td>{item.accountcode}</td>
           <td>{isEditing?<input type="text" name="" id="" />: item.amount}</td>
           
@@ -144,8 +162,8 @@ const EditObr = () => {
     });
 
     const onChangeAccount = (e) =>{
-      
       setAccountItem(e);
+  
     }
 
     const onChangeAmount = (e) => {
@@ -161,6 +179,9 @@ const EditObr = () => {
     }
 
     const onClickNext = ()=>{
+     
+      // console.log(items);
+      // return;
       if(particulars.trim().length == 0){
         alert("Enter particulars");
         return;
@@ -168,7 +189,7 @@ const EditObr = () => {
 
     
       if(items.length>0){
-        navigate('/updateobrpreview',{state:{obrid,items,payee,particulars}});
+        navigate('/updateobrpreview',{state:{obrid,officecode,items,payee,particulars}});
       } else {
         alert('Account details cannot be empty!')
       }
@@ -179,22 +200,32 @@ const EditObr = () => {
     }
 
     const handleEditItem = (id,amount) => {
-      const updateItems = items.map((item) => {
- 
+      
+      const cleanedAmount= amount.replace(/,/g, '')
+      try{
+        const updateItems = items.map((item) => 
+          item.id===id? {...item,amount:cleanedAmount}:item
+  
+          
+          // if(item.id == id){
+           
+          //   return {...item,amount:amount};
+       
+          // }
+      
+        )
         
-        if(item.id == id){
-          return {...item,amount:amount};
-        }
-
-        return item;
-      })
+        setItems(updateItems);
+      }  catch (e) {
+        // Handle the error
+      }
     }
 
     
 
      const accountsList = accounts.map((account) =>{
       return(
-          <option value={account.officecode + ' | ' + account.accountclassification + ' | ' + account.funding + ' | ' + account.accountcode + ' | ' + account.particulars} 
+          <option value={account.id + ' | ' + account.officecode + ' | ' + account.accountclassification + ' | ' + account.funding + ' | ' + account.accountcode + ' | ' + account.particulars} 
           key={account.id}>{account.officecode} | {account.funding} | {account.accountcode} | {account.particulars} </option>
       );
       
@@ -241,7 +272,7 @@ const EditObr = () => {
             <div  className='mt-10'>
               <table>
                 <tbody>
-                  {items.map((item)=> (<AccountItem key={item.id} item={item} 
+                  {items.map((item)=> (<AccountItem key={item.obr_detail_id} item={item} 
                     handleEditItem={handleEditItem} removeItem={removeItem}/>))}
                 </tbody>
               </table>

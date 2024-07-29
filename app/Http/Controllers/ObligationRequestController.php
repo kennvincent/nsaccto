@@ -156,22 +156,33 @@ class ObligationRequestController extends Controller
 
     public function editpreview($id){
         $obr = DB::table('vw_obr')
-                ->select('id',
+                ->select('obr_detail_id as id',
                         'payee',
                         'particulars',
                         'officecode',
                         'officename',
                         'officedesc',
                         'address',
-                        'funding',
-                        'accountcode',
-                        'accountdesc',
-                        'amount',
                         'signatory1',
                         'position1',
                         'signatory2',
                         'position2',
                         'obrstatus','withvoucher')
+                ->where('id','=',[$id])
+                ->get();
+        return response()->json(['obr'=>$obr]);
+    }
+
+    public function editdetailspreview($id){
+        $obr = DB::table('vw_obr')
+                ->select('budgetid as id',
+                        'budgetid',
+                        'officecode',
+                        'accountcode',
+                        'accountdesc',
+                        'accountclassification',
+                        'funding',
+                        'amount')
                 ->where('id','=',[$id])
                 ->get();
         return response()->json(['obr'=>$obr]);
@@ -251,7 +262,7 @@ class ObligationRequestController extends Controller
     public function viewofficeobrlist($officename){
         $obrlist = DB::table('vw_obrheaders')
                     ->select('id','payee','particulars','officecode','officename',
-                             'officedesc','address','totalamount','obrstatus')
+                             'officedesc','address','totalamount','obrstatus','obrstat')
                     ->where('officename','=',$officename)
                     ->where('obrstatus','!=','Cancelled')
                     ->orderBy('id','DESC')
@@ -485,21 +496,31 @@ class ObligationRequestController extends Controller
                 $obr->save();
 
                 $details = $request->obrdetails;
-                // // //$obrid = DB::table('obrheaders')->select('id')->lastInsertedId();
-                // // // $obrid = $obrid->id;
 
-                //This is the last update
+                // //This is the last update
                 $obrid = DB::getPdo()->lastInsertId();
                 foreach($details as $key => $detail){
-                    $obrDetail['budgetid'] = $detail['name']['budgetid'];
-                    $obrDetail['accountdesc'] = $detail['name']['accountdesc'];
-                    $obrDetail['accountclassification'] = $detail['name']['accountclassification'];
-                    $obrDetail['funding'] = $detail['name']['funding'];
-                    $obrDetail['accountcode'] = $detail['name']['accountcode'];
-                    $obrDetail['amount'] = $detail['name']['amount'];
+                    $obrDetail['budgetid'] = $detail['budgetid'];
+                    $obrDetail['accountdesc'] = $detail['accountdesc'];
+                    $obrDetail['accountclassification'] = $detail['accountclassification'];
+                    $obrDetail['funding'] = $detail['funding'];
+                    $obrDetail['accountcode'] = $detail['accountcode'];
+                    $obrDetail['amount'] = $detail['amount'];
                     $obrDetail['obrid'] = $obrid;
                     Obrdetail::create($obrDetail);
                 }
+
+
+                // foreach($details as $key => $detail){
+                //     $obrDetail['budgetid'] = $detail['budgetid'];
+                //     $obrDetail['accountdesc'] = $detail['accountdesc'];
+                //     $obrDetail['accountclassification'] = $detail['accountclassification'];
+                //     $obrDetail['funding'] = $detail['funding'];
+                //     $obrDetail['accountcode'] = $detail['accountcode'];
+                //     $obrDetail['amount'] = $detail['amount'];
+                //     $obrDetail['obrid'] = $obrid;
+                //     Obrdetail::create($obrDetail);
+                // }
 
                 DB::commit();
                 return response()->json(['obr_id'=>$obrid]);
@@ -599,7 +620,46 @@ class ObligationRequestController extends Controller
    }
 
  
-    public function updateobr(Request $request){
+    public function updateobr(Request $request,$id){
+        try{
+            $obrheader = Obrheader::find($id);
+            if($obrheader){
+                $obrheader->payee = $request->payee;
+                $obrheader->address = $request->address;
+                $obrheader->officeid = $request->officeid;
+                $obrheader->officecode = $request->officecode;
+                $obrheader->particulars = $request->particulars;
+                $obrheader->obryear = $request->obryear;
+                $obrheader->signatory1 = $request->signatory1;
+                $obrheader->position1 = $request->position1;
+                $obrheader->signatory2 = $request->signatory2;
+                $obrheader->position2 = $request->position2;
+                $obrheader->save();
+    
+                Obrdetail::where('obrid',$id)->delete();
 
+                $details = $request->obrdetails;
+                // //This is the last update
+              
+                foreach($details as $key => $detail){
+                    $obrDetail['budgetid'] = $detail['budgetid'];
+                    $obrDetail['accountdesc'] = $detail['accountdesc'];
+                    $obrDetail['accountclassification'] = $detail['accountclassification'];
+                    $obrDetail['funding'] = $detail['funding'];
+                    $obrDetail['accountcode'] = $detail['accountcode'];
+                    $obrDetail['amount'] = $detail['amount'];
+                    $obrDetail['obrid'] = $id;
+                    Obrdetail::create($obrDetail);
+                }
+                
+            }
+
+            DB::commit();
+            return response()->json(['obrid'=>$id]);
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Updated Failed');
+            return redirect()->back();
+        }
     }
 }

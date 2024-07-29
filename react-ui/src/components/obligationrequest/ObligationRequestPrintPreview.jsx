@@ -131,13 +131,13 @@ export default function ObligationRequestPrintPreview() {
             'userid':userid,
             'obrdetails': items
             
-        };
-        
-    
-        axiosClient.post(`/obligationrequest`,obr).then(res=>{
-            
-                const obr_id = res.data.obr_id;
 
+        };
+
+        console.log(obr);
+        // return;
+        axiosClient.post(`/obligationrequest`,obr).then(res=>{
+                const obr_id = res.data.obr_id;
                 if(obr_id>0){
                     alert('Obligation Request have been created');
                     setShowSave(false);

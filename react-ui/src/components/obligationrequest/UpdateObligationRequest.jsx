@@ -45,7 +45,7 @@ const UpdateObligationRequest = () => {
     const obrid = location.state.obrid;
     const particulars = location.state.particulars;
     const payee = location.state.payee;
-
+    
     var userid = win.getItem('userid');
     var username = win.getItem('username');
 
@@ -57,9 +57,8 @@ const UpdateObligationRequest = () => {
 
 
     useEffect(()=>{
-        
+  
         setOfficeCode(location.state.officecode);
-        
         axiosClient.get(`signatories`).then(res =>{
             setBudgetAuthorized(res.data.signatories[0].budgetofficer);
         });
@@ -78,7 +77,7 @@ const UpdateObligationRequest = () => {
              try{
                  await axiosClient.get(`/login/${username}`).then(res =>{
                     
-                    console.log(res.data.office[0].authorizedpersonnel);
+                    
                      setOfficeId(res.data.office[0].office_id);
                     //  setOfficeCode(res.data.office[0].officecode);
                      setOfficeName(res.data.office[0].officename);
@@ -87,7 +86,6 @@ const UpdateObligationRequest = () => {
                      setResponsibilityCenter(res.data.office[0].officename);
                      setAuthorizedPersonnel(res.data.office[0].authorizedpersonnel);
                      setAuthorizedPosition(res.data.office[0].position);
-                              
                      setBudgetPosition('Provincial Budget Officer');
                  });
              }
@@ -111,7 +109,7 @@ const UpdateObligationRequest = () => {
          var subtotal=0;
          items.map((item) =>{
 
-             subtotal = subtotal + parseFloat(item.name.amount);
+             subtotal = subtotal + parseFloat(item.amount);
              setTotal(subtotal);
          })
      },[]);
@@ -135,13 +133,14 @@ const UpdateObligationRequest = () => {
             
         };
         
-        
-        axiosClient.post(`/obligationrequest`,obr).then(res=>{
-            
-                const obr_id = res.data.obr_id;
-
+        // console.log(obr);
+        // return;
+    
+        axiosClient.put(`/obligationrequest/update/${obrid}`,obr).then(res=>{
+                const obr_id = res.data.obrid;
+                
                 if(obr_id>0){
-                    alert('Obligation Request have been created');
+                    alert('Obligation Request have been updated');
                     setShowSave(false);
                     setShowPrint(true);
                     // window.localStorage.setItem('obrid',obrid);
@@ -264,7 +263,7 @@ const UpdateObligationRequest = () => {
                     <div className='w-[15%] h-96 border py-0 px-2'>
                         {items.map((item,index)=>{
                             return(
-                                <p className='p-0 m-0' key={index}>{item.name.accountcode.split('|')[0]}</p>
+                                <p className='p-0 m-0' key={item.budgetid}>{item.accountcode.split('|')[1]}</p>
                             );
                         })}
                     </div>
@@ -272,7 +271,7 @@ const UpdateObligationRequest = () => {
                         
                         {items.map((item,index)=>(
                             
-                            <p className='p-0 m-0 text-right' key={index}> {Number(item.name.amount).toLocaleString()}</p>
+                            <p className='p-0 m-0 text-right' key={item.budgetid}> {Number(item.amount).toLocaleString()}</p>
                         
                         ))}
                     </div>
