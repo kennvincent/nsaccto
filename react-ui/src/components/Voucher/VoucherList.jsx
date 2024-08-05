@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function VoucherList() {
     const [vouchersList,setVouchersList] =useState([]);
     const navigate = useNavigate();
+   
 
     useEffect(()=>{
 
@@ -16,11 +17,19 @@ export default function VoucherList() {
     },[]);
 
 
+    const handleVoucherEdit=(voucher_id)=>{
+        // window.localStorage.setItem('voucher_id',voucher_id);
+        navigate(`/vouchereditreview/${voucher_id}`,);
+        // navigate('/vouchereditreview',{state:{voucher_id:voucher_id}});
+    }
+
     const handleVoucherView = (voucher_id)=>{
         window.localStorage.setItem('voucher_id',voucher_id);
         navigate('/voucherprintpreview',{state:{voucher_id:voucher_id}});
-        
-       }
+    }
+
+
+     
        
    const vouchers = vouchersList.map((voucher)=>{
     return(
@@ -29,6 +38,7 @@ export default function VoucherList() {
             <td className='p-1'>{voucher.payee}</td>
             <td className='p-1'>{voucher.address}</td>
             <td className='p-1'>{voucher.explanation}</td>
+            <td className='p-1'><button onClick={()=>handleVoucherEdit(voucher.id)} className='btn btn-primary btn-sm'>Edit</button></td>
             <td className='p-1'><button onClick={()=>handleVoucherView(voucher.id)} className='btn btn-primary btn-sm'>View</button></td>
         </tr>
     )
@@ -48,6 +58,7 @@ export default function VoucherList() {
                             <th>Payee</th>
                             <th>Address</th>
                             <th>Explanation</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>

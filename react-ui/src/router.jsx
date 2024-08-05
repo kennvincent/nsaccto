@@ -43,6 +43,7 @@ import UpdateObligationRequest from "./components/obligationrequest/UpdateObliga
 import BudgetAugmentation from "./components/budget/BudgetAugmentation";
 import BudgetAugmentationList from "./components/budget/BudgetAugmentationList";
 import BudgetAugmentationEdit from "./components/budget/BudgetAugmentationEdit";
+import EditVoucher from "./components/Voucher/EditVoucher";
 
 const router = createBrowserRouter([
     {
@@ -202,6 +203,11 @@ const router = createBrowserRouter([
            {
             path:'/voucherslist',
             element:<VoucherList/>
+           }
+           ,
+           {
+            path:'/vouchereditreview/:voucher_id',
+            element:<EditVoucher/>
            }
            ,
            {

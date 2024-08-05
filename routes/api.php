@@ -142,6 +142,9 @@ Route::get('voucher/deductions/{id}',[VoucherController::class,'voucherdeduction
 Route::get('voucher/list',[VoucherController::class,'voucherslist']);
 Route::get('voucher/{id}',[VoucherController::class,'selectedvoucher']);
 Route::get('voucher/getobrvoucher/{id}',[VoucherController::class,'getobrvoucher']);
+Route::get('voucher/getobrvoucher/header/{id}',[VoucherController::class,'getobrvoucherheadereditview']);
+Route::get('voucher/getobrvoucher/deductions/{id}',[VoucherController::class,'getobrvouchereditdeductionsview']);
+Route::put('voucher/update/{id}',[VoucherController::class,'updatevoucher']);
 
 Route::get('payment/display',[PaymentController::class,'displaypayments']);
 Route::get('utilization/display',[PaymentController::class,'utilization']);

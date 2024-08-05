@@ -263,7 +263,7 @@ const UpdateObligationRequest = () => {
                     <div className='w-[15%] h-96 border py-0 px-2'>
                         {items.map((item,index)=>{
                             return(
-                                <p className='p-0 m-0' key={item.budgetid}>{item.accountcode.split('|')[1]}</p>
+                                <p className='p-0 m-0' key={item.budgetid}>{item.accountcode}</p>
                             );
                         })}
                     </div>
@@ -278,7 +278,7 @@ const UpdateObligationRequest = () => {
                 </div>
                 <div className='flex border w-[1024px] m-auto'>
                     <div className='w-[50%] h-12  py-0 px-2'></div>
-                    
+                            
                     <div className='w-[35%] h-12  py-1 px-2'>
                         
                     </div>
