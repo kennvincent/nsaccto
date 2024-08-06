@@ -111,6 +111,7 @@ class ObligationRequestController extends Controller
                             'officename',
                             'officedesc',
                             'address',
+                            'budgetid',
                             'accountcode1',
                             'accountcode',
                             'amount1',
@@ -132,7 +133,7 @@ class ObligationRequestController extends Controller
         return response()->json(['obr'=>$obrlist]);
     }
 
-    
+
     public function printpreview($id){
 
         $obr = DB::table('vw_obr')
@@ -580,6 +581,7 @@ class ObligationRequestController extends Controller
 
             foreach($details as $key => $detail){
                 $paymentDetail['obr_detail_id'] = $detail['obr_detail_id'];
+                $paymentDetail['budgetid'] = $detail['budgetid'];
                 $paymentDetail['accountcode'] = $detail['accountcode'];
                 $paymentDetail['amountpaid'] = $detail['amountpaid'];
                 $paymentDetail['paymentid'] = $paymentid;

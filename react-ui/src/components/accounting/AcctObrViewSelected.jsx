@@ -74,11 +74,21 @@ export default function AcctObrViewSelected() {
     const handleClickSave=(e)=>{
         e.preventDefault();
         
+        if(checknumber==undefined){
+            alert('Enter Check Number');
+            return;
+        }
    
+        if(bankname==undefined){
+            alert('Enter Bank Name');
+            return;
+        }
+        
         let paymentDetails =[];
         obr2.map((data)=>{
             
             paymentDetails.push({
+                budgetid:data.budgetid,
                 obrid:data.id,
                 obr_detail_id:data.obr_detail_id,
                 accountcode:data.accountcode,
@@ -87,6 +97,7 @@ export default function AcctObrViewSelected() {
            
         })
 
+        
         const payments = {
             'checknumber':checknumber,
             'bankname':bankname,
@@ -150,6 +161,8 @@ export default function AcctObrViewSelected() {
     const obrDetails = obr.map((detail,index)=>{
         return (
             <tr key={index} className='p-0'>
+                <td className='hidden'><input type="text"  name="budgetid" value={detail.budgetid} /></td>
+
                 <td className='p-1'><input type="text" name="accountcode1" value={detail.accountcode1} 
                 onChange={(e)=>handleAccountCodeChange(index,e)} className='py-1' /></td>
                 
