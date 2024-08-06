@@ -130,7 +130,7 @@ class VoucherController extends Controller
 
     public function getobrvouchereditdeductionsview($id){
         $deductions = DB::table('voucherdeductions')
-                ->select('description','amount')
+                ->select('id','description','amount')
                 ->where('voucher_id','=',$id)
                 ->get();
         return response()->json(['deductions'=>$deductions]);

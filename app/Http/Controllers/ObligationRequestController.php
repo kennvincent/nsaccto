@@ -131,6 +131,8 @@ class ObligationRequestController extends Controller
                     ->get();
         return response()->json(['obr'=>$obrlist]);
     }
+
+    
     public function printpreview($id){
 
         $obr = DB::table('vw_obr')

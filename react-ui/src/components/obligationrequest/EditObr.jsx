@@ -203,6 +203,7 @@ const EditObr = () => {
       
       const cleanedAmount= amount.replace(/,/g, '')
       try{
+        
         const updateItems = items.map((item) => 
           item.id===id? {...item,amount:cleanedAmount}:item
   

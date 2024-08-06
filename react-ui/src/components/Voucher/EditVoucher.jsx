@@ -28,7 +28,7 @@ const EditVoucher = () => {
 
     const [editdeduction,setEditDeduction]=useState(0);
     const [editamount,setEditAmount]=useState(0);
-    const [editindex,setEditIndex]=useState('');
+    const [editid,setEditId]=useState('');
 
     const { voucher_id } = useParams();
     const navigate = useNavigate();
@@ -54,7 +54,7 @@ const EditVoucher = () => {
 
       axiosClient.get(`/voucher/getobrvoucher/deductions/${voucher_id}`).then(res =>{
         setDeductions(res.data.deductions);
-        console.log(res.data.deductions);
+        
       })
 
       // const fetchData = async()=>{
@@ -114,13 +114,42 @@ const EditVoucher = () => {
 
     }
 
-    const getArrayEditData =(index,deduction,amount)=>{
-      const cleanedValue = amount.replace(/,/g, '');
-      let newfield = { description: deduction, amount: cleanedValue }
-      setDeductions([...deductions, newfield])
+    const getArrayEditData =(id,deduct,amount)=>{
+      
+      const cleanedAmount = amount.replace(/,/g, '');
+      const updateItems = deductions.map((item) => 
+        
+        // deduction.id===id? {...deduction,amount:cleanedAmount}:deduction
+        item.id===id? {...item,description:deduct,amount:cleanedAmount}:item
+    
+      )
+
+
+     
+      
+      setDeductions(updateItems)
+      setEditDeduction('');
+      setEditAmount('');
+      setEditId('');
+
       setShowEditDeduction(false);
 
+
+
     }
+
+    const handleUpdateDeduction = (updatedDeduction)=>{
+    
+      // console.log(updatedDeduction);
+      setDeductions(deductions.map(deduction =>
+
+        deduction.id === updatedDeduction.id ? updatedDeduction : deduction
+      ));
+
+      setSelectedDeduction(null);
+      setShowEditDeduction(false);
+    }
+  
 
    const handlePayeeInput = (e)=>{
     e.preventDefault();
@@ -164,16 +193,16 @@ const EditVoucher = () => {
     var totalDeductionsAmmount=0;
     var grandTotal=0;
 
-    const deductionsLists = deductions.map((deduct,index)=>{
-      totalDeductionsAmmount += parseFloat(deduct.amount)
+    const deductionsLists = deductions.map((deduction,index)=>{
+      totalDeductionsAmmount += parseFloat(deduction.amount)
       grandTotal = balance - totalDeductionsAmmount
       return(
         <>
 
-          <tr key={index} className='p-0 m-0 w-full'>
-            <td className='p-0 m-0 text-sm w-80'>{deduct.description}</td>
-            <td className='text-right text-lg p-0 m-0'>{deduct.amount>0?Number(deduct.amount).toLocaleString():''}</td>
-            <td className='text-right text-rose-600 p-0 pl-2m-0 w-full'><button onClick={() => removeDeduction(index)}>Remove</button> | <button onClick={() => handleshowEditDeduction(index,deduct.description,deduct.amount)}>Edit</button></td>
+          <tr key={deduction.id} className='p-0 m-0 w-full'>
+            <td className='p-0 m-0 text-sm w-80'>{deduction.description}</td>
+            <td className='text-right text-lg p-0 m-0'>{deduction.amount>0?Number(deduction.amount).toLocaleString():''}</td>
+            <td className='text-right text-rose-600 p-0 pl-2m-0 w-full'><button onClick={() => removeDeduction(index)}>Remove</button> | <button onClick={() => handleshowEditDeduction(deduction)}>Edit</button></td>
           </tr>
 
         </>
@@ -268,12 +297,24 @@ const EditVoucher = () => {
       setShowEditDeduction(false);
     }
 
-    const handleshowEditDeduction= (index,deduction,amount)=>{
-      setEditDeduction(deduction);
-      setEditAmount(amount);
-      setEditIndex(index);
+    const [selectedDeduction,setSelectedDeduction]=useState(null);
+    const handleshowEditDeduction= (deduction)=>{
+     
+      setSelectedDeduction(deduction);
+      // // setEditDeduction(deduction);
+      // // setEditAmount(amount);
+      // // setEditId(id);
       setShowEditDeduction(true);
 
+    }
+
+    const handleChangeAmount = (amount)=>{
+      setEditAmount(amount);
+    }
+
+
+    const handleChangeDeduction = (deduction)=>{
+      setEditDeduction(deduction);
     }
 
   return (
@@ -606,7 +647,7 @@ const EditVoucher = () => {
         <button onClick={handleClose} className='btn btn-primary w-[120px] ml-2'>Close</button>
       </div>
       <AddDeduction visible={showAddDeduction} onClose={handleDeductionClose} passArrayData={getArrayData}/>
-      <EditDeduction visibleedit={showEditDeduction} onCloseEdit={handleEditClose} editdeduction={editdeduction} index={editindex} editamount={editamount} passArrayEditData={getArrayEditData}/>
+      <EditDeduction visibleedit={showEditDeduction} onCloseEdit={handleEditClose} deduction={selectedDeduction} onUpdate={handleUpdateDeduction}/>
     </div>
 
   )
