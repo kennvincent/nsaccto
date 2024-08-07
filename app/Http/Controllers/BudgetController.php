@@ -13,7 +13,7 @@ use App\Models\Aumentationheader;
 class BudgetController extends Controller
 {
     public function officebudget($officename){
-        $obrstatus='oblicated';
+        $obrstatus='obligated';
         $budgets = DB::table('budgets as t1')
                     ->select('t1.id',
                             't1.particulars',
@@ -37,14 +37,12 @@ class BudgetController extends Controller
                             AND t3.obryear=2024
                             AND t3.officename=t1.office),0) as utilized'))
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(amount_to) FROM vw_augmentation as t4
-                            WHERE t4.officename=t1.office
-                            AND t1.accountcode=t4.object_expenditures_to
-                            AND fy=2024
+                            WHERE t1.id = t4.budget_id_to
+                            AND t4.fy=2024
                             AND t4.status=1),0) as augmentation'))
                     ->addSelect(DB::raw('IFNULL((SELECT SUM(amount_from) FROM vw_augmentation as t5
-                            WHERE t5.officename=t1.office
-                            AND t1.accountcode=t5.object_expenditures_from
-                            AND fy=2024
+                            WHERE t1.id = t5.budget_id_from
+                            AND t5.fy=2024
                             AND t5.status=1),0) as lessaugmentation'))
                     ->get();
 

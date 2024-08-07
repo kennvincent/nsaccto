@@ -125,7 +125,7 @@ const BudgetAugmentation = () => {
 
         }
         
-       
+       console.log(data);
         axiosClient.post(`budgetaugmentation/save`,data).then(res=>{
             if(res.data.augmentationid>0){
                 alert('Augmentation have been saved');
