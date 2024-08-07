@@ -24,7 +24,8 @@ export default function LoadOfficesDropDown({onChangeOffice}) {
   return (
     <div>
         <select className='p-1 w-[20rem]' onChange={(e)=>onChangeOffice(e.target.value)}>
-            <option value="" >All</option>
+            <option value="" ></option>
+            <option value="All" >All</option>
             {loadOffices}
         </select>
     </div>

@@ -89,6 +89,7 @@ Route::put('obligationrequest/budgetview/selected/approve',[ObligationRequestCon
 
 Route::get('obligationrequest/officeapprove/{id}',[ObligationRequestController::class,'officeapprove']);
 Route::post('obligationrequest/officeapproveallobr',[ObligationRequestController::class,'officeapproveallobr']);
+Route::post('obligationrequest/budgetapproveallobr',[ObligationRequestController::class,'budgetapproveall']);
 
 // Route::get('obligationrequest/officecancel/{id}',[ObligationRequestController::class,'officecancel']);
 Route::put('obligationrequest/officecancel/',[ObligationRequestController::class,'officecancel']);

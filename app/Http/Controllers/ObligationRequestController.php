@@ -395,6 +395,23 @@ class ObligationRequestController extends Controller
     }
 
 
+    public function budgetapproveall(Request $request){
+        $details = $request->obridlist;
+        foreach ($details as $key => $data) {
+            // Retrieve the record by its ID
+            $record = Obrheader::find($data['id']);
+
+            // Check if the record exists
+            if ($record) {
+                $affected = DB::table('obrheaders')
+                ->where('id', $data['id'])
+                ->update(['obrstatus' => 3]);
+            }
+        }
+
+        return response()->json(['message'=>'Obligation Request Approve all successful']);
+    } 
+
 
     public function officeapproveallobr(Request $request){
         
@@ -666,4 +683,7 @@ class ObligationRequestController extends Controller
             return redirect()->back();
         }
     }
+
+
+
 }

@@ -10,9 +10,9 @@ export default function ObrListBudget() {
     
     useEffect(()=>{
 
-      axiosClient.get(`/obligationrequest/budget/forapprovalobr/view`).then(res =>{
-        setObrList(res.data.obrlist);
-      });
+      // axiosClient.get(`/obligationrequest/budget/forapprovalobr/view`).then(res =>{
+      //   setObrList(res.data.obrlist);
+      // });
 
     },[]);
  
@@ -40,16 +40,22 @@ export default function ObrListBudget() {
     })
 
     const onChangeOffice = (officename)=>{
-      if(officename.trim().length==0){
+      handleShowHideApproveButton(false);
+      if(officename.trim() =='All'){
         axiosClient.get(`/obligationrequest/budget/forapprovalobr/view`).then(res =>{
           setObrList(res.data.obrlist);
+          handleShowHideApproveButton(true);
         });
-      }else{
+      }
+      else if(officename.trim() ==''){
+        setObrList([]);
+      }
+      else{
         axiosClient.get(`/obligationrequest/budget/forapprovalobr/office/${officename}`).then(res =>{
-          
           setObrList(res.data.obrlist);
+          handleShowHideApproveButton(true);
+          
         });
-
         
       }
     }
@@ -63,14 +69,36 @@ export default function ObrListBudget() {
       
     }
 
+    const [isVisible,setIsVisible] =useState(false);
+
+    const handleShowHideApproveButton = (visible)=>{
+      setIsVisible(visible);
+    }
+
+    const handleApproveAll = ()=>{
+      let obridlist = [];
+      obrlist.map((obr)=>{
+        obridlist.push({id:obr.id});
+      })
+
+      const obr = {'obridlist':obridlist}
+     
+      axiosClient.post(`obligationrequest/budgetapproveallobr`,obr).then(res =>{
+        alert(res.data.message);
+        window.location.href = window.location.href;
+      });
+
+    }
+
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div>
         <h3 className="text-gray-700 font-medium">Obligation Request</h3>
       </div>
-      <div className='flex'>
+      <div className='flex relative'>
         <LoadOfficesDropDown onChangeOffice={onChangeOffice} />
         <input type="text" onChange={(e)=>handleOnChange(e.target.value)} className='h-8 ml-10 w-[300px]'/>
+        {isVisible && (<button onClick={handleApproveAll} className='btn btn-primary btn-sm absolute right-0'>Approval All</button>)}
       </div>
       
       <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">
