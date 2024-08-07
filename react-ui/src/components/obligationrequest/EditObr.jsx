@@ -237,7 +237,7 @@ const EditObr = () => {
         <div className='card'>
           
           <div className='card-header'>
-            <h5>Edit Oblication Request</h5>
+            <h5>Edit Obligation Request</h5>
           </div>
           <div className='card-body'>
             <div>

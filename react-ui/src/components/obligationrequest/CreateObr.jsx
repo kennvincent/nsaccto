@@ -186,7 +186,7 @@ const CreateObr = () => {
     <div className='w-full lg:w-[768px] xl:w-[1024px] h-[800px]  m-auto p-2 rounded-lg  overflow-y-auto'>
         <div className='card'>
           <div className='card-header'>
-            <h5>Create Oblication Request</h5>
+            <h5>Create Obligation Request</h5>
           </div>
           <div className='card-body'>
             <div>

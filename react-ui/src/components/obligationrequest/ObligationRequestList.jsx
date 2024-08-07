@@ -77,13 +77,12 @@ export default function OBRList() {
     }else{
       displayOBR();
     }
-   
   }
 
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div className='flex'>
-        <h3 className="text-gray-700 font-medium">Obligation Request</h3>
+        <h4 className="text-gray-700 font-medium">{officename}: Obligation Request</h4>
         <input type="text" className='w-[300px] h-8 ml-4' onChange={(e)=>onHandleOnChangePayee(e.target.value)} />
       </div>
       <div className="border-x border-gray-200 rounded-sm mt-0 overflow-scroll h-[40rem]">
@@ -91,7 +90,7 @@ export default function OBRList() {
           <thead className='sticky top-0 bg-slate-200'>
               <tr>
                 <th>Payee</th>
-                <th>Office Code</th>
+                <th>Particulars</th>
                 {/* <th>Responsibility Center</th>
                 <th>Office Description</th>
                 <th>Particulars</th> */}
@@ -112,8 +111,8 @@ export default function OBRList() {
                 <td className='p-2'>{obr.particulars}</td>
                 <td className='p-2 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
                 <td className='p-2'>{obr.obrstatus}</td>
-                <td className='p-2'><a href="#" onClick={(e) => onClickCancel(e,{id:obr.id})}>Cancel</a></td>
-                 <td className='p-2'><a href="#" onClick={(e) => onClickEdit(obr.id)}>{obr.obrstat==='1' && 'Edit'}</a></td> 
+                <td className='p-2 w-[50px]'><a href="#" onClick={(e) => onClickCancel(e,{id:obr.id})}>Cancel</a></td>
+                <td className='p-2 w-[50px]'><a href="#" onClick={(e) => onClickEdit(obr.id)}>{(obr.obrstat==='1' || obr.obrstat==='2') && 'Edit' }</a></td> 
                 <td className='p-2'><a href="#" onClick={(e) => onClickPreview(obr.id)}>Print Preview</a></td>
                 {/* <td className='p-2'><a href="#" onClick={(e) => onClickPreview(e,{id:obr.id})}>Print Preview</a></td> */}
                 

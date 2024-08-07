@@ -303,6 +303,7 @@ class ObligationRequestController extends Controller
                             'officedesc','address','totalamount','obrstatus')
                     ->where('payee','LIKE', '%'. $payee . '%')
                     ->where('officename','=',$officename)
+                    ->where('obrstat','!=',0)
                     ->orderBy('id','DESC')
                     ->get();
         return response()->json(['obrlist'=>  $obrlist]);
@@ -315,11 +316,10 @@ class ObligationRequestController extends Controller
                     ->select('id','payee','particulars','officecode','officename',
                             'officedesc','address','totalamount','obrstatus','withvoucher')
                     ->where('payee','LIKE', '%'. $payee . '%')
-                    ->where('obrstatus1','=','1')
+                    ->where('obrstat','=','1')
                     ->orderBy('id','DESC')
                     ->get();
         return response()->json(['obrlist'=>  $obrlist]);
-        
     }
 
  
