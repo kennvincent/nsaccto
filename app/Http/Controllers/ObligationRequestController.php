@@ -450,13 +450,21 @@ class ObligationRequestController extends Controller
     }
 
     public function officecancel(Request $request){
-        DB::table('obrheaders')
-        ->where('id',$request->obrid)
-        ->update(array('obrstatus' => 0));
+        // $id = $request->obrid;
+        // DB::table('obrheaders')
+        // ->where('id',$id)
+        // ->update(array('obrstatus' => 0));
+        // return response()->json(['message'=>"Obligation Request have been cancelled"]);
 
-        // $affected = DB::table('obrheaders')
-        //       ->where('id', $obrid)
-        //       ->delete(['obrstatus' => 0]);
+        $id = $request->obrid;
+        $record = Obrheader::find($id);
+
+            // Check if the record exists
+            if ($record) {
+                $affected = DB::table('obrheaders')
+                ->where('id', $id)
+                ->update(['obrstatus' => 0]);
+            }
         return response()->json(['message'=>"Obligation Request have been cancelled"]);
     }
 

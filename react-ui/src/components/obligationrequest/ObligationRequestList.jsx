@@ -43,11 +43,11 @@ export default function OBRList() {
     })
   }
 
-  const onClickCancel = (e,obr)=>{
-    const obrid = obr['id'];
+  const onClickCancel = (obrid)=>{
     const data = {
-      'obrid':obrid
+      obrid:obrid
     }
+    
     axiosClient.put(`/obligationrequest/officecancel/`,data).then(res =>{
       displayOBR();
       alert(res.data.message);
@@ -89,6 +89,7 @@ export default function OBRList() {
         <table className='w-full text-gray-700 border-collapse border  border-slate-400'>
           <thead className='sticky top-0 bg-slate-200'>
               <tr>
+                <th>Record ID</th>
                 <th>Payee</th>
                 <th>Particulars</th>
                 {/* <th>Responsibility Center</th>
@@ -103,7 +104,8 @@ export default function OBRList() {
             </thead>
           <tbody>
             {obrlist.map((obr)=>(
-              <tr key={obr.id} className='m-0 border hover:bg-slate-100 p-0'> 
+              <tr key={obr.id} className='m-0 border hover:bg-slate-100 p-0'>
+                <td>{obr.id}</td>
                 <td className='p-2'>{obr.payee}</td>
                 {/* <td className='p-2'>{obr.officecode}</td>
                 <td className='p-2'>{obr.officename}</td>
@@ -111,8 +113,8 @@ export default function OBRList() {
                 <td className='p-2'>{obr.particulars}</td>
                 <td className='p-2 text-right'>{Number(obr.totalamount).toLocaleString()}</td>
                 <td className='p-2'>{obr.obrstatus}</td>
-                <td className='p-2 w-[50px]'><a href="#" onClick={(e) => onClickCancel(e,{id:obr.id})}>Cancel</a></td>
-                <td className='p-2 w-[50px]'><a href="#" onClick={(e) => onClickEdit(obr.id)}>{(obr.obrstat==='1' || obr.obrstat==='2') && 'Edit' }</a></td> 
+                <td className='p-2 w-[50px]'><a href="#" onClick={() => onClickCancel(obr.id)}>Cancel</a></td>
+                <td className='p-2 w-[50px]'><a href="#" onClick={(e) => onClickEdit(obr.id)}>Edit</a></td> 
                 <td className='p-2'><a href="#" onClick={(e) => onClickPreview(obr.id)}>Print Preview</a></td>
                 {/* <td className='p-2'><a href="#" onClick={(e) => onClickPreview(e,{id:obr.id})}>Print Preview</a></td> */}
                 
