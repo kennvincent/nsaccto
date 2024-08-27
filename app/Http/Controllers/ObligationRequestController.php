@@ -215,21 +215,16 @@ class ObligationRequestController extends Controller
     }
 
     public function getobrdetails($id){
-        $obr = DB::table('vw_obr')
+        $obr = DB::table('obrdetails')
                 ->select('id',
-                        'payee',
-                        'particulars',
-                        'obr_detail_id',
                         'budgetid',
-                        'officecode',
                         'accountcode',
                         'accountdesc',
                         'accountclassification',
-                        'funding',
                         'amount')
-                ->where('id','=',[$id])
+                ->where('obrid','=',[$id])
                 ->get();
-        return response()->json(['obr'=>$obr]);
+        return response()->json(['obrdetails'=>$obr]);
     }
 
     public function sum($id){

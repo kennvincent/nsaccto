@@ -32,134 +32,76 @@ const CreateVoucherPayment = () => {
     //     }
     //   };
 
-    const data = [
-        {
-            id:1,payee:'Juan Dela Cruz',
-            particulars:'To obligate payment for Juan Dela Cruz',
-            details:[
-                {
-                    detailid:1,
-                    accountcode:'100-10-001',
-                    accountdesc:'Office Supplies',
-                    amount:1200
+    // const data = [
+    //     {
+    //         id:1,payee:'Juan Dela Cruz',
+    //         particulars:'To obligate payment for Juan Dela Cruz',
+    //         details:[
+    //             {detail_id:1,accountcode:'100-10-001',accountdesc:'Office Supplies',amount:1200 },
+    //             {detail_id:2,accountcode:'100-20-002',accountdesc:'Travel Expenses',amount:4000 }
+    //         ]
+    //     },
+    //     {
+    //         id:2,payee:'Vicente D. Letran Jr, et. al.',
+    //         particulars:'To obligate payment for ABC',
+    //         details:[
+    //             {detail_id:1,accountcode:'200-10-010',accountdesc:'Internet Subscription',amount:5300},
+    //             {detail_id:2,accountcode:'200-20-020',accountdesc:'ICT Equipment',amount:7000},
+    //             {detail_id:3,accountcode:'200-30-030',accountdesc:'Communication Networks',amount:3600}
+    //         ]
+    //     }
+    //     ,
+    //     {
+    //         id:3,payee:'Vincent A. Sabelao',
+    //         particulars:'To obligate payment for ABC',
+    //         details:[
+    //             {detail_id:1,accountcode:'200-10-010',accountdesc:'Internet Subscription',amount:5300},
+    //             {detail_id:2,accountcode:'200-20-020',accountdesc:'ICT Equipment',amount:7000},
+    //             {detail_id:3,accountcode:'200-30-030',accountdesc:'Communication Networks',amount:3600}
+    //         ]
+    //     },
+    //     {
+    //         id:4,payee:'Frederick Gelera, et. al.',
+    //         particulars:'To obligate payment for ABC',
+    //         details:[
+    //             {detail_id:1,accountcode:'200-10-010',accountdesc:'Internet Subscription',amount:5300},
+    //             {detail_id:2,accountcode:'200-20-020',accountdesc:'ICT Equipment',amount:7000},
+    //             {detail_id:3,accountcode:'200-30-030',accountdesc:'Communication Networks',amount:3600}
+    //         ]
+    //     }
 
-                },
-                {
-                    detailid:2,
-                    accountcode:'100-20-002',
-                    accountdesc:'Travel Expenses',
-                    amount:4000
-                }
-            ]
-        },
-        {
-            id:2,payee:'Vicente D. Letran Jr, et. al.',
-            particulars:'To obligate payment for ABC',
-            details:[
-                {
-                    detailid:1,
-                    accountcode:'200-10-010',
-                    accountdesc:'Internet Subscription',
-                    amount:5300
-                },
-                {
-                    detailid:2,
-                    accountcode:'200-20-020',
-                    accountdesc:'ICT Equipment',
-                    amount:7000
-                },
-                {
-                    detailid:3,
-                    accountcode:'200-30-030',
-                    accountdesc:'Communication Networks',
-                    amount:3600
-                }
-            ]
-        }
-        ,
-        {
-            id:3,payee:'Vincent A. Sabelao',
-            particulars:'To obligate payment for ABC',
-            details:[
-                {
-                    detailid:1,
-                    accountcode:'200-10-010',
-                    accountdesc:'Internet Subscription',
-                    amount:5300
-                },
-                {
-                    detailid:2,
-                    accountcode:'200-20-020',
-                    accountdesc:'ICT Equipment',
-                    amount:7000
-                },
-                {
-                    detailid:3,
-                    accountcode:'200-30-030',
-                    accountdesc:'Communication Networks',
-                    amount:3600
-                }
-            ]
-        },
-        {
-            id:4,payee:'Frederick Gelera, et. al.',
-            particulars:'To obligate payment for ABC',
-            details:[
-                {
-                    detailid:1,
-                    accountcode:'200-10-010',
-                    accountdesc:'Internet Subscription',
-                    amount:5300
-                },
-                {
-                    detailid:2,
-                    accountcode:'200-20-020',
-                    accountdesc:'ICT Equipment',
-                    amount:7000
-                },
-                {
-                    detailid:3,
-                    accountcode:'200-30-030',
-                    accountdesc:'Communication Networks',
-                    amount:3600
-                }
-            ]
-        }
+    // ];
 
-    ];
-
-    const [filteredData,setFilteredData]=useState(data);
-
+    const [filteredData,setFilteredData]=useState([]);
+    
 
     const handleSelected = (obrid)=>{
         axiosClient(`obligationrequest/getheader/${obrid}`).then(res=>{
-            setObrDetails(res.data.obr);
-            const obrheader = [
-                {
-                    id : res.data.obr[0].id,
-                    payee : res.data.obr[0].payee,
-                    particulars : res.data.obr[0].particulars,
-                    details:[
-                        {
-                            detailid:5,
-                            accountcode:'200-40-040',
-                            accountdesc:'Network Tools',
-                            amount:7800
-                        }
-                    ]
-                }
-            ]
-
-            console.log(obrheader);
-            
-            
-            
+            let id = res.data.obr[0].id;
+            let payee = res.data.obr[0].payee;
+            let particulars = res.data.obr[0].particulars
             axiosClient(`obligationrequest/getdetails/${obrid}`).then(res=>{
-                setObrDetails(res.data.obr);
+              
+
+                 let obrdata = {
+                        id : id,
+                        payee : payee,
+                        particulars : particulars,
+                        details: res.data.obrdetails.map((detail)=>({
+                            detail_id:detail.id,
+                            accountcode:detail.accountcode,
+                            accountdesc:detail.accountdesc,
+                            amount:detail.amount
+                        }))
+                    
+                    }
+                
+                setFilteredData([...filteredData,obrdata]);
+                
             })
         })
         
-       
+        
     }
 
  
@@ -216,7 +158,7 @@ const CreateVoucherPayment = () => {
                                     </thead>
                                     <tbody>
                                         {obr.details.map((detail) => (
-                                            <tr key={detail.detailid} className='p-0 h-4'>
+                                            <tr key={detail.detail_id} className='p-0 h-4'>
                                                 <td className='w-[200px] p-0 px-2 h-8'>{detail.accountcode}</td>
                                                 <td className='w-[400px] p-0 px-2 h-8'>{detail.accountdesc}</td>
                                                 <td className='w-[200px] p-0 px-2 h-8 text-right'>{detail.amount}</td>
