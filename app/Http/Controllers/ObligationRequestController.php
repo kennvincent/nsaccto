@@ -19,9 +19,20 @@ class ObligationRequestController extends Controller
         // $obrlist = DB::table('vw_obrheaders')
         //             ->select('id','payee','particulars','officecode','officename',
         //                      'officedesc','address','totalamount','obrstatus')
+        //             ->where('obrstate','=','3')
         //             ->orderBy('id','DESC')
         //             ->get();
         // return response()->json(['obrlist'=>$obrlist]);
+    }
+
+    public function viewapprovedlist(){
+        $obrlist = DB::table('vw_obrheaders')
+                    ->select('id','payee','particulars','officecode','officename',
+                             'officedesc','address','totalamount','obrstatus')
+                    ->where('obrstat','=','3')
+                    ->orderBy('id','DESC')
+                    ->get();
+        return response()->json(['obrlist'=>$obrlist]);
     }
 
     public function viewlistbyoffice($office){
@@ -179,6 +190,36 @@ class ObligationRequestController extends Controller
     public function editdetailspreview($id){
         $obr = DB::table('vw_obr')
                 ->select('budgetid as id',
+                        'budgetid',
+                        'officecode',
+                        'accountcode',
+                        'accountdesc',
+                        'accountclassification',
+                        'funding',
+                        'amount')
+                ->where('id','=',[$id])
+                ->get();
+        return response()->json(['obr'=>$obr]);
+    }
+
+    
+    public function getobrheader($id){
+        $obr = DB::table('vw_obrheaders')
+                ->select('id',
+                        'payee',
+                        'particulars',
+                        'officecode')
+                ->where('id','=',[$id])
+                ->get();
+        return response()->json(['obr'=>$obr]);
+    }
+
+    public function getobrdetails($id){
+        $obr = DB::table('vw_obr')
+                ->select('id',
+                        'payee',
+                        'particulars',
+                        'obr_detail_id',
                         'budgetid',
                         'officecode',
                         'accountcode',

@@ -62,9 +62,12 @@ Route::post('obligationrequest',[ObligationRequestController::class,'insert']);
 
 Route::get('obligationrequest/getobrid',[ObligationRequestController::class,'getobrid']);
 Route::get('obligationrequest',[ObligationRequestController::class,'viewlist']);
+Route::get('obligationrequest/viewapprovedlist',[ObligationRequestController::class,'viewapprovedlist']);
 
 Route::get('obligationrequest/edit/{id}',[ObligationRequestController::class,'editpreview']);
 Route::get('obligationrequest/edit/details/{id}',[ObligationRequestController::class,'editdetailspreview']);
+Route::get('obligationrequest/getheader/{id}',[ObligationRequestController::class,'getobrheader']);
+Route::get('obligationrequest/getdetails/{id}',[ObligationRequestController::class,'getobrdetails']);
 Route::put('obligationrequest/update/{id}',[ObligationRequestController::class,'updateobr']);
 Route::get('obligationrequest/viewall/forapproval',[ObligationRequestController::class,'viewallforapprovalobrlist']);
 Route::get('obligationrequest/viewall/officeapproved',[ObligationRequestController::class,'viewallofficeapprovedobrlist']);

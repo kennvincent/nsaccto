@@ -75,6 +75,12 @@ export const DASHBOARD_ACCOUNTING_SIDEBAR_LINKS = [
 		icon: <HiOutlineDocumentText />,
 	},
 	{
+		key: 'createvoucer',
+		label: 'Create Voucher',
+		path: '/createvoucherpayment',
+		icon: <HiOutlineDocumentText />,
+	},
+	{
 		key: 'voucherlist',
 		label: 'Vouchers List',
 		path: '/voucherslist',
