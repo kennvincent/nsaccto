@@ -123,7 +123,6 @@ export default function AcctObrViewSelected() {
          let data = [...obr2];
         data[index]['accountcode'] = event.target.value;
         setObr2(data);
-        console.log(obr2);
     }
 
       const handleAmountChange = (index, event) => {

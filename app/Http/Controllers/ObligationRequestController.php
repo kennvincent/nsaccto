@@ -27,7 +27,7 @@ class ObligationRequestController extends Controller
 
     public function viewapprovedlist(){
         $obrlist = DB::table('vw_obrheaders')
-                    ->select('id','payee','particulars','officecode','officename',
+                    ->select('id','payee','obrnumber','particulars','officecode','officename',
                              'officedesc','address','totalamount','obrstatus')
                     ->where('obrstat','=','3')
                     ->orderBy('id','DESC')
@@ -207,6 +207,7 @@ class ObligationRequestController extends Controller
         $obr = DB::table('vw_obrheaders')
                 ->select('id',
                         'payee',
+                        'obrnumber',
                         'particulars',
                         'officecode')
                 ->where('id','=',[$id])
