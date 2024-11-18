@@ -167,7 +167,7 @@ export default function ShowObrBudget() {
                 <h4>OBLIGATION REQUESTS</h4>
             </div>
             <div className='flex'>
-                <div className='w-[15rem] h-8 items-center border py-0 px-2'>
+                <div className='w-[300px] h-8 items-center border py-0 px-2'>
                     <p>Payee</p>
                 </div>
                 <div className='w-[70rem] h-8 border px-2'>
@@ -182,7 +182,7 @@ export default function ShowObrBudget() {
 
             <div></div>
             <div className='flex'>
-                <div className='w-[15rem] h-8 items-center border py-0 px-2'>
+                <div className='w-[260px] h-8 items-center border py-0 px-2'>
                     <p>Office</p>
                 </div>
                 <div className='w-[85rem] h-8 border px-2'>
@@ -191,7 +191,7 @@ export default function ShowObrBudget() {
                 </div>
             </div>
             <div className='flex'>
-                <div className='w-[15rem] h-8 items-center border py-0 px-2'>
+                <div className='w-[260px] h-8 items-center border py-0 px-2'>
                     <p>Address</p>
                 </div>
                 <div className='w-[85rem] h-8 border py-0 px-2'>
@@ -201,7 +201,7 @@ export default function ShowObrBudget() {
             </div>
 
             <div className='flex'>
-                <div className='w-[15rem] h-12 items-center border py-0 px-2'>
+                <div className='w-[252px] h-12 items-center border py-0 px-2'>
                     <p>Responsibility Center</p>
                 </div>
                 <div className='w-[40rem] h-12 border py-0 px-2'>
@@ -219,24 +219,24 @@ export default function ShowObrBudget() {
             </div>
 
             <div className='flex'>
-                <div className='w-[15rem] h-96 items-center border p-2'>
+                <div className='w-[179px] h-96 items-center border p-2'>
                     {obr.map((obr)=>{officename = obr.officename})}
                     <p>{officename}</p>
                 </div>
-                <div className='w-[40rem] h-96  p-2'>
+                <div className='w-[480px] h-96  p-2'>
                     {obr.map((obr)=>{particulars = obr.particulars})}
                     <p>{particulars}</p>
                 </div>
-                <div className='w-[10rem] h-96 border p-0'>
+                <div className='w-[100px] h-96 border p-0'>
                     {obr.map((obr)=>{officecode = obr.officecode})}
                     <p>{officecode}</p>
                 </div>
-                <div className='w-[10rem] h-96 border py-0 px-2'>
+                <div className='w-[200px] h-96 border py-0 px-2'>
                     {obr.map((obr,index)=>(
                         <p className='p-0 m-0' key={index}>{obr.accountcode}</p>
                     ))}
                 </div>
-                <div className='w-[15rem] h-96 border py-0 px-2'>
+                <div className='w-[200px] h-96 border py-0 px-2'>
                     {obr.map((obr,index)=>(
                         <p className='p-0 m-0 text-right' key={index}> {Number(obr.amount).toLocaleString()}</p>
                     ))}

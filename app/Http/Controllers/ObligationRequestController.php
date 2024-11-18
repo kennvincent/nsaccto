@@ -617,30 +617,41 @@ class ObligationRequestController extends Controller
 
 
     public function savepayment(Request $request){
+
+    
+       $data = $request->all();
+       $obrid;
+       $userid;
+       foreach($data as $item){
+        $obrid = $item['obrid'];
+        $userid = $item['userid'];
+       }
+       
+        // return response()->json($request);
         try{
             DB::beginTransaction();
             $payment = new Paymentheader;
-            $payment->obrid = $request->obrid;
-            $payment->checknumber = $request->checknumber;
-            $payment->bankname = $request->bankname;
-            $payment->userid=$request->userid;
+            $payment->obrid = $obrid;
+            // $payment->checknumber = $request->checknumber;
+            // $payment->bankname = $request->bankname;
+            $payment->userid=$userid;
             $payment->save();
 
             $paymentid = DB::getPdo()->lastInsertId();
-            $details = $request->details;
+            // $details = $request->details;
 
-            foreach($details as $key => $detail){
-                $paymentDetail['obr_detail_id'] = $detail['obr_detail_id'];
-                $paymentDetail['budgetid'] = $detail['budgetid'];
-                $paymentDetail['accountcode'] = $detail['accountcode'];
-                $paymentDetail['amountpaid'] = $detail['amountpaid'];
-                $paymentDetail['paymentid'] = $paymentid;
-                Paymentdetail::create($paymentDetail);
-            }
+            // foreach($details as $key => $detail){
+            //     $paymentDetail['obr_detail_id'] = $detail['obr_detail_id'];
+            //     $paymentDetail['budgetid'] = $detail['budgetid'];
+            //     $paymentDetail['accountcode'] = $detail['accountcode'];
+            //     $paymentDetail['amountpaid'] = $detail['amountpaid'];
+            //     $paymentDetail['paymentid'] = $paymentid;
+            //     Paymentdetail::create($paymentDetail);
+            // }
             DB::commit();
             return response()->json(['message'=>'success']);
         }catch(e){
-
+             DB::rollback();
         }
     }
 

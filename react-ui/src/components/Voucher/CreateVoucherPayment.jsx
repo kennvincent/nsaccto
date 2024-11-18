@@ -6,10 +6,11 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Container } from '@mui/material';
 
 const CreateVoucherPayment = () => {
+    const win = window.sessionStorage;
     const [showSearch,setShowSearch]=useState(false);
     const [obrdata,setData] = useState([]);
     const [obrDetails,setObrDetails] = useState([]);
-
+  
     const handleShowSearch = ()=>{
         setShowSearch(true);
         axiosClient(`obligationrequest/viewapprovedlist`).then(res=>{
@@ -76,7 +77,7 @@ const CreateVoucherPayment = () => {
     // ];
 
     const [filteredData,setFilteredData]=useState([]);
-    const [alldetails,setAllDetails] = useState([]);
+  
 
     const handleSelected = (obrid)=>{
 
@@ -93,18 +94,30 @@ const CreateVoucherPayment = () => {
                         obrnumber : obrnumber,
                         particulars : particulars,
                         details: res.data.obrdetails.map((detail)=>({
+                            obrid:obrid,
                             detail_id:detail.id,
+                            budgetid : detail.budgetid,
                             accountcode:detail.accountcode,
                             accountdesc:detail.accountdesc,
-                            amount:detail.amount
+                            amount:detail.amount,
+                            amountpayment:detail.amount,
+                            vat:0,
+                            pt:0,
+                            ewt1:0,
+                            ewt2:0,
+                            retention:0,
+                            recompensate:0,
+                            aggregate:0,
+                            penalties:0,
+                            others:0
+                           
                         }))
                     
                     }
-                
+             
                 setFilteredData([...filteredData,obrdata]);
-            
-                setShowSearch(false);
                 
+                setShowSearch(false);
             })
         })
         
@@ -132,36 +145,126 @@ const CreateVoucherPayment = () => {
     }
     
 
-    const handleAmountChange = (id,detail_id)=>{
-        console.log(id,detail_id);
+    const handleAmountChange = (e,id,detail_id,index,column)=>{
+     
+        const indexObr = filteredData.findIndex(item => item.id === id);
        
 
+        // console.log(index);
+        // // console.log(id,detail_id,index,column);
+        // // console.log(filteredData);
+        // // const {value} = e.target.value;
+        // // setFilteredData(prevData => {
+        // //     const newData = [...prevData];
+        // //     newData[index][column] = e.target.value;
+        // //     return newData;
+        // //   });
+        // // console.log(filteredData);
+
+        const cleanedValue = e.target.value.replace(/,/g, '');
+        const parsedValue= parseFloat(cleanedValue);
+        const finalValue = isNaN(parsedValue)?0:parsedValue;
+
+        filteredData[indexObr].details[index][column] = finalValue;
+        // console.log(filteredData[indexObr].details[index]);
+        
+       
+      
     }
+    
+    function formatAmount(amount) {
+        return Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    
+
+    const [alldetails,setAllDetails] = useState([]);
+    const [payments,setPayments] = useState([]);
+
+    const handSavePayment = ()=>{
+      
+        // console.log(filteredData);
+        setPayments([]);
+
+        
+        filteredData.map((obr)=>{
+            obr.details.map((details)=>{
+                let newDetails = {
+                    userid: win.getItem('userid'),
+                    obrid : details.obrid,
+                    detail_id : details.detail_id,
+                    bugetid : details.budgetid,
+                    accountcode : details.accountcode,
+                    accountdesc : details.accountdesc,
+                    amount : details.amount,
+                    amountpayment: details.amountpayment,
+                    vat : details.vat,
+                    pt : details.pt,
+                    ewt1 : details.ewt1,
+                    ewt2 : details.ewt2,
+                    retention : details.retention,
+                    recompensate : details.recompensate,
+                    aggregate : details.aggregate,
+                    penalties : details.penalties,
+                    others : details.others
+                }
+                
+            
+                payments.push(newDetails);
+                
+                console.log(payments);
+                
+                // console.log(details.obrid,details.detail_id,details.budgetid,details.accountcode,
+                //     details.accountdesc,details.amount,details.vat,details.pt,
+                //     details.ewt1,details.ewt2,details.retention,details.recompensate,
+                //     details.aggregate,details.penalties,details.others);
+            })
+        }); 
+        
+        
+        axiosClient.post('/obligationrequest/accounting/payment',payments).then(res=>{
+            console.log(res.data);
+        });
+        
+    }
+
+    const handleKeyDown = (e) => {
+        // console.log(e.keyCode);
+        const charCode = e.keyCode || e.which;
+    
+        // Prevent non-numeric characters, but allow comma (44) and period (46)
+        if ((charCode < 48 || charCode > 57) && (charCode < 96 || charCode >105) && charCode !== 188 && charCode !== 190 && charCode !== 110) {
+          e.preventDefault(); // Prevent input if it's not a number, comma, or period
+        }
+      };
     
   return (
     <div className=''>
-        <div className='card'>
+        <div className='card overflow-y-scroll'>
             <div className='card-header'><h5>Voucher/Payment</h5></div>
               <div className='card-body min-h-[400px] max-h-[800px] overflow-y-scroll'>
                 <button onClick={handleShowSearch} className='btn btn-primary btn-sm mb-2'>Search OBR</button>
                 <table border="1" cellPadding="0" cellSpacing="0" width="100%">
                     <table>
                         <thead>
-                            <tr>
-                                <th>Payee</th>
-                                <th>OBR Number</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                            {filteredData.length>0 && (
+                              <tr>
+                                
+                                   <th>Payee</th>
+                                   <th>OBR Number</th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                               </tr> 
+                            )}
+                            
                         </thead>
                         <tbody>
                         {filteredData.map(obr => (
@@ -202,21 +305,21 @@ const CreateVoucherPayment = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {obr.details.map((detail) => (
+                                        {obr.details.map((detail,index) => (
                                             <tr key={detail.detail_id} className='p-0 h-4'>
                                                 <td className='w-[200px] p-0 px-2 h-8'>{detail.accountcode}</td>
                                                 <td className='w-[400px] p-0 px-2 h-8'>{detail.accountdesc}</td>
-                                                <td className='w-[200px] p-0 px-2 h-8 text-right'>{Number(detail.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2' value={detail.amount} onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
-                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onChange={(e)=>handleAmountChange(obr.id,detail.detail_id)}  /></td>
+                                                <td className='w-[200px] p-0 px-2 h-8 text-right'>{Number(detail.amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown}  onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'amountpayment')}  /></td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown} onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'vat')}  /></td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown} onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'pt')}  /></td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown} onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'ewt1')}  /></td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown} onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'ewt2')}  /></td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown} onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'retention')}  /></td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown} onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'recompensate')}  /></td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown} onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'aggregate')}  /></td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown} onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'penalties')}  /></td>
+                                                <td className='w-[150px] h-8 text-right p-0 px-2'><input type='text' className='w-[120px] h-8 text-right p-0 px-2'  onKeyDown={handleKeyDown} onChange={(e)=>handleAmountChange(e,obr.id,detail.detail_id,index,'others')}  /></td>
                                             </tr>
                                             
                                         ))}
@@ -230,10 +333,14 @@ const CreateVoucherPayment = () => {
                             
                         </React.Fragment>
                         ))}
-                        <tr>
-                            <td colSpan={12}></td>
-                            <td><button className='btn btn-primary btn-sm'>Create Voucher</button></td>
-                        </tr>
+                        {filteredData.length>0  && (
+                          <tr>
+                          <td><button className='btn btn-primary btn-sm' onClick={handSavePayment}>Create Voucher</button></td>
+                       </tr>
+                            
+                        )}
+                       
+                       
                     </tbody>
                     </table>
                     
