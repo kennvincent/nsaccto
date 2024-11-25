@@ -9,10 +9,19 @@ class Paymentdetail extends Model
 {
     use HasFactory;
     protected $fillable=[
+        'paymentid',
         'obr_detail_id',
         'budgetid',
         'accountcode',
         'amountpaid',
-        'paymentid'
+        'vat',
+        'pt',
+        'ewt1',
+        'ewt2',
+        'retention',
+        'recompensate',
+        'aggregate',
+        'penalties',
+        'others',
     ];
 }

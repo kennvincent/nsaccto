@@ -631,7 +631,6 @@ class ObligationRequestController extends Controller
         try{
             DB::beginTransaction();
             $payment = new Paymentheader;
-            $payment->obrid = $obrid;
             // $payment->checknumber = $request->checknumber;
             // $payment->bankname = $request->bankname;
             $payment->userid=$userid;
@@ -648,8 +647,27 @@ class ObligationRequestController extends Controller
             //     $paymentDetail['paymentid'] = $paymentid;
             //     Paymentdetail::create($paymentDetail);
             // }
+
+            foreach($data as $detail){
+                $paymentDetail['paymentid'] =  $paymentid;
+                $paymentDetail['obr_detail_id'] =  $detail['obrid'];
+                $paymentDetail['budgetid'] =  $detail['budgetid'];
+                $paymentDetail['accountcode'] =  $detail['accountcode'];
+                $paymentDetail['amountpaid'] =  $detail['amountpayment'];
+                $paymentDetail['vat'] =  $detail['vat'];
+                $paymentDetail['pt'] =  $detail['pt'];
+                $paymentDetail['ewt1'] =  $detail['ewt1'];
+                $paymentDetail['ewt2'] =  $detail['ewt2'];
+                $paymentDetail['retention'] =  $detail['retention'];
+                $paymentDetail['recompensate'] =  $detail['recompensate'];
+                $paymentDetail['aggregate'] =  $detail['aggregate'];
+                $paymentDetail['penalties'] =  $detail['penalties'];
+                $paymentDetail['others'] =  $detail['others'];
+                Paymentdetail::create($paymentDetail);
+            }
+
             DB::commit();
-            return response()->json(['message'=>'success']);
+            return response()->json(['message'=>'Payment have been saved']);
         }catch(e){
              DB::rollback();
         }

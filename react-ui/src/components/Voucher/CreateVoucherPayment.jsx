@@ -192,7 +192,7 @@ const CreateVoucherPayment = () => {
                     userid: win.getItem('userid'),
                     obrid : details.obrid,
                     detail_id : details.detail_id,
-                    bugetid : details.budgetid,
+                    budgetid : details.budgetid,
                     accountcode : details.accountcode,
                     accountdesc : details.accountdesc,
                     amount : details.amount,

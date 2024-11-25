@@ -43,21 +43,21 @@ const BudgetRealignment = () => {
         <div className='card-body '>
              <div>
                 <h6 className='p-0 m-0'>Office</h6>
-                <select onChange={(e)=>onChangeOffice(e.target.value)} className='w-full p-0'>
+                <select onChange={(e)=>onChangeOffice(e.target.value)} className='w-full form-control'>
                     <option >--Select Office--</option>
                     {loadOffices}
                 </select>
              </div>
              <div className='mt-4'>
                 <h6 className='p-0 m-0'>Account From</h6>
-                <select className='w-full p-0'>
+                <select className='w-full form-control'>
                     <option></option>
                     {officeAccounts}
                 </select>
              </div>
              <div className='mt-4'>
                 <h6 className='p-0 m-0'>Account To</h6>
-                <select className='w-full p-0'>
+                <select className='w-full  form-control'>
                     <option></option>
                     {officeAccounts}
                 </select>
