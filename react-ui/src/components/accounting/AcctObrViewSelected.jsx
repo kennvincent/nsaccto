@@ -114,9 +114,7 @@ export default function AcctObrViewSelected() {
             }
 
         });
-        
     }
-
 
 
     const handleAccountCodeChange = (index, event) => {

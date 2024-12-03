@@ -5,6 +5,7 @@ import { all } from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Container } from '@mui/material';
 
+
 const CreateVoucherPayment = () => {
     const win = window.sessionStorage;
     const [showSearch,setShowSearch]=useState(false);
@@ -15,7 +16,6 @@ const CreateVoucherPayment = () => {
         setShowSearch(true);
         axiosClient(`obligationrequest/viewapprovedlist`).then(res=>{
             setData(res.data.obrlist);
-         
         })
     }
 
@@ -26,55 +26,6 @@ const CreateVoucherPayment = () => {
 
     const [obrAccounts,setObrAccounts] = useState([]);
 
-    // const [expandedRows, setExpandedRows] = useState([]);
-    // const toggleRow = (id) => {
-    //     const isRowExpanded = expandedRows.includes(id);
-    //     if (isRowExpanded) {
-    //       setExpandedRows(expandedRows.filter(rowId => rowId !== id));
-    //     } else {
-    //       setExpandedRows([...expandedRows, id]);
-    //     }
-    //   };
-
-    // const data = [
-    //     {
-    //         id:1,payee:'Juan Dela Cruz',
-    //         particulars:'To obligate payment for Juan Dela Cruz',
-    //         details:[
-    //             {detail_id:1,accountcode:'100-10-001',accountdesc:'Office Supplies',amount:1200 },
-    //             {detail_id:2,accountcode:'100-20-002',accountdesc:'Travel Expenses',amount:4000 }
-    //         ]
-    //     },
-    //     {
-    //         id:2,payee:'Vicente D. Letran Jr, et. al.',
-    //         particulars:'To obligate payment for ABC',
-    //         details:[
-    //             {detail_id:1,accountcode:'200-10-010',accountdesc:'Internet Subscription',amount:5300},
-    //             {detail_id:2,accountcode:'200-20-020',accountdesc:'ICT Equipment',amount:7000},
-    //             {detail_id:3,accountcode:'200-30-030',accountdesc:'Communication Networks',amount:3600}
-    //         ]
-    //     }
-    //     ,
-    //     {
-    //         id:3,payee:'Vincent A. Sabelao',
-    //         particulars:'To obligate payment for ABC',
-    //         details:[
-    //             {detail_id:1,accountcode:'200-10-010',accountdesc:'Internet Subscription',amount:5300},
-    //             {detail_id:2,accountcode:'200-20-020',accountdesc:'ICT Equipment',amount:7000},
-    //             {detail_id:3,accountcode:'200-30-030',accountdesc:'Communication Networks',amount:3600}
-    //         ]
-    //     },
-    //     {
-    //         id:4,payee:'Frederick Gelera, et. al.',
-    //         particulars:'To obligate payment for ABC',
-    //         details:[
-    //             {detail_id:1,accountcode:'200-10-010',accountdesc:'Internet Subscription',amount:5300},
-    //             {detail_id:2,accountcode:'200-20-020',accountdesc:'ICT Equipment',amount:7000},
-    //             {detail_id:3,accountcode:'200-30-030',accountdesc:'Communication Networks',amount:3600}
-    //         ]
-    //     }
-
-    // ];
 
     const [filteredData,setFilteredData]=useState([]);
   
@@ -167,7 +118,7 @@ const CreateVoucherPayment = () => {
 
         filteredData[indexObr].details[index][column] = finalValue;
         // console.log(filteredData[indexObr].details[index]);
-        
+       
        
       
     }
@@ -230,9 +181,9 @@ const CreateVoucherPayment = () => {
     const handleKeyDown = (e) => {
         // console.log(e.keyCode);
         const charCode = e.keyCode || e.which;
-    
         // Prevent non-numeric characters, but allow comma (44) and period (46)
-        if ((charCode < 48 || charCode > 57) && (charCode < 96 || charCode >105) && charCode !== 188 && charCode !== 190 && charCode !== 110) {
+        if ((charCode < 48 || charCode > 57) && (charCode < 96 || charCode >105) && 
+         charCode !== 188 && charCode !== 190 && charCode !== 110 && charCode !=8 && charCode !=37 && charCode !=39) {
           e.preventDefault(); // Prevent input if it's not a number, comma, or period
         }
       };
@@ -249,7 +200,7 @@ const CreateVoucherPayment = () => {
                             {filteredData.length>0 && (
                               <tr>
                                 
-                                   <th>Payee</th>
+                                   <th style={{backgroundColor:'green'}} >Payee</th>
                                    <th>OBR Number</th>
                                    <th></th>
                                    <th></th>
@@ -270,9 +221,10 @@ const CreateVoucherPayment = () => {
                         {filteredData.map(obr => (
                         <React.Fragment key={obr.id}>
                             <tr className='p-0 h-8'>
-                                <td  >{obr.payee} </td>
+                                <td  style={{backgroundColor:'red'}} colSpan={1}>{obr.payee} </td>
                                 <td >{obr.obrnumber}</td>
                                 <td><a href="#" className='text-red-600' onClick={(e)=>handleRemove(obr.id)}>Remove</a></td>
+                                {/* <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -280,8 +232,7 @@ const CreateVoucherPayment = () => {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
+                                <td></td> */}
                             </tr>
                            
                             <tr>
@@ -344,7 +295,7 @@ const CreateVoucherPayment = () => {
                     </tbody>
                     </table>
                     
-                    </table>
+                </table>
                    
                    
             </div>

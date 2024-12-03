@@ -45,6 +45,8 @@ import BudgetAugmentationList from "./components/budget/BudgetAugmentationList";
 import BudgetAugmentationEdit from "./components/budget/BudgetAugmentationEdit";
 import EditVoucher from "./components/Voucher/EditVoucher";
 import CreateVoucherPayment from "./components/Voucher/CreateVoucherPayment";
+// import PaymentDetails from "./components/Voucher/PaymentDetails";
+import CreatePayment from "./components/Voucher/CreatePayment";
 
 const router = createBrowserRouter([
     {
@@ -204,6 +206,10 @@ const router = createBrowserRouter([
            {
             path:'/createvoucherpayment',
             element:<CreateVoucherPayment/>
+           },
+           {
+            path:'/createpayment',
+            element:<CreatePayment/>
            }
            ,
            {
