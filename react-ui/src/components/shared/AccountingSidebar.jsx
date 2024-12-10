@@ -34,7 +34,6 @@ export default function AccountingSidebar() {
               <SidebarLink key={item.key} item={item} />         
               ))}
 
-
         </div>
         
 

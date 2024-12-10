@@ -97,10 +97,8 @@ const CreateVoucherPayment = () => {
     
 
     const handleAmountChange = (e,id,detail_id,index,column)=>{
-     
         const indexObr = filteredData.findIndex(item => item.id === id);
        
-
         // console.log(index);
         // // console.log(id,detail_id,index,column);
         // // console.log(filteredData);
@@ -118,8 +116,7 @@ const CreateVoucherPayment = () => {
 
         filteredData[indexObr].details[index][column] = finalValue;
         // console.log(filteredData[indexObr].details[index]);
-       
-       
+        filteredData[indexObr].details[index]['netamount'] = filteredData[indexObr].details[index]['amountpayment'] - filteredData[indexObr].details[index]['vat'];
       
     }
     
@@ -162,7 +159,7 @@ const CreateVoucherPayment = () => {
             
                 payments.push(newDetails);
                 
-                console.log(payments);
+                // console.log(payments);
                 
                 // console.log(details.obrid,details.detail_id,details.budgetid,details.accountcode,
                 //     details.accountdesc,details.amount,details.vat,details.pt,
@@ -173,7 +170,7 @@ const CreateVoucherPayment = () => {
         
         
         axiosClient.post('/obligationrequest/accounting/payment',payments).then(res=>{
-            console.log(res.data);
+            // console.log(res.data);
         });
         
     }
