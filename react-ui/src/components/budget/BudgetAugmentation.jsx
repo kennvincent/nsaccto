@@ -125,7 +125,6 @@ const BudgetAugmentation = () => {
 
         }
         
-       console.log(data);
         axiosClient.post(`budgetaugmentation/save`,data).then(res=>{
             if(res.data.augmentationid>0){
                 alert('Augmentation have been saved');
@@ -278,12 +277,14 @@ const BudgetAugmentation = () => {
     const handleSelectAccountFrom = (selected)=>{
         setObjectExpenditures(selected);
       
-      
+
         if(officename==''){
             alert('Select Office');
             return;
         }
        
+
+
         if(fy==''){
             alert('Enter FY');
             return;

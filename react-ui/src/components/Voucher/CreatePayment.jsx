@@ -17,7 +17,6 @@ const CreatePayment = () => {
         })
     }
 
-   
     const handleSelected = (obrid)=>{
 
         axiosClient(`obligationrequest/getheader/${obrid}`).then(res=>{
@@ -59,8 +58,6 @@ const CreatePayment = () => {
                 setShowSearch(false);
             })
         })
-        
-        
     }
 
     const handleCloseSearch = ()=>{

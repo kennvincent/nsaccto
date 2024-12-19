@@ -12,6 +12,22 @@ use App\Models\Aumentationheader;
 
 class BudgetController extends Controller
 {
+    public function allbudgetyear($year){
+        $budgets = DB::table('budgets as t1')
+                    ->select('t1.id',
+                    't1.particulars',
+                    't1.accountcode',
+                    't1.proposedamount',
+                    't1.accountclassification',
+                    't1.funding',
+                    't1.sector',
+                    't1.office',
+                    't1.officecode')
+            ->where('t1.budgetyear',$year)
+            ->get();
+        return response()->json(['budgets'=>$budgets]);
+    }
+
     public function officebudget($officename){
         $obrstatus='obligated';
         $budgets = DB::table('budgets as t1')

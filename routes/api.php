@@ -123,6 +123,7 @@ Route::get('budgets',[BudgetImportController::class,'display']);
 Route::get('budgets/officebudget/accounts/{officename}',[BudgetImportController::class,'officeaccounts']);
 Route::get('budgets/available',[BudgetImportController::class,'getavailablebudget']);
 
+Route::get('getallbudgetyear/{year}',[BudgetController::class,'allbudgetyear']);
 Route::get('displayofficebudget/{officename}',[BudgetController::class,'officebudget']);
 Route::get('getaccounts/{officename}',[BudgetController::class,'accountsperoffice']);
 Route::get('getaccount/{id}',[BudgetController::class,'getaccount']);

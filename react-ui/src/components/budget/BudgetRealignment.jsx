@@ -1,74 +1,60 @@
 import React, { useEffect, useState } from 'react'
 import axiosClient from '../../axios-client';
+import SelectBudgetFrom from './SelectBudgetFrom';
 
 const BudgetRealignment = () => {
-    const [offices,setOffices] = useState([]);
-    const [accounts,setAccounts]=useState([]);
-    const [availablebudget,setAvailableBudget]=useState(0);
-    const [obligated,setObligated]=useState(0);
-    const [utilized,setUtilized]=useState(0);
+    const [budgetyear,setBudgetYear]=useState('');
+    const [allbudgets,setAllBudgets]=useState([]);
+
+    const [showBudgetFrom,setShowBudgetFrom] = useState(false)
     useEffect(()=>{
-        axiosClient.get(`offices`).then(res=>{
-            setOffices(res.data.offices);
-        })
+        axiosClient.get(`getobryear`).then(res=>{
+            setBudgetYear(res.data.obryear[0].budgetyear);
+        });
         
     },[]);
 
-    const loadOffices = offices.map((ofc)=>{
-        return(
-            <option key={ofc.id} value={ofc.officename} className='p-4'>{ofc.officedesc}</option>
-        );
-    });
+    
 
-    const onChangeOffice = (ofc)=>{
-        axiosClient.get(`budgets/officebudget/accounts/${ofc}`,).then(res=>{
-            setAccounts(res.data.budgets);
-          });
+
+    const [showDialogFrom, setShowDialogFrom] = useState(false);
+
+    const handleShowBudgetFromClick = ()=>{
+        setShowBudgetFrom(true);
+        axiosClient.get(`getallbudgetyear/${budgetyear}`).then(res=>{
+            setAllBudgets(res.data.budgets);
+        })
     }
 
-    const officeAccounts = accounts.map((budget)=>{
-        return(
-            <option key={budget.id} value={budget.id}>{budget.officecode} | {budget.funding} | {budget.accountcode} | {budget.particulars}</option>
-        );
-    });
-
-    const getAvailableBalance = ()=>{
-
-    }
+  
   return (
-    <div className='card w-[1000px] m-auto'>
-        <div className='card-header'>
-            <h5>Budget Realignment</h5>
-        </div>
-        <div className='card-body '>
-             <div>
-                <h6 className='p-0 m-0'>Office</h6>
-                <select onChange={(e)=>onChangeOffice(e.target.value)} className='w-full form-control'>
-                    <option >--Select Office--</option>
-                    {loadOffices}
-                </select>
-             </div>
-             <div className='mt-4'>
-                <h6 className='p-0 m-0'>Account From</h6>
-                <select className='w-full form-control'>
-                    <option></option>
-                    {officeAccounts}
-                </select>
-             </div>
-             <div className='mt-4'>
-                <h6 className='p-0 m-0'>Account To</h6>
-                <select className='w-full  form-control'>
-                    <option></option>
-                    {officeAccounts}
-                </select>
-             </div>
+    <>
+    
+        <div className='card w-[1000px] m-auto'>
+            <div className='card-header'>
+                <h5>Budget Realignment {budgetyear}</h5>
+            </div>
 
+            <div className='card-body '>
+                
+                <div className='border border-solid btn-sm p-2 mb-4'>
+                    <button className='btn btn-primary btn-sm' onClick={handleShowBudgetFromClick} >Add</button>
+                    <h5>From</h5>
+                    
+                </div>  
+
+                <div className='border border-solid btn-sm p-2'>
+                    <button className='btn btn-primary btn-sm'>Add</button>
+                    <h5>To</h5>
+                </div>
+                
+            </div>
             
+          
         </div>
-        
-        
-       
-    </div>
+
+        <SelectBudgetFrom visible={showBudgetFrom} dataBudgetFrom={allbudgets} onClose={()=>setShowBudgetFrom(false)}/>
+    </>
   )
 }
 

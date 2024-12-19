@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
 const SelectAccount = ({visible,dataBudgetFrom,onClose,onCloseSelect}) => {
-    
+        
+
     const handleClickSelect = (id,accountcode,funding,officecode)=>{
         const data = {
             'budgetid':id,
@@ -11,7 +12,6 @@ const SelectAccount = ({visible,dataBudgetFrom,onClose,onCloseSelect}) => {
         }
         
         onCloseSelect(data);
-       
     }
 
 
